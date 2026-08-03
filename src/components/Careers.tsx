@@ -31,6 +31,10 @@ const perks = [
 
 const experienceBands = ["0–2 years", "2–5 years", "5–10 years", "10+ years"];
 
+/** Must stay under Vercel's ~4.5 MB serverless request-body limit. */
+const MAX_RESUME_BYTES = 4 * 1024 * 1024;
+const RESUME_SIZE_ERROR = "Resume must be under 4 MB — please compress it and try again.";
+
 export function Careers() {
   const [role, setRole] = useState<string>(openRoles[0].title);
   const [experience, setExperience] = useState(experienceBands[1]);
@@ -52,10 +56,19 @@ export function Careers() {
     const form = e.currentTarget;
     const fd = new FormData(form);
     fd.set("experience", experience); // chip state, not a native input
+
+    // guard again at submit time — the platform hard-rejects large bodies
+    const resume = fd.get("resume");
+    if (resume instanceof File && resume.size > MAX_RESUME_BYTES) {
+      setError(RESUME_SIZE_ERROR);
+      return;
+    }
+
     setSending(true);
     setError(null);
     try {
       const res = await fetch("/api/careers", { method: "POST", body: fd });
+      if (res.status === 413) throw new Error(RESUME_SIZE_ERROR);
       const body = await res.json().catch(() => ({}));
       if (!res.ok || body.ok !== true) {
         throw new Error(typeof body.error === "string" ? body.error : "delivery failed");
@@ -278,7 +291,7 @@ export function Careers() {
                       className="flex cursor-pointer items-center justify-between gap-3 rounded-xl border border-dashed border-line bg-surface2 px-4 py-3 text-sm transition-colors hover:border-brand/50"
                     >
                       <span className={fileName ? "truncate font-medium text-fg" : "text-faint"}>
-                        {fileName ?? "Upload PDF or DOC (max 5 MB)"}
+                        {fileName ?? "Upload PDF or DOC (max 4 MB)"}
                       </span>
                       <span className="inline-flex shrink-0 items-center gap-1.5 font-semibold text-brand">
                         <Icons.download className="h-4 w-4 rotate-180" />
@@ -292,7 +305,17 @@ export function Careers() {
                       required
                       accept=".pdf,.doc,.docx"
                       className="sr-only"
-                      onChange={(e) => setFileName(e.target.files?.[0]?.name ?? null)}
+                      onChange={(e) => {
+                        const f = e.target.files?.[0] ?? null;
+                        if (f && f.size > MAX_RESUME_BYTES) {
+                          e.target.value = ""; // reject oversized file immediately
+                          setFileName(null);
+                          setError(RESUME_SIZE_ERROR);
+                          return;
+                        }
+                        setError(null);
+                        setFileName(f?.name ?? null);
+                      }}
                     />
                   </div>
 
