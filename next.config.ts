@@ -20,12 +20,15 @@ const nextConfig: NextConfig = {
   env: {
     NEXT_PUBLIC_BASE_PATH: basePath,
   },
+  /* Serve images as-is everywhere: Vercel's image-optimization quota 402s
+     on new transformations (large catalog), breaking newly added photos.
+     Catalog assets are already display-sized (~612px PNGs). */
+  images: { unoptimized: true },
   ...(isPages
     ? {
         output: "export",
         basePath,
         assetPrefix: `/${repo}/`,
-        images: { unoptimized: true },
         trailingSlash: true,
       }
     : {}),
