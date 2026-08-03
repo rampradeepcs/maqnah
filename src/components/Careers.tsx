@@ -317,6 +317,11 @@ export function Careers() {
                         setFileName(f?.name ?? null);
                       }}
                     />
+                    {error === RESUME_SIZE_ERROR && (
+                      <p className="mt-2 text-sm text-brand" role="alert">
+                        {RESUME_SIZE_ERROR}
+                      </p>
+                    )}
                   </div>
 
                   <div>
@@ -349,7 +354,7 @@ export function Careers() {
                       </>
                     )}
                   </button>
-                  {error && (
+                  {error && error !== RESUME_SIZE_ERROR && (
                     <p className="text-center text-sm text-brand" role="alert">
                       {error !== "generic"
                         ? error
