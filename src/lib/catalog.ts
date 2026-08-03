@@ -144,7 +144,7 @@ const electrical: Product[] = [
   { id: "reflecting-light-barrier-ee52", name: "Reflecting Light Barrier", fit: "G33 · K44", img: asset("/catalog/ee/reflecting-light-barrier-ee52.png"), category: "electrical" },
   { id: "relay-combi-3t-ee53", name: "Relay Combi - 3T", fit: "RSB 851 · 951", img: asset("/catalog/ee/relay-combi-3t-ee53.png"), category: "electrical" },
   { id: "s20-limit-switch-ee54", name: "S20 Limit Switch", fit: "RSB D24", img: asset("/catalog/ee/s20-limit-switch-ee54.png"), category: "electrical" },
-  { id: "s25-limit-switch-ee55", name: "S25 Limit Switch", fit: "RSB 851 · 951 · SB 2", img: asset("/catalog/ee/s25-limit-switch-ee55.png"), category: "electrical" },
+  { id: "s25-limit-switch-ee55", name: "S25 Limit Switch", fit: "RSB 851 · 951 · SB 2", img: asset("/catalog/ee/s25-limit-switch-v2.png"), category: "electrical" },
   { id: "s42-limit-switch-ee56", name: "S42 Limit Switch", fit: "RSB 851 · 951 SB 2", img: asset("/catalog/ee/s42-limit-switch-ee56.png"), category: "electrical" },
   { id: "s42-safety-limit-switch-ee57", name: "S42 Safety Limit Switch", fit: "Unilap · Comber", img: asset("/catalog/ee/s42-safety-limit-switch-ee57.png"), category: "electrical" },
   { id: "s44-limit-switch-ee58", name: "S44 Limit Switch", fit: "RSB 851 · 951 · SB 2", img: asset("/catalog/ee/s44-limit-switch-ee58.png"), category: "electrical" },
