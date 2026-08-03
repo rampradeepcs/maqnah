@@ -36,12 +36,39 @@ export function Careers() {
   const [experience, setExperience] = useState(experienceBands[1]);
   const [fileName, setFileName] = useState<string | null>(null);
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const formRef = useRef<HTMLDivElement>(null);
 
   const apply = (title: string) => {
     setRole(title);
     setSent(false);
     formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  /** Applications are delivered server-side via /api/careers (Resend). */
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+    fd.set("experience", experience); // chip state, not a native input
+    setSending(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/careers", { method: "POST", body: fd });
+      const body = await res.json().catch(() => ({}));
+      if (!res.ok || body.ok !== true) {
+        throw new Error(typeof body.error === "string" ? body.error : "delivery failed");
+      }
+      form.reset();
+      setFileName(null);
+      setSent(true);
+    } catch (err) {
+      const specific = err instanceof Error && err.message !== "delivery failed" ? err.message : null;
+      setError(specific ?? "generic");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -187,13 +214,7 @@ export function Careers() {
                   </button>
                 </div>
               ) : (
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    setSent(true);
-                  }}
-                  className="space-y-5"
-                >
+                <form onSubmit={handleSubmit} className="space-y-5">
                   <div className="grid gap-5 sm:grid-cols-2">
                     <Field label="Full name" name="name" required placeholder="Your name" />
                     <Field label="Email" name="email" type="email" required placeholder="you@example.com" />
@@ -290,11 +311,33 @@ export function Careers() {
 
                   <button
                     type="submit"
-                    className="shine inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-brand text-sm font-semibold text-white transition-transform duration-300 hover:scale-[1.01]"
+                    disabled={sending}
+                    className="shine inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-brand text-sm font-semibold text-white transition-transform duration-300 hover:scale-[1.01] disabled:cursor-not-allowed disabled:opacity-70"
                   >
-                    Submit application
-                    <Icons.arrow className="h-4 w-4" />
+                    {sending ? (
+                      <>
+                        <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+                        Submitting…
+                      </>
+                    ) : (
+                      <>
+                        Submit application
+                        <Icons.arrow className="h-4 w-4" />
+                      </>
+                    )}
                   </button>
+                  {error && (
+                    <p className="text-center text-sm text-brand" role="alert">
+                      {error !== "generic"
+                        ? error
+                        : "Something went wrong sending your application. Please try again, or email your resume to "}
+                      {error === "generic" && (
+                        <a href={`mailto:${company.email}`} className="font-semibold underline">
+                          {company.email}
+                        </a>
+                      )}
+                    </p>
+                  )}
                   <p className="text-center text-xs text-faint">
                     By applying you agree to be contacted about this and future openings.
                   </p>
