@@ -166,7 +166,9 @@
       "Bash(git commit -m 'Add '\\\\''Our associated partners'\\\\'' logo wall on home + About \\(like Clientele\\) *)",
       "Bash(grep -v \"cairosvg\\\\|api_key.\\\\{0,3\\\\}re_UDhv\")",
       "Bash(python3 -c \"import json; d=json.load\\(open\\('.claude/settings.local.json'\\)\\); print\\('valid JSON, allow count:', len\\(d['permissions']['allow']\\)\\)\")",
-      "Bash(GIT_EDITOR=true git rebase --continue)"
+      "Bash(GIT_EDITOR=true git rebase --continue)",
+      "Bash(git stash *)",
+      "Bash(git rev-list *)"
     ]
   }
 }

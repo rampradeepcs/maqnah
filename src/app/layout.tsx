@@ -4,7 +4,6 @@ import "./globals.css";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { NoRightClick } from "@/components/NoRightClick";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
-import { ComingSoon } from "@/components/ComingSoon";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Splash } from "@/components/Splash";
@@ -95,7 +94,6 @@ export default function RootLayout({
       className={`${display.variable} ${sans.variable} h-full antialiased`}
     >
       <body className="min-h-full">
-        <ComingSoon />
         <Splash />
         <SmoothScroll />
         <NoRightClick />
