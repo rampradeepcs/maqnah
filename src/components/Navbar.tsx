@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Logo } from "./Logo";
@@ -20,6 +20,23 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const [prodOpen, setProdOpen] = useState(false);
   const pathname = usePathname();
+
+  /* The dropdown renders outside the glass pill (backdrop-filters don't nest),
+     anchored to the Products trigger. A short close delay bridges the gap. */
+  const prodRef = useRef<HTMLDivElement>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [prodPos, setProdPos] = useState({ x: 0, y: 76 });
+
+  const openProd = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    const r = prodRef.current?.getBoundingClientRect();
+    if (r) setProdPos({ x: r.left + r.width / 2, y: r.bottom });
+    setProdOpen(true);
+  };
+  const scheduleCloseProd = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(() => setProdOpen(false), 140);
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -64,9 +81,10 @@ export function Navbar() {
               item.dropdown ? (
                 <div
                   key={item.href}
+                  ref={prodRef}
                   className="relative"
-                  onMouseEnter={() => setProdOpen(true)}
-                  onMouseLeave={() => setProdOpen(false)}
+                  onMouseEnter={openProd}
+                  onMouseLeave={scheduleCloseProd}
                 >
                   <Link
                     href={item.href}
@@ -79,39 +97,6 @@ export function Navbar() {
                       <path d="m6 9 6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </Link>
-                  {/* Dropdown */}
-                  <div
-                    className={`absolute left-1/2 top-full w-[30rem] -translate-x-1/2 pt-3 transition-all duration-300 ${
-                      prodOpen
-                        ? "pointer-events-auto translate-y-0 opacity-100"
-                        : "pointer-events-none -translate-y-1 opacity-0"
-                    }`}
-                  >
-                    <div className="glass-strong grid grid-cols-2 gap-1 rounded-2xl p-2 shadow-card">
-                      {categories.map((c) => {
-                        const Icon = Icons[c.icon];
-                        return (
-                          <Link
-                            key={c.id}
-                            href={`/products/${c.slug}`}
-                            className="group flex items-center gap-3 rounded-xl px-3 py-2.5 transition-colors hover:bg-surface2"
-                          >
-                            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand/10 text-brand">
-                              <Icon className="h-5 w-5" />
-                            </span>
-                            <span className="min-w-0">
-                              <span className="block truncate text-sm font-medium text-fg">
-                                {c.name}
-                              </span>
-                              <span className="block text-xs text-faint">
-                                {categoryCount(c)} parts
-                              </span>
-                            </span>
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  </div>
                 </div>
               ) : (
                 <Link
@@ -147,6 +132,44 @@ export function Navbar() {
               </span>
             </button>
           </div>
+        </div>
+      </div>
+
+      {/* Products dropdown — sibling of the glass pill so its backdrop blur
+          samples the page content (backdrop-filters don't nest). */}
+      <div
+        className={`fixed w-[30rem] -translate-x-1/2 pt-3 transition-all duration-300 ${
+          prodOpen
+            ? "pointer-events-auto translate-y-0 opacity-100"
+            : "pointer-events-none -translate-y-1 opacity-0"
+        }`}
+        style={{ left: prodPos.x, top: prodPos.y }}
+        onMouseEnter={openProd}
+        onMouseLeave={scheduleCloseProd}
+      >
+        <div className="glass-strong grid grid-cols-2 gap-1 rounded-2xl p-2 shadow-card">
+          {categories.map((c) => {
+            const Icon = Icons[c.icon];
+            return (
+              <Link
+                key={c.id}
+                href={`/products/${c.slug}`}
+                className="group flex items-center gap-3 rounded-xl px-3 py-2.5 transition-colors hover:bg-surface2"
+              >
+                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand/10 text-brand">
+                  <Icon className="h-5 w-5" />
+                </span>
+                <span className="min-w-0">
+                  <span className="block truncate text-sm font-medium text-fg">
+                    {c.name}
+                  </span>
+                  <span className="block text-xs text-faint">
+                    {categoryCount(c)} parts
+                  </span>
+                </span>
+              </Link>
+            );
+          })}
         </div>
       </div>
 

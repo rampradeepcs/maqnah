@@ -45,8 +45,8 @@
 
   --grid-line: rgba(12, 14, 20, 0.05);
   --tint-top: rgba(12, 14, 20, 0.035);
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --glass-strong-bg: rgba(255, 255, 255, 0.82);
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-strong-bg: rgba(255, 255, 255, 0.8);
   --grad-fg-a: #16171c;
   --grad-fg-b: #55565e;
   --shadow-card: 0 24px 60px -24px rgba(12, 14, 20, 0.18);
@@ -143,18 +143,20 @@ html.lenis body {
   color: transparent;
 }
 
-@utility glass {
+/* Glass surfaces — plain rules (the CSS optimizer drops backdrop-filter
+   declarations inside @utility blocks, which silently removed the blur). */
+.glass {
   background: var(--glass-bg);
-  backdrop-filter: blur(20px) saturate(150%);
-  -webkit-backdrop-filter: blur(20px) saturate(150%);
   border: 1px solid var(--line);
+  -webkit-backdrop-filter: blur(32px) saturate(150%);
+  backdrop-filter: blur(32px) saturate(150%);
 }
 
-@utility glass-strong {
+.glass-strong {
   background: var(--glass-strong-bg);
-  backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
   border: 1px solid var(--line);
+  -webkit-backdrop-filter: blur(48px) saturate(170%);
+  backdrop-filter: blur(48px) saturate(170%);
 }
 
 /* Card surface tint (subtle top-down) */
