@@ -26,7 +26,7 @@ export function Logo({
         <span className="font-display text-[1.15rem] font-semibold tracking-tight leading-none">
           <span className="text-current">nachi</span>{" "}
           <span className="text-current/80">tekneka</span>
-          <sup className="ml-0.5 text-[0.55em] align-super text-brand">™</sup>
+          <sup className="ml-0.5 text-[0.72em] align-super text-brand">™</sup>
         </span>
       )}
     </span>
