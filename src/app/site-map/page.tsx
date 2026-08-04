@@ -34,6 +34,8 @@ const groups: { heading: string; links: { label: string; href: string; note?: st
     links: [
       { label: "Downloads", href: "/downloads" },
       { label: "Company Brochure (PDF)", href: asset("/brochure.pdf") },
+      { label: "Privacy Policy", href: "/privacy-policy" },
+      { label: "Terms & Conditions", href: "/terms-and-conditions" },
     ],
   },
 ];

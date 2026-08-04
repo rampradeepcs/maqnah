@@ -74,6 +74,12 @@ export function Footer() {
             <a href={`mailto:${company.email}`} className="hover:text-brand">
               {company.email}
             </a>
+            <Link href="/privacy-policy" className="hover:text-brand">
+              Privacy Policy
+            </Link>
+            <Link href="/terms-and-conditions" className="hover:text-brand">
+              Terms &amp; Conditions
+            </Link>
             <Link href="/site-map" className="hover:text-brand">
               Site Map
             </Link>
