@@ -14,6 +14,28 @@
       "autoPort": true
     },
     {
+      "name": "longiv-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "/Users/rampradeepcholan/Documents/ram/claude/.claude/worktrees/suspicious-kowalevski-dcb09f",
+        "run",
+        "dev"
+      ],
+      "autoPort": true
+    },
+    {
+      "name": "spinwisely-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "/Users/rampradeepcholan/Documents/ram/claude/.claude/worktrees/spinwisely-landing-redesign-80e35f",
+        "run",
+        "dev"
+      ],
+      "autoPort": true
+    },
+    {
       "name": "ipro-dev",
       "runtimeExecutable": "npm",
       "runtimeArgs": [
