@@ -204,7 +204,7 @@ export function Navbar() {
             </Link>
           </div>
           <p className="mt-8 text-center text-sm text-faint">
-            Designed and Built by{" "}
+            Built by{" "}
             <a
               href="https://borncreative.in/"
               target="_blank"

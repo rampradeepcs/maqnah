@@ -69,7 +69,7 @@ export function Footer() {
               © {new Date().getFullYear()} {company.name}. All rights reserved.
             </p>
             <p>
-              Designed and Built by{" "}
+              Built by{" "}
               <a
                 href="https://borncreative.in/"
                 target="_blank"
