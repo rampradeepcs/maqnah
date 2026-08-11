@@ -203,6 +203,17 @@ export function Navbar() {
               Get a quote
             </Link>
           </div>
+          <p className="mt-8 text-center text-sm text-faint">
+            Designed and Built by{" "}
+            <a
+              href="https://borncreative.in/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-muted hover:text-brand"
+            >
+              Born Creative
+            </a>
+          </p>
         </div>
       </div>
     </header>

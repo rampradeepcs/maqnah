@@ -64,9 +64,22 @@ export function Footer() {
         </div>
 
         <div className="mt-14 flex flex-col gap-4 border-t border-line pt-8 text-sm text-faint md:flex-row md:items-center md:justify-between">
-          <p>
-            © {new Date().getFullYear()} {company.name}. All rights reserved.
-          </p>
+          <div className="flex flex-col gap-1.5">
+            <p>
+              © {new Date().getFullYear()} {company.name}. All rights reserved.
+            </p>
+            <p>
+              Designed and Built by{" "}
+              <a
+                href="https://borncreative.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium hover:text-brand"
+              >
+                Born Creative
+              </a>
+            </p>
+          </div>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
             <a href={`tel:${company.phone.replace(/\s/g, "")}`} className="hover:text-brand">
               {company.phone}
