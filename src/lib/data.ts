@@ -384,24 +384,6 @@ export const openRoles = [
       "Design and commission servo, inverter and auto-leveler retrofit systems — from panel wiring and drives to HMI logic.",
   },
   {
-    id: "sales-engineer",
-    title: "Sales Engineer — Spinning Machinery",
-    dept: "Sales",
-    location: "Coimbatore · Travel",
-    type: "Full-time",
-    blurb:
-      "Consult with spinning mills on parts and retrofit solutions; build technical proposals with our engineering team.",
-  },
-  {
-    id: "cnc-machinist",
-    title: "CNC Machinist — Precision Parts",
-    dept: "Manufacturing",
-    location: "Coimbatore",
-    type: "Full-time",
-    blurb:
-      "Machine OEM-grade spare parts to tight dimensional tolerances on CNC turning and milling centres.",
-  },
-  {
     id: "stores-executive",
     title: "Stores & Dispatch Executive",
     dept: "Operations",

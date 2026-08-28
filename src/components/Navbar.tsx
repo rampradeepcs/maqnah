@@ -67,7 +67,7 @@ export function Navbar() {
     <header className="fixed inset-x-0 top-0 z-50">
       <div className={`transition-all duration-500 ${scrolled ? "mt-3" : "mt-0"}`}>
         <div
-          className={`container-x flex h-16 items-center justify-between rounded-full !max-w-6xl transition-all duration-500 ${
+          className={`container-x relative z-50 flex h-16 items-center justify-between rounded-full !max-w-6xl transition-all duration-500 ${
             scrolled ? "glass-strong shadow-card" : ""
           }`}
           style={scrolled ? { paddingInline: "1.25rem" } : undefined}
@@ -138,7 +138,7 @@ export function Navbar() {
       {/* Products dropdown — sibling of the glass pill so its backdrop blur
           samples the page content (backdrop-filters don't nest). */}
       <div
-        className={`fixed w-[30rem] -translate-x-1/2 pt-3 transition-all duration-300 ${
+        className={`fixed z-50 w-[30rem] -translate-x-1/2 pt-3 transition-all duration-300 ${
           prodOpen
             ? "pointer-events-auto translate-y-0 opacity-100"
             : "pointer-events-none -translate-y-1 opacity-0"
