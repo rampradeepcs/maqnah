@@ -3,10 +3,10 @@ import { NextResponse } from "next/server";
 /**
  * Contact-form delivery via Resend (https://resend.com).
  * Configure in Vercel env: RESEND_API_KEY (required); CONTACT_TO,
- * CONTACT_BCC, CONTACT_FROM optional overrides.
+ * CONTACT_CC, CONTACT_FROM optional overrides.
  */
 const TO = process.env.CONTACT_TO ?? "sales03@nachitekneka.com";
-const BCC = process.env.CONTACT_BCC ?? "rampradeepux@gmail.com";
+const CC = process.env.CONTACT_CC ?? "raaj@nachitekneka.com";
 const FROM = process.env.CONTACT_FROM ?? "Nachi Tekneka Website <enquiry@nachitekneka.com>";
 
 const esc = (s: string) =>
@@ -63,7 +63,7 @@ export async function POST(req: Request) {
     body: JSON.stringify({
       from: FROM,
       to: [TO],
-      bcc: [BCC],
+      cc: [CC],
       reply_to: email,
       subject: `New enquiry from nachitekneka.com — ${name}`,
       html,
