@@ -2,11 +2,11 @@ import { NextResponse } from "next/server";
 
 /**
  * Careers-form delivery via Resend. Accepts multipart/form-data with an
- * optional resume attachment. Env overrides: CAREERS_TO, CAREERS_BCC,
+ * optional resume attachment. Env overrides: CAREERS_TO, CAREERS_CC,
  * CAREERS_FROM; requires RESEND_API_KEY.
  */
 const TO = process.env.CAREERS_TO ?? "info@nachitekneka.com";
-const BCC = process.env.CAREERS_BCC ?? "rampradeepux@gmail.com";
+const CC = process.env.CAREERS_CC ?? "raaj@nachitekneka.com";
 const FROM = process.env.CAREERS_FROM ?? "Nachi Tekneka Careers <careers@nachitekneka.com>";
 
 /** Vercel serverless request bodies cap at ~4.5 MB — leave headroom. */
@@ -91,7 +91,7 @@ export async function POST(req: Request) {
     body: JSON.stringify({
       from: FROM,
       to: [TO],
-      bcc: [BCC],
+      cc: [CC],
       reply_to: email,
       subject: `Job application: ${role || "General"} — ${name}`,
       html,
