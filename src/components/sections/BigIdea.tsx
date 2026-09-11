@@ -90,7 +90,7 @@ export function BigIdea() {
                     />
                     <span
                       className="mono text-[11px] transition-colors duration-500"
-                      style={{ color: on ? "#f4f7f9" : "#5d6672" }}
+                      style={{ color: on ? "#f4f7f9" : "#767f8c" }}
                     >
                       {rung}
                     </span>

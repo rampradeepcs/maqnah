@@ -40,7 +40,7 @@ export function Method() {
                   <li key={m.step} className="flex items-baseline gap-4">
                     <span
                       className="mono w-6 shrink-0 text-[10px] transition-colors duration-500"
-                      style={{ color: on ? "#b8ff4a" : "#5d6672" }}
+                      style={{ color: on ? "#b8ff4a" : "#767f8c" }}
                     >
                       {String(i + 1).padStart(2, "0")}
                     </span>
@@ -114,7 +114,7 @@ export function Method() {
                         screens the ring keeps only its markers. */}
                     <span
                       className="mono hidden whitespace-nowrap text-[10px] transition-colors duration-500 sm:inline"
-                      style={{ color: on ? "#f4f7f9" : "#5d6672" }}
+                      style={{ color: on ? "#f4f7f9" : "#767f8c" }}
                     >
                       {m.step}
                     </span>

@@ -7,11 +7,17 @@ import { Magnetic } from "./ui/Magnetic";
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const [progress, setProgress] = useState(0);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 40);
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(max > 0 ? Math.min(1, y / max) : 0);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -56,6 +62,17 @@ export function Nav() {
           borderBottom: `1px solid ${scrolled ? "rgba(255,255,255,.08)" : "transparent"}`,
         }}
       >
+        {/* Read-out of how far through the story the reader is. */}
+        <span
+          aria-hidden
+          className="absolute bottom-[-1px] left-0 h-px bg-signal"
+          style={{
+            width: `${progress * 100}%`,
+            opacity: scrolled ? 1 : 0,
+            boxShadow: "0 0 8px rgba(184,255,74,.6)",
+            transition: "opacity .4s",
+          }}
+        />
         <div
           className="container-x flex items-center justify-between transition-all duration-500"
           style={{ height: scrolled ? 66 : 84 }}

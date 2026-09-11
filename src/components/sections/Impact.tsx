@@ -21,7 +21,11 @@ export function Impact() {
         <p className="tag mb-8">10 / Impact</p>
         <MaskLines
           className="display t-h1 max-w-5xl"
-          lines={["Technology is only valuable", "when it moves the numbers."]}
+          lines={[
+            "Technology is only",
+            "valuable when it",
+            "moves the numbers.",
+          ]}
         />
 
         <Reveal delay={0.2}>

@@ -31,7 +31,7 @@ export function Founder() {
             >
               &ldquo;
             </span>
-            <p className="display mx-auto mt-6 max-w-4xl text-[clamp(1.5rem,3.6vw,3rem)] leading-[1.16] text-fg">
+            <p className="display mx-auto mt-6 max-w-3xl text-balance text-[clamp(1.5rem,3.6vw,2.75rem)] leading-[1.16] text-fg">
               {founder.quote}
             </p>
           </blockquote>

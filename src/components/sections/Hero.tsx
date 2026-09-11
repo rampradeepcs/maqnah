@@ -24,7 +24,7 @@ function Pipeline() {
           <span
             className="mono text-[10px] transition-all duration-500"
             style={{
-              color: idx === i ? "#b8ff4a" : "#5d6672",
+              color: idx === i ? "#b8ff4a" : "#767f8c",
               textShadow: idx === i ? "0 0 18px rgba(184,255,74,.5)" : "none",
             }}
           >

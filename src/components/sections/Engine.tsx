@@ -85,7 +85,7 @@ export function Engine() {
                     <span className="flex flex-col gap-1 md:items-center">
                       <span
                         className="mono text-[10px] transition-colors duration-400"
-                        style={{ color: on ? "#b8ff4a" : "#5d6672" }}
+                        style={{ color: on ? "#b8ff4a" : "#767f8c" }}
                       >
                         {String(i + 1).padStart(2, "0")}
                       </span>

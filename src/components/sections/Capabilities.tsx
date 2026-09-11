@@ -85,7 +85,7 @@ export function Capabilities() {
                   {/* Number */}
                   <span
                     className="mono block text-[11px] transition-colors duration-500"
-                    style={{ color: isOpen ? "#b8ff4a" : "#5d6672" }}
+                    style={{ color: isOpen ? "#b8ff4a" : "#767f8c" }}
                   >
                     {cap.num}
                   </span>

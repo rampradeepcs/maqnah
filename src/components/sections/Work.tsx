@@ -1,5 +1,5 @@
-import Image from "next/image";
 import { work } from "@/lib/content";
+import { ParallaxImage } from "../ui/ParallaxImage";
 import { Reveal, MaskLines } from "../ui/Reveal";
 
 /**
@@ -42,12 +42,11 @@ export function Work() {
                     className="relative aspect-[3/2] overflow-hidden border border-line"
                     data-cursor="VIEW CASE STUDY"
                   >
-                    <Image
+                    <ParallaxImage
                       src={item.image}
                       alt={item.alt}
-                      fill
                       sizes="(max-width: 1024px) 100vw, 58vw"
-                      className="object-cover"
+                      className="absolute inset-0"
                     />
                     <div
                       aria-hidden

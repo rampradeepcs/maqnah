@@ -38,7 +38,7 @@ export function FinalCta() {
           </Reveal>
 
           <MaskLines
-            className="display t-h1 mx-auto max-w-5xl"
+            className="display t-h1 mx-auto max-w-5xl text-balance"
             lineClassName="text-center"
             lines={[
               finalCta.heading[0],

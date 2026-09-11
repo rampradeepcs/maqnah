@@ -127,7 +127,7 @@ export function Solutions() {
                     <span
                       className="mono text-[8px] sm:text-[9px]"
                       style={{
-                        color: "#5d6672",
+                        color: "#767f8c",
                         opacity: isHot ? 1 : 0.6,
                         transition: "opacity .4s",
                       }}
