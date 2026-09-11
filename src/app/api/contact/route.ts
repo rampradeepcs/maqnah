@@ -1,79 +1,85 @@
 import { NextResponse } from "next/server";
 
 /**
- * Contact-form delivery via Resend (https://resend.com).
- * Configure in Vercel env: RESEND_API_KEY (required); CONTACT_TO,
- * CONTACT_CC, CONTACT_FROM optional overrides.
+ * Contact form endpoint.
+ *
+ * Sends through Resend's REST API when RESEND_API_KEY is configured. Without
+ * it the route fails loudly rather than silently swallowing an enquiry — the
+ * form then points the visitor at the mailbox directly.
  */
-const TO = process.env.CONTACT_TO ?? "sales03@nachitekneka.com";
-const CC = process.env.CONTACT_CC ?? "raaj@nachitekneka.com";
-const FROM = process.env.CONTACT_FROM ?? "Nachi Tekneka Website <enquiry@nachitekneka.com>";
-
-const esc = (s: string) =>
-  s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
-
 export async function POST(req: Request) {
-  const key = process.env.RESEND_API_KEY;
-  if (!key) {
-    return NextResponse.json({ ok: false, error: "Email delivery is not configured" }, { status: 503 });
-  }
-
   let body: Record<string, unknown>;
   try {
     body = await req.json();
   } catch {
-    return NextResponse.json({ ok: false, error: "Invalid request" }, { status: 400 });
+    return NextResponse.json({ error: "Invalid request." }, { status: 400 });
   }
 
-  const field = (k: string, max = 500) =>
-    typeof body[k] === "string" ? (body[k] as string).trim().slice(0, max) : "";
-
-  const name = field("name", 120);
-  const email = field("email", 200);
-  const company = field("company", 200);
-  const phone = field("phone", 50);
-  const interest = field("interest", 100);
-  const message = field("message", 5000);
-
-  if (!name || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-    return NextResponse.json({ ok: false, error: "Name and a valid email are required" }, { status: 400 });
+  // Honeypot
+  if (typeof body.website === "string" && body.website.trim() !== "") {
+    return NextResponse.json({ ok: true });
   }
 
-  const rows: [string, string][] = [
-    ["Name", name],
-    ["Company", company],
-    ["Email", email],
-    ["Phone", phone],
-    ["Interested in", interest],
-    ["Message", message],
-  ];
-  const html = `
-    <h2 style="font-family:sans-serif">New enquiry — nachitekneka.com</h2>
-    <table style="font-family:sans-serif;border-collapse:collapse">${rows
-      .filter(([, v]) => v)
-      .map(
-        ([k, v]) =>
-          `<tr><td style="padding:6px 12px;border:1px solid #ddd;font-weight:bold">${k}</td><td style="padding:6px 12px;border:1px solid #ddd;white-space:pre-wrap">${esc(v)}</td></tr>`,
-      )
-      .join("")}</table>`;
+  const str = (v: unknown) => (typeof v === "string" ? v.trim() : "");
+  const name = str(body.name);
+  const email = str(body.email);
+  const company = str(body.company);
+  const message = str(body.message);
+
+  if (!name || !email || !company) {
+    return NextResponse.json(
+      { error: "Name, work email and company are required." },
+      { status: 400 },
+    );
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+    return NextResponse.json(
+      { error: "That email address doesn't look right." },
+      { status: 400 },
+    );
+  }
+
+  const key = process.env.RESEND_API_KEY;
+  const to = process.env.CONTACT_TO ?? "mohsin@maqnah.com";
+  const from = process.env.CONTACT_FROM ?? "Maqnah Website <onboarding@resend.dev>";
+
+  if (!key) {
+    return NextResponse.json(
+      { error: "The contact form isn't connected yet." },
+      { status: 503 },
+    );
+  }
+
+  const escape = (s: string) =>
+    s.replace(/[<>&]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" })[c]!);
 
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
-    headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${key}`,
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({
-      from: FROM,
-      to: [TO],
-      cc: [CC],
+      from,
+      to: [to],
       reply_to: email,
-      subject: `New enquiry from nachitekneka.com — ${name}`,
-      html,
+      subject: `New enquiry — ${company}`,
+      html: `
+        <h2>New enquiry from maqnah.com</h2>
+        <p><strong>Name:</strong> ${escape(name)}</p>
+        <p><strong>Work email:</strong> ${escape(email)}</p>
+        <p><strong>Company:</strong> ${escape(company)}</p>
+        <p><strong>Message:</strong><br>${escape(message || "—").replace(/\n/g, "<br>")}</p>
+      `,
     }),
   });
 
   if (!res.ok) {
-    const detail = await res.text().catch(() => "");
-    console.error("Resend delivery failed:", res.status, detail);
-    return NextResponse.json({ ok: false, error: "Delivery failed" }, { status: 502 });
+    return NextResponse.json(
+      { error: "We couldn't send that just now." },
+      { status: 502 },
+    );
   }
+
   return NextResponse.json({ ok: true });
 }

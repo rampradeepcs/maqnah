@@ -1,35 +1,37 @@
-import { Hero } from "@/components/hero/Hero";
-import { Stats } from "@/components/Stats";
-import { SpinLyfeX } from "@/components/SpinLyfeX";
-import { Quality } from "@/components/Quality";
-import { Catalog } from "@/components/Catalog";
-import { ModelCoverage } from "@/components/ModelCoverage";
-import { Solutions } from "@/components/Solutions";
-import { RetrofitMatrix } from "@/components/RetrofitMatrix";
-import { Services } from "@/components/Services";
-import { Company } from "@/components/Company";
-import { Testimonials } from "@/components/Testimonials";
-import { GlobalPresence } from "@/components/GlobalPresence";
-import { Downloads } from "@/components/Downloads";
-import { Contact } from "@/components/Contact";
+import { Hero } from "@/components/sections/Hero";
+import { BigIdea } from "@/components/sections/BigIdea";
+import { Capabilities } from "@/components/sections/Capabilities";
+import { Engine } from "@/components/sections/Engine";
+import { DataFlow } from "@/components/sections/DataFlow";
+import { Consulting } from "@/components/sections/Consulting";
+import { Solutions } from "@/components/sections/Solutions";
+import { Industries } from "@/components/sections/Industries";
+import { Work } from "@/components/sections/Work";
+import { Impact } from "@/components/sections/Impact";
+import { WhyMaqnah } from "@/components/sections/WhyMaqnah";
+import { Method } from "@/components/sections/Method";
+import { Insights } from "@/components/sections/Insights";
+import { Founder } from "@/components/sections/Founder";
+import { FinalCta } from "@/components/sections/FinalCta";
 
 export default function Home() {
   return (
-    <main>
+    <>
       <Hero />
-      <Stats />
-      <SpinLyfeX />
-      <Quality />
-      <Catalog />
-      <ModelCoverage />
+      <BigIdea />
+      <Capabilities />
+      <Engine />
+      <DataFlow />
+      <Consulting />
       <Solutions />
-      <RetrofitMatrix />
-      <Services />
-      <Company />
-      <Testimonials />
-      <GlobalPresence />
-      <Downloads />
-      <Contact />
-    </main>
+      <Industries />
+      <Work />
+      <Impact />
+      <WhyMaqnah />
+      <Method />
+      <Insights />
+      <Founder />
+      <FinalCta />
+    </>
   );
 }

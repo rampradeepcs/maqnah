@@ -1,17 +1,16 @@
 import type { Metadata, Viewport } from "next";
-import { Space_Grotesk, Inter } from "next/font/google";
+import { Instrument_Sans, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { SmoothScroll } from "@/components/SmoothScroll";
-import { NoRightClick } from "@/components/NoRightClick";
-import { WhatsAppFloat } from "@/components/WhatsAppFloat";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { Splash } from "@/components/Splash";
+import { site } from "@/lib/content";
+import { SmoothScroll } from "@/components/ui/SmoothScroll";
+import { Cursor } from "@/components/ui/Cursor";
+import { Preloader } from "@/components/ui/Preloader";
+import { Nav } from "@/components/Nav";
+import { Footer } from "@/components/sections/Footer";
 
-const display = Space_Grotesk({
+const display = Instrument_Sans({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
   display: "swap",
 });
 
@@ -21,67 +20,76 @@ const sans = Inter({
   display: "swap",
 });
 
-const SITE = "https://www.nachitekneka.com";
+const mono = JetBrains_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  display: "swap",
+});
+
+const DESCRIPTION =
+  "Maqnah is an AI, data and digital transformation consulting partner. We turn enterprise data into intelligence — strategy, machine learning, automation and platforms built for real business impact.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE),
+  metadataBase: new URL(site.url),
   title: {
-    default: "Nachi Tekneka — A Solution Provider for the Spinning Industry",
-    template: "%s · Nachi Tekneka",
+    default: "Maqnah — Turn Data Into Intelligence",
+    template: "%s · Maqnah",
   },
-  description:
-    "Nachi Tekneka delivers OEM-level spare parts, Nachi SpinLyfeX™ retrofit systems and onsite technical services for the spinning industry — from blowroom to ring frame. ISO 9001:2015 certified.",
+  description: DESCRIPTION,
   keywords: [
-    "spinning industry spare parts",
-    "Nachi Tekneka",
-    "SpinLyfeX retrofit",
-    "servo upgrade RSB",
-    "carding auto leveler",
-    "draw frame parts",
-    "comber parts",
-    "ring frame spares",
-    "textile machinery retrofit",
-    "Rieter spare parts",
+    "AI consulting Saudi Arabia",
+    "data intelligence",
+    "enterprise AI strategy",
+    "predictive analytics",
+    "generative AI consulting",
+    "intelligent automation",
+    "digital transformation",
+    "data engineering",
+    "AI agents",
+    "Maqnah",
   ],
-  authors: [{ name: "Nachi Tekneka" }],
+  authors: [{ name: site.name }],
   openGraph: {
     type: "website",
-    url: SITE,
-    title: "Nachi Tekneka — A Solution Provider for the Spinning Industry",
-    description:
-      "OEM-level spare parts, SpinLyfeX™ retrofits and onsite technical services for spinning mills worldwide. ISO 9001:2015 certified.",
-    siteName: "Nachi Tekneka",
+    url: site.url,
+    siteName: site.name,
+    title: "Maqnah — Turn Data Into Intelligence",
+    description: DESCRIPTION,
+    images: [{ url: "/img/og.jpg", width: 1200, height: 630, alt: DESCRIPTION }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nachi Tekneka — Spinning Industry Solutions",
-    description:
-      "OEM-level spare parts, SpinLyfeX™ retrofits and onsite technical services for spinning mills worldwide.",
+    title: "Maqnah — Turn Data Into Intelligence",
+    description: DESCRIPTION,
+    images: ["/img/og.jpg"],
   },
   robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
-  colorScheme: "light",
+  themeColor: "#07090C",
+  colorScheme: "dark",
 };
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "Nachi Tekneka",
-  url: SITE,
-  slogan: "A Solution Provider for the Spinning Industry",
-  email: "info@nachitekneka.com",
-  telephone: "+91 422 267 0091",
-  foundingLocation: "Coimbatore, India",
-  areaServed: ["India", "United States", "Mexico", "Worldwide"],
-  hasCredential: "ISO 9001:2015",
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Coimbatore",
-    addressCountry: "IN",
-  },
+  name: site.name,
+  url: site.url,
+  slogan: "Turning complexity into intelligence.",
+  email: site.email,
+  foundingLocation: site.location,
+  areaServed: "Worldwide",
+  description: DESCRIPTION,
+  knowsAbout: [
+    "Artificial Intelligence",
+    "Data Engineering",
+    "Predictive Analytics",
+    "Intelligent Automation",
+    "Digital Transformation",
+  ],
+  address: { "@type": "PostalAddress", addressCountry: "SA" },
 };
 
 export default function RootLayout({
@@ -91,22 +99,21 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${display.variable} ${sans.variable} h-full antialiased`}
+      className={`${display.variable} ${sans.variable} ${mono.variable} h-full`}
     >
       <body className="min-h-full">
-        <Splash />
+        <Preloader />
         <SmoothScroll />
-        <NoRightClick />
+        <Cursor />
         <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-brand focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-5 focus:top-5 focus:z-[200] focus:rounded-full focus:bg-signal focus:px-5 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-void"
         >
           Skip to content
         </a>
-        <Navbar />
-        <div id="main-content">{children}</div>
+        <Nav />
+        <main id="main">{children}</main>
         <Footer />
-        <WhatsAppFloat />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
