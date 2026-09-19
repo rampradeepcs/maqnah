@@ -33,6 +33,7 @@ export function IntelligenceCore({
   density = 1,
   calm = false,
   focus = [0.5, 0.5],
+  tone = "dark",
 }: {
   className?: string;
   /** Multiplier on particle count; scaled down again on small screens. */
@@ -41,6 +42,11 @@ export function IntelligenceCore({
   calm?: boolean;
   /** Where the core sits, as a fraction of the box. */
   focus?: [number, number];
+  /**
+   * "dark": additive lime light on black. "light": Saudi green drawn with
+   * multiply blending, so the same geometry reads as ink on light grey.
+   */
+  tone?: "dark" | "light";
 }) {
   const wrap = useRef<HTMLDivElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
@@ -53,6 +59,13 @@ export function IntelligenceCore({
     if (!ctx) return;
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const lightTone = tone === "light";
+    const SIG = lightTone ? "0,108,53" : SIGNAL;
+    const SEC = lightTone ? "31,164,99" : CYAN;
+    const blend: GlobalCompositeOperation = lightTone ? "multiply" : "lighter";
+    // Ink on paper needs a little more weight than light on black.
+    const gain = lightTone ? 1.25 : 1;
 
     let w = 0;
     let h = 0;
@@ -136,9 +149,9 @@ export function IntelligenceCore({
         [rr * 1.35, calm ? 0.16 : 0.26],
       ] as const) {
         const g = ctx.createRadialGradient(0, 0, 0, 0, 0, radius);
-        g.addColorStop(0, `rgba(${SIGNAL},${alpha * hot})`);
-        g.addColorStop(0.5, `rgba(${SIGNAL},${alpha * 0.28 * hot})`);
-        g.addColorStop(1, "rgba(184,255,74,0)");
+        g.addColorStop(0, `rgba(${SIG},${alpha * hot})`);
+        g.addColorStop(0.5, `rgba(${SIG},${alpha * 0.28 * hot})`);
+        g.addColorStop(1, `rgba(${SIG},0)`);
         ctx.fillStyle = g;
         ctx.beginPath();
         ctx.arc(0, 0, radius, 0, Math.PI * 2);
@@ -155,7 +168,7 @@ export function IntelligenceCore({
         ctx.save();
         ctx.rotate(t * ring.speed);
         ctx.lineWidth = ring.w;
-        ctx.strokeStyle = `rgba(${SIGNAL},${ring.a * hot})`;
+        ctx.strokeStyle = `rgba(${SIG},${ring.a * hot})`;
         const span = (Math.PI * 2) / ring.seg;
         for (let i = 0; i < ring.seg; i++) {
           ctx.beginPath();
@@ -184,7 +197,7 @@ export function IntelligenceCore({
         ctx.beginPath();
         ctx.moveTo(Math.cos(ang) * r0, Math.sin(ang) * r0);
         ctx.lineTo(Math.cos(ang) * r1, Math.sin(ang) * r1);
-        ctx.strokeStyle = `rgba(${SIGNAL},${long ? 0.24 : 0.1})`;
+        ctx.strokeStyle = `rgba(${SIG},${long ? 0.24 : 0.1})`;
         ctx.lineWidth = 1;
         ctx.stroke();
       }
@@ -203,9 +216,9 @@ export function IntelligenceCore({
         else ctx.lineTo(x, y);
       }
       ctx.closePath();
-      ctx.fillStyle = `rgba(${SIGNAL},${0.1 * hot})`;
+      ctx.fillStyle = `rgba(${SIG},${0.1 * hot})`;
       ctx.fill();
-      ctx.strokeStyle = `rgba(${SIGNAL},${0.9 * hot})`;
+      ctx.strokeStyle = `rgba(${SIG},${0.9 * hot})`;
       ctx.lineWidth = 1.2;
       ctx.stroke();
       // Internal facets
@@ -214,7 +227,7 @@ export function IntelligenceCore({
         ctx.beginPath();
         ctx.moveTo(0, 0);
         ctx.lineTo(Math.cos(ang) * rr * 0.56, Math.sin(ang) * rr * 0.56);
-        ctx.strokeStyle = `rgba(${SIGNAL},${0.22 * hot})`;
+        ctx.strokeStyle = `rgba(${SIG},${0.22 * hot})`;
         ctx.lineWidth = 0.6;
         ctx.stroke();
       }
@@ -222,9 +235,12 @@ export function IntelligenceCore({
 
       // --- Hot centre ---------------------------------------------------
       const centre = ctx.createRadialGradient(0, 0, 0, 0, 0, rr * 0.34);
-      centre.addColorStop(0, `rgba(245,255,225,${hot})`);
-      centre.addColorStop(0.35, `rgba(${SIGNAL},${0.75 * hot})`);
-      centre.addColorStop(1, "rgba(184,255,74,0)");
+      centre.addColorStop(
+        0,
+        lightTone ? `rgba(${SIG},${hot})` : `rgba(245,255,225,${hot})`,
+      );
+      centre.addColorStop(0.35, `rgba(${SIG},${0.75 * hot})`);
+      centre.addColorStop(1, `rgba(${SIG},0)`);
       ctx.fillStyle = centre;
       ctx.beginPath();
       ctx.arc(0, 0, rr * 0.34, 0, Math.PI * 2);
@@ -242,7 +258,7 @@ export function IntelligenceCore({
       pointer.strength += (pointer.target - pointer.strength) * 0.05;
 
       ctx.clearRect(0, 0, w, h);
-      ctx.globalCompositeOperation = "lighter";
+      ctx.globalCompositeOperation = blend;
 
       const influence = Math.min(w, h) * 0.42;
 
@@ -273,9 +289,9 @@ export function IntelligenceCore({
         // Fade in from the rim, flare on approach to the core.
         const near = 1 - Math.min(1, (p.r - coreR) / (outerR * 0.55));
         const rim = Math.min(1, (outerR - p.r) / (outerR * 0.35));
-        const alpha = p.bright * rim * (0.25 + near * 0.9);
+        const alpha = p.bright * rim * (0.25 + near * 0.9) * gain;
 
-        const colour = p.hue === 1 ? CYAN : SIGNAL;
+        const colour = p.hue === 1 ? SEC : SIG;
 
         // Streak along the direction of travel.
         ctx.beginPath();
@@ -316,8 +332,8 @@ export function IntelligenceCore({
           pointer.y,
           influence * 0.5,
         );
-        g.addColorStop(0, `rgba(${SIGNAL},${0.07 * pointer.strength})`);
-        g.addColorStop(1, "rgba(184,255,74,0)");
+        g.addColorStop(0, `rgba(${SIG},${0.07 * pointer.strength})`);
+        g.addColorStop(1, `rgba(${SIG},0)`);
         ctx.fillStyle = g;
         ctx.fillRect(0, 0, w, h);
       }
@@ -368,7 +384,7 @@ export function IntelligenceCore({
       window.removeEventListener("pointermove", onMove);
       el.removeEventListener("pointerleave", onLeave);
     };
-  }, [density, calm, focus]);
+  }, [density, calm, focus, tone]);
 
   return (
     <div ref={wrap} className={`relative ${className}`} aria-hidden>

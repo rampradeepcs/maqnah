@@ -447,3 +447,190 @@ html.lenis body {
     transform: scaleX(1);
   }
 }
+
+/* ============================================================================
+   LIGHT VERSION — served at /light
+   Light-grey ground · Saudi-flag green signal · green-gradient highlights.
+
+   The light root layout puts `theme-light` on <html>, and this block
+   re-points the same semantic tokens. Every utility, surface and shared
+   component (form, counters, cursor, logo) flips with no second stylesheet.
+   ============================================================================ */
+
+html.theme-light {
+  color-scheme: light;
+
+  --color-void: #f3f4f1;
+  --color-bg: #f3f4f1;
+  --color-surface: #ffffff;
+  --color-surface2: #e9ede9;
+  --color-surface3: #dfe5df;
+
+  --color-fg: #101512;
+  --color-muted: #4f5853;
+  --color-faint: #66706a;
+  --color-line: rgba(16, 21, 18, 0.09);
+  --color-line-strong: rgba(16, 21, 18, 0.2);
+
+  /* Saudi flag green (Pantone 330 C ≈ #006C35) and its gradient stops */
+  --color-signal: #006c35;
+  --color-signal-dim: #0b8a45;
+  --color-signal-deep: #004d26;
+  --color-cyan: #1fa463;
+  --color-blue: #3dbb7a;
+
+  --grid-line: rgba(16, 21, 18, 0.06);
+
+  --tile-mist: #e9ede9;
+  --tile-mint: #dfefe5;
+  --tile-sage: #e8efe0;
+  --tile-sand: #efece4;
+
+  --ksa-1: #dfe8e1;
+  --ksa-2: #a6d6b8;
+  --ksa-3: #2f9f5f;
+  --ksa-4: #006c35;
+}
+
+html.theme-light ::selection {
+  background: var(--color-signal);
+  color: #ffffff;
+}
+html.theme-light ::-webkit-scrollbar-thumb {
+  background: rgba(16, 21, 18, 0.18);
+}
+html.theme-light ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 108, 53, 0.45);
+}
+html.theme-light .panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+}
+html.theme-light .glass {
+  background: rgba(255, 255, 255, 0.72);
+}
+html.theme-light .tag {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+}
+html.theme-light .text-signal-gradient {
+  background: linear-gradient(
+    100deg,
+    var(--ksa-3) 0%,
+    var(--ksa-4) 60%,
+    var(--color-signal-deep) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* --- Light-only type: a high-contrast serif carries the headlines -------- */
+.serif {
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+}
+.t-l-hero {
+  font-size: clamp(1.75rem, 3.3vw, 3.1rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+.t-l-h1 {
+  font-size: clamp(3.25rem, 8.5vw, 8.5rem);
+}
+.t-l-h2 {
+  font-size: clamp(2.6rem, 5.8vw, 5.5rem);
+}
+.t-l-h3 {
+  font-size: clamp(1.75rem, 3vw, 2.75rem);
+  line-height: 1.05;
+}
+.t-l-num {
+  font-size: clamp(4.25rem, 10.5vw, 10.5rem);
+  line-height: 0.85;
+  letter-spacing: -0.03em;
+}
+.t-l-body {
+  font-size: clamp(1.125rem, 1.42vw, 1.42rem);
+  line-height: 1.6;
+  letter-spacing: -0.008em;
+}
+.label {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--color-faint);
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 0.8rem;
+  border-radius: 0.3rem;
+  background: var(--tile-mint);
+  color: var(--color-signal);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+}
+
+/* Keyword highlight — "AI", "LLM" — the green gradient carried in the type */
+.kw {
+  background: linear-gradient(100deg, var(--ksa-3) 0%, var(--ksa-4) 70%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* The green gradient block, grainy like the reference bar */
+.grad-ksa {
+  background: linear-gradient(
+    180deg,
+    var(--ksa-1) 0%,
+    var(--ksa-2) 36%,
+    var(--ksa-3) 70%,
+    var(--ksa-4) 100%
+  );
+}
+.text-grad-ksa {
+  background: linear-gradient(
+    100deg,
+    var(--ksa-3) 0%,
+    var(--ksa-4) 55%,
+    var(--color-signal-deep) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.tile-mist {
+  background: var(--tile-mist);
+}
+.tile-mint {
+  background: var(--tile-mint);
+}
+.tile-sage {
+  background: var(--tile-sage);
+}
+.tile-sand {
+  background: var(--tile-sand);
+}
+
+@keyframes fade-swap {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animate-fade-swap {
+  animation: fade-swap 0.55s var(--ease-out-expo);
+}

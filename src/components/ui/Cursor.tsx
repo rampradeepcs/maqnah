@@ -83,7 +83,7 @@ export function Cursor() {
         ref={dot}
         className="fixed left-0 top-0 h-1.5 w-1.5 rounded-full bg-signal"
         style={{
-          boxShadow: "0 0 12px 2px rgba(184,255,74,.6)",
+          boxShadow: "0 0 12px 2px color-mix(in srgb, var(--color-signal) 60%, transparent)",
           opacity: active && label ? 0 : 1,
           transition: "opacity .2s",
         }}
@@ -96,11 +96,11 @@ export function Cursor() {
           height: label ? 44 : active ? 44 : 26,
           paddingInline: label ? 18 : 0,
           background: label
-            ? "rgba(184,255,74,.92)"
+            ? "color-mix(in srgb, var(--color-signal) 92%, transparent)"
             : active
-              ? "rgba(184,255,74,.09)"
+              ? "color-mix(in srgb, var(--color-signal) 9%, transparent)"
               : "transparent",
-          borderColor: label ? "transparent" : "rgba(184,255,74,.5)",
+          borderColor: label ? "transparent" : "color-mix(in srgb, var(--color-signal) 50%, transparent)",
           transition:
             "width .35s cubic-bezier(.16,1,.3,1), height .35s cubic-bezier(.16,1,.3,1), background .3s, padding .35s cubic-bezier(.16,1,.3,1)",
         }}
