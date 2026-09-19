@@ -21,7 +21,7 @@ export function LightEngine() {
 
   return (
     <section className="container-x border-t border-line py-24 md:py-36">
-      <div className="grid gap-16 lg:grid-cols-[1fr_1.55fr] lg:gap-24">
+      <div className="grid gap-16 lg:grid-cols-[1fr_1.55fr] lg:items-start lg:gap-24">
         <div>
           <Reveal>
             <span className="pill">{engine.label}</span>
@@ -41,11 +41,13 @@ export function LightEngine() {
             <p className="serif mt-6 text-[clamp(1.6rem,2.6vw,2.4rem)] text-fg">
               {step.key}
             </p>
-            <p className="t-l-body mt-2 max-w-sm text-muted">{step.outcome}</p>
+            <p className="t-l-body mt-2 min-h-[4.8em] max-w-sm text-muted">
+              {step.outcome}
+            </p>
           </div>
         </div>
 
-        <Reveal threshold={0.15} className="self-end">
+        <Reveal threshold={0.15}>
           <div
             className="grid grid-cols-6 gap-2 md:gap-3"
             onMouseLeave={() => setActive(last)}
