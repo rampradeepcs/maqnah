@@ -1,15 +1,13 @@
 import { light } from "@/lib/content-light";
-import { IntelligenceCore } from "../visuals/IntelligenceCore";
+import { WaveGrid } from "./WaveGrid";
 import { LogoMark } from "../ui/Logo";
 import { Clock } from "./Clock";
 import { Hi } from "./Keyword";
 
-const FOCUS: [number, number] = [0.77, 0.56];
-
 /**
  * The hero is the navigation. A very large wordmark, two thin columns of
  * links, the local time — then one statement in the middle of a great deal
- * of air. The intelligence core sits behind it, sparse and green.
+ * of air. Behind it, a wall of cubes ripples wherever the cursor has been.
  */
 export function LightHero() {
   const { hero } = light;
@@ -18,26 +16,16 @@ export function LightHero() {
       id="top"
       className="relative flex min-h-[100svh] flex-col overflow-hidden"
     >
-      {/* Backdrop: a faint grid that fades out toward the edges */}
+      {/* Backdrop: the wave grid, with a CSS grid beneath as the no-WebGL fallback */}
+      <div aria-hidden className="hairline-grid pointer-events-none absolute inset-0" />
+      <WaveGrid className="pointer-events-none absolute inset-0" />
       <div
         aria-hidden
-        className="hairline-grid pointer-events-none absolute inset-0"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-40"
         style={{
-          maskImage:
-            "radial-gradient(75% 70% at 60% 50%, #000 30%, transparent 100%)",
-          WebkitMaskImage:
-            "radial-gradient(75% 70% at 60% 50%, #000 30%, transparent 100%)",
+          background: "linear-gradient(to bottom, transparent, var(--color-void))",
         }}
       />
-      <div className="pointer-events-none absolute inset-0 opacity-45 md:opacity-80">
-        <IntelligenceCore
-          className="absolute inset-0 h-full w-full"
-          tone="light"
-          density={0.42}
-          calm
-          focus={FOCUS}
-        />
-      </div>
 
       {/* Top row — wordmark, links, clock */}
       <div className="container-x relative grid grid-cols-[1fr_auto] items-start gap-x-6 gap-y-7 pt-6 sm:grid-cols-[1.35fr_1fr_1fr_auto] md:pt-8">

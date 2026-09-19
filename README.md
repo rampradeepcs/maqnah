@@ -31,6 +31,20 @@ than shipped as video or images:
 | **Data ecosystem** | `visuals/DataEcosystem.tsx` | Nine source systems converge on one intelligence core, which emits four things a business can act on. Curves and packets on canvas; labels in real DOM so they stay crisp and accessible. |
 | **Consulting transformation** | `sections/Consulting.tsx` | Five business problems convert, one by one as you scroll, into five AI-powered outcomes. |
 
+## The light version — `/light`
+
+A second take for comparison, served from its own root layout: light-grey
+ground, Saudi-flag green `#006C35`, grainy green-gradient highlights,
+Instrument Serif headlines, minimal copy, and the keywords "AI" / "LLM"
+carried in the gradient wherever they appear (`components/light/Keyword.tsx`).
+
+Its hero backdrop is `components/light/WaveGrid.tsx`: a 40×40 wall of
+instanced cubes seen from above, rippling wherever the cursor has been. Each
+pointer move drops a point into a 128-texel trail texture; the vertex shader
+sums Gaussian-windowed cosine rings expanding from every live point, and the
+crests tint green. Three.js loads lazily on the client and the loop pauses
+when the hero scrolls away. `/light` is `noindex`.
+
 ## Design system
 
 Everything lives in `src/app/globals.css` under Tailwind v4's `@theme`.
