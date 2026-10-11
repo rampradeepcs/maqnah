@@ -62,8 +62,9 @@ pills, surfaces, reveals) in `@layer components`, so utilities always win.
   intelligence is active (metrics, icons, CTAs) and is never decoration
 - **Night** — `#040A07`, the contact section's sky
 - **Type** — Urbanist (titles), Inter (body), JetBrains Mono (cursor label)
-- **Logo** — the official lock-up from the brief, in `public/brand/`, used as
-  supplied and reversed to white in the footer with a CSS filter
+- **Logo** — the official lock-up from the brief, in `public/brand/`, with
+  the blades recoloured from indigo to `#006C35`; reversed to white in the
+  footer with a CSS filter
 
 ## Motion
 
