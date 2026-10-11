@@ -35,7 +35,9 @@ export function SmoothScroll() {
       const el = document.querySelector(id);
       if (!el) return;
       e.preventDefault();
-      lenis.scrollTo(el as HTMLElement, { offset: -72, duration: 1.4 });
+      // Lenis honours html's scroll-padding-top (--nav-offset), which clears
+      // the fixed navigation bar, so no extra offset is needed here.
+      lenis.scrollTo(el as HTMLElement, { duration: 1.4 });
       history.replaceState(null, "", id);
     };
     document.addEventListener("click", onClick);

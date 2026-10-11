@@ -1,26 +1,27 @@
 import type { Metadata } from "next";
-import { site } from "./content";
+import { hero, site } from "./content";
 
-export const DESCRIPTION =
-  "Maqnah is an AI, data and digital transformation consulting partner. We turn enterprise data into intelligence — strategy, machine learning, automation and platforms built for real business impact.";
+export const DESCRIPTION = hero.lead;
+
+const TITLE = `Maqnah — ${hero.tag}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "Maqnah — Turn Data Into Intelligence",
+    default: TITLE,
     template: "%s · Maqnah",
   },
   description: DESCRIPTION,
   keywords: [
     "AI consulting Saudi Arabia",
-    "data intelligence",
-    "enterprise AI strategy",
-    "predictive analytics",
+    "data and AI GCC",
+    "AI-native data platforms",
+    "agentic AI",
+    "Arabic LLM",
     "generative AI consulting",
-    "intelligent automation",
-    "digital transformation",
-    "data engineering",
-    "AI agents",
+    "predictive analytics",
+    "data governance PDPL",
+    "decision intelligence",
     "Maqnah",
   ],
   authors: [{ name: site.name }],
@@ -28,13 +29,13 @@ export const metadata: Metadata = {
     type: "website",
     url: site.url,
     siteName: site.name,
-    title: "Maqnah — Turn Data Into Intelligence",
+    title: hero.headline,
     description: DESCRIPTION,
-    images: [{ url: "/img/og.jpg", width: 1200, height: 630, alt: DESCRIPTION }],
+    images: [{ url: "/img/og.jpg", width: 1200, height: 630, alt: hero.headline }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Maqnah — Turn Data Into Intelligence",
+    title: hero.headline,
     description: DESCRIPTION,
     images: ["/img/og.jpg"],
   },
@@ -46,17 +47,17 @@ export const jsonLd = {
   "@type": "Organization",
   name: site.name,
   url: site.url,
-  slogan: "Turning complexity into intelligence.",
+  slogan: hero.headline,
   email: site.email,
   foundingLocation: site.location,
-  areaServed: "Worldwide",
+  areaServed: ["Saudi Arabia", "GCC"],
   description: DESCRIPTION,
   knowsAbout: [
-    "Artificial Intelligence",
-    "Data Engineering",
+    "Data Platforms",
+    "Generative AI",
+    "Agentic AI",
     "Predictive Analytics",
-    "Intelligent Automation",
-    "Digital Transformation",
+    "Decision Intelligence",
   ],
   address: { "@type": "PostalAddress", addressCountry: "SA" },
 };

@@ -21,20 +21,30 @@ export async function POST(req: Request) {
   }
 
   const str = (v: unknown) => (typeof v === "string" ? v.trim() : "");
-  const name = str(body.name);
+  const firstName = str(body.firstName);
+  const lastName = str(body.lastName);
   const email = str(body.email);
   const company = str(body.company);
+  const phoneCode = str(body.phoneCode);
+  const phone = str(body.phone);
   const message = str(body.message);
+  const consent = body.consent === "on" || body.consent === true;
 
-  if (!name || !email || !company) {
+  if (!firstName || !lastName || !email || !phone || !message) {
     return NextResponse.json(
-      { error: "Name, work email and company are required." },
+      { error: "Name, work email, phone number and your goal are required." },
       { status: 400 },
     );
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
     return NextResponse.json(
       { error: "That email address doesn't look right." },
+      { status: 400 },
+    );
+  }
+  if (!consent) {
+    return NextResponse.json(
+      { error: "Please agree to be contacted about your enquiry." },
       { status: 400 },
     );
   }
@@ -52,6 +62,7 @@ export async function POST(req: Request) {
 
   const escape = (s: string) =>
     s.replace(/[<>&]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" })[c]!);
+  const name = `${firstName} ${lastName}`;
 
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
@@ -63,13 +74,15 @@ export async function POST(req: Request) {
       from,
       to: [to],
       reply_to: email,
-      subject: `New enquiry — ${company}`,
+      subject: `Discovery session request — ${company || name}`,
       html: `
-        <h2>New enquiry from maqnah.com</h2>
+        <h2>New discovery session request from maqnah.com</h2>
         <p><strong>Name:</strong> ${escape(name)}</p>
         <p><strong>Work email:</strong> ${escape(email)}</p>
-        <p><strong>Company:</strong> ${escape(company)}</p>
-        <p><strong>Message:</strong><br>${escape(message || "—").replace(/\n/g, "<br>")}</p>
+        <p><strong>Company:</strong> ${escape(company || "—")}</p>
+        <p><strong>Phone:</strong> ${escape(`${phoneCode} ${phone}`.trim())}</p>
+        <p><strong>What they want to achieve:</strong><br>${escape(message).replace(/\n/g, "<br>")}</p>
+        <p><strong>Consent to contact:</strong> yes</p>
       `,
     }),
   });

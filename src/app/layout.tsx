@@ -1,11 +1,11 @@
 import type { Viewport } from "next";
 import "./globals.css";
-import { display, mono, sans, serif } from "@/lib/fonts";
+import { display, mono, sans } from "@/lib/fonts";
 import { jsonLd, metadata as seo } from "@/lib/seo";
 import { SmoothScroll } from "@/components/ui/SmoothScroll";
 import { Cursor } from "@/components/ui/Cursor";
-import { LightNav } from "@/components/light/LightNav";
-import { LightFooter } from "@/components/light/LightFooter";
+import { Nav } from "@/components/Nav";
+import { Footer } from "@/components/Footer";
 
 export const metadata = seo;
 
@@ -21,7 +21,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${display.variable} ${sans.variable} ${mono.variable} ${serif.variable} h-full`}
+      className={`${display.variable} ${sans.variable} ${mono.variable} h-full`}
     >
       <body className="min-h-full">
         <SmoothScroll />
@@ -32,9 +32,9 @@ export default function RootLayout({
         >
           Skip to content
         </a>
-        <LightNav />
+        <Nav />
         <main id="main">{children}</main>
-        <LightFooter />
+        <Footer />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

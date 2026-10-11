@@ -1,15 +1,11 @@
-import {
-  Instrument_Sans,
-  Instrument_Serif,
-  Inter,
-  JetBrains_Mono,
-} from "next/font/google";
+import { Inter, JetBrains_Mono, Urbanist } from "next/font/google";
 
 /**
- * One place for every typeface. The serif carries the headlines; display,
- * sans and mono cover sub-heads, body copy and the cursor label.
+ * One place for every typeface. Urbanist is the title face the brief asks
+ * for (a calm geometric sans); Inter carries body copy and JetBrains Mono
+ * the cursor label.
  */
-export const display = Instrument_Sans({
+export const display = Urbanist({
   variable: "--font-display",
   subsets: ["latin"],
   display: "swap",
@@ -25,13 +21,5 @@ export const mono = JetBrains_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
   weight: ["400", "500"],
-  display: "swap",
-});
-
-export const serif = Instrument_Serif({
-  variable: "--font-serif",
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
   display: "swap",
 });

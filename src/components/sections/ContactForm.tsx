@@ -1,27 +1,48 @@
 "use client";
 
 import { useState } from "react";
-import { site } from "@/lib/content";
+import { contact, site } from "@/lib/content";
+import { Icon } from "../ui/Icon";
 
 type State = "idle" | "sending" | "sent" | "error";
 
-const FIELDS = [
-  { name: "name", label: "Name", type: "text", required: true },
-  { name: "email", label: "Work email", type: "email", required: true },
-  { name: "company", label: "Company name", type: "text", required: true },
-] as const;
+const input =
+  "w-full rounded-xl border border-line bg-void px-4 py-3 text-[15px] text-fg outline-none transition-[border-color,background-color,box-shadow] duration-300 placeholder:text-faint focus:border-signal focus:bg-white focus:shadow-[0_0_0_4px_rgba(0,108,53,0.1)]";
+
+function Field({
+  label,
+  required,
+  className = "",
+  children,
+}: {
+  label: string;
+  required?: boolean;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <label className={`grid gap-2 ${className}`}>
+      <span className="text-[13.5px] font-medium text-fg">
+        {label}
+        {required && <span className="text-signal"> *</span>}
+      </span>
+      {children}
+    </label>
+  );
+}
 
 export function ContactForm() {
   const [state, setState] = useState<State>("idle");
   const [error, setError] = useState<string | null>(null);
+  const { form } = contact;
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setState("sending");
     setError(null);
 
-    const form = e.currentTarget;
-    const data = Object.fromEntries(new FormData(form).entries());
+    const el = e.currentTarget;
+    const data = Object.fromEntries(new FormData(el).entries());
 
     try {
       const res = await fetch("/api/contact", {
@@ -34,7 +55,7 @@ export function ContactForm() {
         throw new Error(body.error ?? "Something went wrong.");
       }
       setState("sent");
-      form.reset();
+      el.reset();
     } catch (err) {
       setState("error");
       setError(err instanceof Error ? err.message : "Something went wrong.");
@@ -43,14 +64,12 @@ export function ContactForm() {
 
   if (state === "sent") {
     return (
-      <div className="panel flex min-h-[380px] flex-col items-start justify-center p-8 md:p-12">
-        <span className="mb-5 flex h-10 w-10 items-center justify-center rounded-full bg-signal text-void">
-          ✓
+      <div className="flex min-h-[420px] flex-col items-center justify-center gap-4 text-center">
+        <span className="grid h-12 w-12 place-items-center rounded-full bg-signal text-white">
+          <Icon name="check" className="h-6 w-6" />
         </span>
-        <p className="display text-[clamp(1.4rem,2.4vw,2rem)] leading-tight">
-          Message received.
-        </p>
-        <p className="mt-3 max-w-sm text-[15px] leading-relaxed text-muted">
+        <p className="display t-h3 text-fg">Message received.</p>
+        <p className="max-w-sm text-[15px] leading-relaxed text-muted">
           We read every one of these ourselves. Expect a reply from the team
           within two working days.
         </p>
@@ -59,43 +78,56 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="panel p-7 md:p-10">
-      <div className="grid gap-6 sm:grid-cols-2">
-        {FIELDS.map((f) => (
-          <label
-            key={f.name}
-            className={f.name === "company" ? "sm:col-span-2" : undefined}
-          >
-            <span className="tag mb-2 block">
-              {f.label}
-              {f.required && <span className="text-signal"> *</span>}
-            </span>
-            <input
-              name={f.name}
-              type={f.type}
-              required={f.required}
-              autoComplete={
-                f.name === "email"
-                  ? "email"
-                  : f.name === "name"
-                    ? "name"
-                    : "organization"
-              }
-              className="w-full border-b border-line bg-transparent pb-2.5 text-[15px] text-fg outline-none transition-colors duration-300 placeholder:text-faint focus:border-signal"
-            />
-          </label>
-        ))}
+    <form onSubmit={onSubmit} className="grid gap-4 sm:grid-cols-2">
+      <Field label="First name" required>
+        <input name="firstName" type="text" required autoComplete="given-name" className={input} />
+      </Field>
+      <Field label="Last name" required>
+        <input name="lastName" type="text" required autoComplete="family-name" className={input} />
+      </Field>
+      <Field label="Work email" required>
+        <input name="email" type="email" required autoComplete="email" className={input} />
+      </Field>
+      <Field label="Company name">
+        <input name="company" type="text" autoComplete="organization" className={input} />
+      </Field>
 
-        <label className="sm:col-span-2">
-          <span className="tag mb-2 block">Message</span>
-          <textarea
-            name="message"
-            rows={4}
-            placeholder="What are you trying to move?"
-            className="w-full resize-none border-b border-line bg-transparent pb-2.5 text-[15px] text-fg outline-none transition-colors duration-300 placeholder:text-faint focus:border-signal"
+      <Field label="Phone number" required className="sm:col-span-2">
+        <span className="grid grid-cols-[118px_1fr] gap-2">
+          <select
+            name="phoneCode"
+            aria-label="Country code"
+            defaultValue={form.countryCodes[0]}
+            className={`${input} pr-2`}
+          >
+            {form.countryCodes.map((c) => (
+              <option key={c}>{c}</option>
+            ))}
+          </select>
+          <input
+            name="phone"
+            type="tel"
+            required
+            autoComplete="tel-national"
+            aria-label="Phone number"
+            className={input}
           />
-        </label>
-      </div>
+        </span>
+      </Field>
+
+      <Field label="What would you like to achieve?" required className="sm:col-span-2">
+        <textarea name="message" required rows={4} className={`${input} min-h-[118px] resize-y`} />
+      </Field>
+
+      <label className="flex items-start gap-3 text-[13.5px] leading-relaxed text-muted sm:col-span-2">
+        <input
+          name="consent"
+          type="checkbox"
+          required
+          className="mt-0.5 h-[18px] w-[18px] shrink-0 accent-[var(--color-signal)]"
+        />
+        <span>{form.consent}</span>
+      </label>
 
       {/* Honeypot — real people never fill this in. */}
       <input
@@ -107,33 +139,26 @@ export function ContactForm() {
         className="pointer-events-none absolute left-[-9999px] h-0 w-0 opacity-0"
       />
 
-      <div className="mt-9 flex flex-wrap items-center gap-5">
+      <div className="flex flex-col items-center gap-3 pt-2 sm:col-span-2">
         <button
           type="submit"
           disabled={state === "sending"}
-          data-cursor="SEND →"
-          className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-signal px-7 py-3.5 text-sm font-semibold text-void disabled:opacity-60"
+          data-cursor="SEND"
+          className="btn btn-primary px-8 disabled:opacity-60"
         >
-          <span className="relative z-10">
-            {state === "sending" ? "Sending…" : "Submit"}
-          </span>
-          <span className="relative z-10 transition-transform duration-500 group-hover:translate-x-1">
-            →
-          </span>
+          {state === "sending" ? "Sending…" : form.submit}
         </button>
-
-        {state === "error" && (
-          <p className="text-[13px] text-muted">
-            {error}{" "}
-            <a
-              href={`mailto:${site.email}`}
-              className="text-signal underline underline-offset-4"
-            >
-              Email us directly
-            </a>
-            .
-          </p>
-        )}
+        <p aria-live="polite" className="text-center text-[13.5px] text-muted">
+          {state === "error" && (
+            <>
+              {error}{" "}
+              <a href={`mailto:${site.email}`} className="text-signal underline underline-offset-4">
+                Email us directly
+              </a>
+              .
+            </>
+          )}
+        </p>
       </div>
     </form>
   );
