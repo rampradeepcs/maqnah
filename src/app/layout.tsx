@@ -1,36 +1,27 @@
-import type { Metadata, Viewport } from "next";
-import "../globals.css";
+import type { Viewport } from "next";
+import "./globals.css";
 import { display, mono, sans, serif } from "@/lib/fonts";
-import { DESCRIPTION } from "@/lib/seo";
+import { jsonLd, metadata as seo } from "@/lib/seo";
 import { SmoothScroll } from "@/components/ui/SmoothScroll";
 import { Cursor } from "@/components/ui/Cursor";
 import { LightNav } from "@/components/light/LightNav";
 import { LightFooter } from "@/components/light/LightFooter";
 
-/* A comparison version: kept out of search so it never competes with "/". */
-export const metadata: Metadata = {
-  title: "Maqnah — AI & data consulting (light version)",
-  description: DESCRIPTION,
-  robots: { index: false, follow: false },
-};
+export const metadata = seo;
 
 export const viewport: Viewport = {
   themeColor: "#f3f4f1",
   colorScheme: "light",
 };
 
-/**
- * Second root layout. `theme-light` on <html> re-points the design tokens,
- * so shared pieces (cursor, form, counters, logo) render in the light palette.
- */
-export default function LightLayout({
+export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang="en"
       suppressHydrationWarning
-      className={`theme-light ${display.variable} ${sans.variable} ${mono.variable} ${serif.variable} h-full`}
+      className={`${display.variable} ${sans.variable} ${mono.variable} ${serif.variable} h-full`}
     >
       <body className="min-h-full">
         <SmoothScroll />
@@ -44,6 +35,10 @@ export default function LightLayout({
         <LightNav />
         <main id="main">{children}</main>
         <LightFooter />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </body>
     </html>
   );

@@ -17,33 +17,6 @@ export const site = {
   url: "https://www.maqnah.com",
 } as const;
 
-export const nav = [
-  { label: "AI & Data", href: "#capabilities" },
-  { label: "Consulting", href: "#consulting" },
-  { label: "Solutions", href: "#solutions" },
-  { label: "Industries", href: "#industries" },
-  { label: "Work", href: "#work" },
-  { label: "Insights", href: "#insights" },
-  { label: "About", href: "#about" },
-] as const;
-
-export const hero = {
-  headline: ["Turn Data Into", "Intelligence."],
-  sub: "AI-powered strategy, data intelligence and digital transformation for businesses ready to move ahead.",
-  primaryCta: { label: "Explore our capabilities", href: "#capabilities" },
-  secondaryCta: { label: "Talk to an AI strategist", href: "#contact" },
-  systemLabel: "Maqnah Intelligence System",
-  pipeline: ["Data", "Insight", "Decision", "Impact"],
-  floatingLabels: [
-    "DATA",
-    "AI",
-    "INSIGHTS",
-    "AUTOMATION",
-    "STRATEGY",
-    "GROWTH",
-  ],
-} as const;
-
 /** VERIFIED — published by Maqnah. */
 export const stats = [
   { value: 120, suffix: "+", label: "Clients" },
@@ -51,88 +24,6 @@ export const stats = [
   { value: 200, suffix: "+", label: "Projects" },
   { value: 100, suffix: "+", label: "Experts" },
 ] as const;
-
-export const bigIdea = {
-  lines: [
-    "Your business already",
-    "has the data.",
-    "We help you turn it",
-    "into decisions.",
-  ],
-  // Words in `lines` that illuminate on scroll.
-  highlight: ["data.", "decisions."],
-  ladder: ["Data", "Intelligence", "Decisions", "Growth"],
-} as const;
-
-export type Capability = {
-  num: string;
-  title: string;
-  lede: string;
-  items: string[];
-  image: string;
-  alt: string;
-};
-
-export const capabilities: Capability[] = [
-  {
-    num: "01",
-    title: "Data & AI",
-    lede: "We build the intelligence layer — the models, pipelines and analytics that turn scattered information into a decision engine.",
-    items: [
-      "Data Strategy",
-      "AI Strategy",
-      "Machine Learning",
-      "Predictive Analytics",
-      "Generative AI",
-      "Data Engineering",
-    ],
-    image: "/img/cap-data-ai.jpg",
-    alt: "Data resolving out of noise into an ordered crystalline lattice",
-  },
-  {
-    num: "02",
-    title: "AI Consulting",
-    lede: "We find where AI is genuinely worth doing, prove it, and give your organisation a roadmap it can actually execute.",
-    items: [
-      "AI Readiness",
-      "AI Transformation",
-      "AI Roadmaps",
-      "Use Case Discovery",
-      "AI Governance",
-      "Enterprise AI Strategy",
-    ],
-    image: "/img/cap-consulting.jpg",
-    alt: "A branching decision map with one route lit brighter than the rest",
-  },
-  {
-    num: "03",
-    title: "Automation",
-    lede: "We take the work that shouldn't need a human and give it to software that never gets tired — with intelligence in the loop.",
-    items: [
-      "Process Automation",
-      "Intelligent Workflows",
-      "AI Agents",
-      "System Integration",
-      "Operational Intelligence",
-    ],
-    image: "/img/cap-automation.jpg",
-    alt: "A luminous mechanism routing particles along precise tracks",
-  },
-  {
-    num: "04",
-    title: "Digital Transformation",
-    lede: "We modernise the platforms, products and experiences underneath the business so the intelligence has somewhere to live.",
-    items: [
-      "Digital Strategy",
-      "Product Engineering",
-      "Cloud Transformation",
-      "UX & Product Design",
-      "Modernization",
-    ],
-    image: "/img/cap-transformation.jpg",
-    alt: "A rigid monolith dissolving into particles and reassembling as modular architecture",
-  },
-];
 
 export const engine = {
   heading: "Intelligence is a system.",
@@ -175,49 +66,6 @@ export const engine = {
       outcome: "Advantage that compounds.",
     },
   ],
-} as const;
-
-export const dataFlow = {
-  heading: "Make complexity visible.",
-  lede: "Every enterprise is already generating more signal than it can read. We take all of it — and give back four things a business can act on.",
-  inputs: [
-    "ERP",
-    "CRM",
-    "IoT",
-    "Cloud",
-    "Web",
-    "Mobile",
-    "Finance",
-    "Customer",
-    "Operations",
-  ],
-  core: "Maqnah Intelligence",
-  outputs: ["Insights", "Predictions", "Automation", "Decisions"],
-} as const;
-
-export const consulting = {
-  heading: ["AI isn't the strategy.", "Impact is."],
-  lede: "We have never opened an engagement with a model. We open it with a number the business wants to move.",
-  problem: {
-    label: "Business problem",
-    items: [
-      "Manual processes",
-      "Disconnected data",
-      "Slow decisions",
-      "Operational inefficiency",
-      "Poor forecasting",
-    ],
-  },
-  outcome: {
-    label: "AI-powered outcome",
-    items: [
-      "Automation",
-      "Prediction",
-      "Intelligence",
-      "Optimization",
-      "Growth",
-    ],
-  },
 } as const;
 
 /** Ecosystem nodes — `links` are indices of related solutions. */
@@ -411,105 +259,10 @@ export const work: CaseStudy[] = [
   },
 ];
 
-export const impact = {
-  heading: "Technology is only valuable when it moves the numbers.",
-  lede: "Founded in Saudi Arabia, Maqnah has spent years building transformative digital solutions for organisations that needed to scale, modernise and think faster.",
-  mission:
-    "To empower businesses with innovative technology solutions that streamline operations, enhance productivity and drive sustainable growth.", // VERIFIED
-  vision:
-    "To innovate and create impactful digital experiences that empower brands to succeed and connect with their audiences in a dynamic digital landscape.", // VERIFIED
-} as const;
-
-export const principles = [
-  {
-    num: "01",
-    title: "Business first",
-    desc: "We start with the problem, not the technology.",
-    detail:
-      "Every engagement opens on a number the business is trying to move. The architecture comes after — never before.",
-  },
-  {
-    num: "02",
-    title: "Data before hype",
-    desc: "We turn fragmented information into usable intelligence.",
-    detail:
-      "Most AI projects fail on the data, not the model. We fix the foundation first, even when it is the unglamorous half of the work.",
-  },
-  {
-    num: "03",
-    title: "AI with purpose",
-    desc: "We identify where AI creates measurable value.",
-    detail:
-      "We will tell you which use cases are not worth building. That judgement is the most valuable thing a consulting partner brings.",
-  },
-  {
-    num: "04",
-    title: "Built to scale",
-    desc: "We engineer solutions designed for real enterprise environments.",
-    detail:
-      "Governance, security, integration and operations are designed in from the first sprint — because pilots that cannot scale are just expensive demos.",
-  },
-] as const;
-
-export const method = [
-  { step: "Discover", desc: "Understand the business." },
-  { step: "Define", desc: "Identify high-value opportunities." },
-  { step: "Design", desc: "Create the intelligence architecture." },
-  { step: "Build", desc: "Engineer the solution." },
-  { step: "Deploy", desc: "Launch into the real world." },
-  { step: "Optimize", desc: "Continuously improve performance." },
-] as const;
-
-export const insights = [
-  {
-    topic: "AI Strategy",
-    title: "The use case you should not build",
-    lede: "Most AI roadmaps are a list of what is possible. The useful ones are a list of what is worth it.",
-    image: "/img/ins-strategy.jpg",
-  },
-  {
-    topic: "Data Intelligence",
-    title: "Your data isn't messy. It's unowned.",
-    lede: "Fragmentation is rarely a technical problem. It is an accountability problem wearing a technical costume.",
-    image: "/img/ins-data.jpg",
-  },
-  {
-    topic: "Enterprise AI",
-    title: "Why pilots stall at 80%",
-    lede: "The last twenty percent is governance, integration and trust — the parts nobody demos.",
-    image: "/img/ins-enterprise.jpg",
-  },
-  {
-    topic: "Digital Transformation",
-    title: "Modernisation is a decision, not a migration",
-    lede: "Moving a broken process to the cloud gives you a faster broken process.",
-    image: "/img/ins-transformation.jpg",
-  },
-  {
-    topic: "Automation",
-    title: "Agents need judgement, not just access",
-    lede: "An autonomous workflow is only as safe as the decision boundary you drew around it.",
-    image: "/img/ins-automation.jpg",
-  },
-  {
-    topic: "Future of Work",
-    title: "The org chart after automation",
-    lede: "When routine work leaves, what remains is judgement — and most organisations are not structured for it.",
-    image: "/img/ins-work.jpg",
-  },
-] as const;
-
 export const founder = {
   quote:
     "We find what to automate, who your users are, and how AI can optimize your workflow. Then we build and launch the solution.", // VERIFIED (lightly punctuated)
   name: "Mohsin Khan", // VERIFIED
   role: "Founder & VP, Global Sales", // VERIFIED
   avatar: "/img/mohsin-khan.png",
-} as const;
-
-export const finalCta = {
-  heading: ["Ready to turn", "intelligence into impact?"],
-  lede: "Tell us where your business is today. We'll help you discover where AI and data can take it next.",
-  primary: { label: "Start a conversation", href: "#contact-form" },
-  secondary: { label: "Explore our work", href: "#work" },
 } as const;

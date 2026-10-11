@@ -4,32 +4,30 @@
    MAQNAH — Design system
    "Intelligence that transforms business."
 
-   Near-black ground · electric-lime signal · cool-cyan secondary.
-   Colour is treated as data: the accents mark where intelligence is active,
-   never as decoration.
+   Light-grey ground · Saudi-flag green signal · grainy green-gradient
+   highlights. Colour is treated as data: the accent marks where intelligence
+   is active, never as decoration.
    ============================================================================ */
 
 @theme {
   /* --- Ground ------------------------------------------------------------ */
-  --color-void: #07090c;
-  --color-bg: #07090c;
-  --color-surface: #0b0f14;
-  --color-surface2: #10151c;
-  --color-surface3: #151b23;
+  --color-void: #f3f4f1;
+  --color-bg: #f3f4f1;
+  --color-surface: #ffffff;
+  --color-surface2: #e9ede9;
+  --color-surface3: #dfe5df;
 
   /* --- Ink --------------------------------------------------------------- */
-  --color-fg: #f4f7f9;
-  --color-muted: #97a1ae;
-  --color-faint: #767f8c;
-  --color-line: rgba(255, 255, 255, 0.09);
-  --color-line-strong: rgba(255, 255, 255, 0.18);
+  --color-fg: #101512;
+  --color-muted: #4f5853;
+  --color-faint: #66706a;
+  --color-line: rgba(16, 21, 18, 0.09);
+  --color-line-strong: rgba(16, 21, 18, 0.2);
 
-  /* --- Signal ------------------------------------------------------------ */
-  --color-signal: #b8ff4a;
-  --color-signal-dim: #8dff3d;
-  --color-signal-deep: #6ac21f;
-  --color-cyan: #5ce1e6;
-  --color-blue: #6ea8ff;
+  /* --- Signal: Saudi flag green (Pantone 330 C ≈ #006C35) ---------------- */
+  --color-signal: #006c35;
+  --color-signal-dim: #0b8a45;
+  --color-signal-deep: #004d26;
 
   /* --- Type -------------------------------------------------------------- */
   --font-display: var(--font-display), "Helvetica Neue", system-ui, sans-serif;
@@ -38,14 +36,23 @@
 
   /* --- Motion ------------------------------------------------------------ */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 :root {
-  --grid-line: rgba(255, 255, 255, 0.035);
-  --nav-h: 76px;
-  color-scheme: dark;
+  color-scheme: light;
+
+  --grid-line: rgba(16, 21, 18, 0.06);
+
+  --tile-mist: #e9ede9;
+  --tile-mint: #dfefe5;
+  --tile-sage: #e8efe0;
+  --tile-sand: #efece4;
+
+  /* Gradient stops, palest to the flag green */
+  --ksa-1: #dfe8e1;
+  --ksa-2: #a6d6b8;
+  --ksa-3: #2f9f5f;
+  --ksa-4: #006c35;
 }
 
 * {
@@ -78,7 +85,7 @@ body {
 
 ::selection {
   background: var(--color-signal);
-  color: #07090c;
+  color: #ffffff;
 }
 
 ::-webkit-scrollbar {
@@ -89,11 +96,11 @@ body {
   background: var(--color-void);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.14);
+  background: rgba(16, 21, 18, 0.18);
   border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(184, 255, 74, 0.4);
+  background: rgba(0, 108, 53, 0.45);
 }
 
 :focus-visible {
@@ -131,19 +138,16 @@ html.lenis body {
   }
 }
 
-@utility container-tight {
-  width: 100%;
-  margin-inline: auto;
-  padding-inline: 1.25rem;
-  max-width: 72rem;
-  @media (min-width: 768px) {
-    padding-inline: 2.5rem;
-  }
-}
-
 /* ============================================================================
-   Typography
+   Typography — a high-contrast serif carries the headlines
    ============================================================================ */
+
+.serif {
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+}
 
 .display {
   font-family: var(--font-display);
@@ -152,387 +156,6 @@ html.lenis body {
   line-height: 0.9;
 }
 
-/* Hero — 120–160px on desktop, still commanding on mobile. */
-.t-hero {
-  font-size: clamp(2.9rem, 8.9vw, 8.75rem);
-}
-.t-h1 {
-  font-size: clamp(2.5rem, 7.2vw, 6.5rem);
-}
-.t-h2 {
-  font-size: clamp(2rem, 4.6vw, 4rem);
-}
-.t-h3 {
-  font-size: clamp(1.5rem, 2.6vw, 2.25rem);
-  letter-spacing: -0.025em;
-}
-
-.mono {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-
-/* Small technical label: "01 / INTELLIGENCE" */
-.tag {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--color-faint);
-  font-weight: 500;
-}
-
-.lede {
-  font-size: clamp(1.0625rem, 1.35vw, 1.3125rem);
-  line-height: 1.55;
-  color: var(--color-muted);
-  letter-spacing: -0.011em;
-}
-
-@utility text-signal-gradient {
-  background: linear-gradient(
-    100deg,
-    var(--color-signal) 0%,
-    #dfffa8 45%,
-    var(--color-cyan) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-@utility text-dim-gradient {
-  background: linear-gradient(
-    180deg,
-    var(--color-fg) 0%,
-    rgba(244, 247, 249, 0.42) 130%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* ============================================================================
-   Surfaces
-   ============================================================================ */
-
-.panel {
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.045) 0%,
-      rgba(255, 255, 255, 0) 45%
-    ),
-    var(--color-surface);
-  border: 1px solid var(--color-line);
-}
-
-.glass {
-  background: rgba(9, 12, 17, 0.62);
-  border: 1px solid var(--color-line);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-  backdrop-filter: blur(20px) saturate(160%);
-}
-
-.hairline-grid {
-  background-image:
-    linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size: 72px 72px;
-}
-
-.noise::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.4;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
-}
-
-/* Signal glow — used sparingly on live/active elements only. */
-.glow-signal {
-  box-shadow:
-    0 0 0 1px rgba(184, 255, 74, 0.28),
-    0 0 28px -6px rgba(184, 255, 74, 0.45);
-}
-.glow-text {
-  text-shadow: 0 0 28px rgba(184, 255, 74, 0.45);
-}
-
-/* Edge fades for horizontal scrollers */
-.fade-x {
-  -webkit-mask-image: linear-gradient(
-    90deg,
-    transparent 0,
-    #000 5%,
-    #000 95%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    90deg,
-    transparent 0,
-    #000 5%,
-    #000 95%,
-    transparent 100%
-  );
-}
-
-.no-bar {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-.no-bar::-webkit-scrollbar {
-  display: none;
-}
-
-/* ============================================================================
-   Reveal system
-   ============================================================================ */
-
-.reveal {
-  opacity: 0;
-  transform: translateY(26px);
-  transition:
-    opacity 1s var(--ease-out-expo),
-    transform 1s var(--ease-out-expo);
-  will-change: opacity, transform;
-}
-.reveal.in {
-  opacity: 1;
-  transform: none;
-}
-
-/* Character / word mask reveal */
-.mask-line {
-  overflow: hidden;
-  display: block;
-}
-.mask-line > span {
-  display: block;
-  transform: translateY(105%);
-  transition: transform 1.1s var(--ease-out-expo);
-}
-.in .mask-line > span,
-.mask-line.in > span {
-  transform: none;
-}
-
-.stagger > * {
-  opacity: 0;
-  transform: translateY(20px);
-  transition:
-    opacity 0.8s var(--ease-out-expo),
-    transform 0.8s var(--ease-out-expo);
-}
-.stagger.in > * {
-  opacity: 1;
-  transform: none;
-}
-
-/* Hairline that draws itself in */
-.rule {
-  transform-origin: left;
-  transform: scaleX(0);
-  transition: transform 1.2s var(--ease-out-expo);
-}
-.in .rule,
-.rule.in {
-  transform: scaleX(1);
-}
-
-/* ============================================================================
-   Keyframes
-   ============================================================================ */
-
-@keyframes marquee-x {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-@keyframes pulse-dot {
-  0%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.45;
-    transform: scale(0.82);
-  }
-}
-@keyframes rotate-slow {
-  to {
-    transform: rotate(360deg);
-  }
-}
-@keyframes drift {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
-  50% {
-    transform: translate3d(0, -14px, 0);
-  }
-}
-@keyframes dash-flow {
-  to {
-    stroke-dashoffset: -1000;
-  }
-}
-@keyframes scan {
-  0% {
-    transform: translateY(-100%);
-  }
-  100% {
-    transform: translateY(400%);
-  }
-}
-@keyframes boot-bar {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: scaleX(1);
-  }
-}
-
-.animate-marquee-x {
-  animation: marquee-x 48s linear infinite;
-}
-.animate-pulse-dot {
-  animation: pulse-dot 1.9s var(--ease-in-out-quart) infinite;
-}
-.animate-rotate-slow {
-  animation: rotate-slow 40s linear infinite;
-}
-.animate-drift {
-  animation: drift 7s ease-in-out infinite;
-}
-.animate-dash-flow {
-  animation: dash-flow 14s linear infinite;
-}
-
-/* ============================================================================
-   Reduced motion — keep the information, drop the movement
-   ============================================================================ */
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-  }
-  .reveal {
-    opacity: 1;
-    transform: none;
-  }
-  .mask-line > span {
-    transform: none;
-  }
-  .stagger > * {
-    opacity: 1;
-    transform: none;
-  }
-  .rule {
-    transform: scaleX(1);
-  }
-}
-
-/* ============================================================================
-   LIGHT VERSION — served at /light
-   Light-grey ground · Saudi-flag green signal · green-gradient highlights.
-
-   The light root layout puts `theme-light` on <html>, and this block
-   re-points the same semantic tokens. Every utility, surface and shared
-   component (form, counters, cursor, logo) flips with no second stylesheet.
-   ============================================================================ */
-
-html.theme-light {
-  color-scheme: light;
-
-  --color-void: #f3f4f1;
-  --color-bg: #f3f4f1;
-  --color-surface: #ffffff;
-  --color-surface2: #e9ede9;
-  --color-surface3: #dfe5df;
-
-  --color-fg: #101512;
-  --color-muted: #4f5853;
-  --color-faint: #66706a;
-  --color-line: rgba(16, 21, 18, 0.09);
-  --color-line-strong: rgba(16, 21, 18, 0.2);
-
-  /* Saudi flag green (Pantone 330 C ≈ #006C35) and its gradient stops */
-  --color-signal: #006c35;
-  --color-signal-dim: #0b8a45;
-  --color-signal-deep: #004d26;
-  --color-cyan: #1fa463;
-  --color-blue: #3dbb7a;
-
-  --grid-line: rgba(16, 21, 18, 0.06);
-
-  --tile-mist: #e9ede9;
-  --tile-mint: #dfefe5;
-  --tile-sage: #e8efe0;
-  --tile-sand: #efece4;
-
-  --ksa-1: #dfe8e1;
-  --ksa-2: #a6d6b8;
-  --ksa-3: #2f9f5f;
-  --ksa-4: #006c35;
-}
-
-html.theme-light ::selection {
-  background: var(--color-signal);
-  color: #ffffff;
-}
-html.theme-light ::-webkit-scrollbar-thumb {
-  background: rgba(16, 21, 18, 0.18);
-}
-html.theme-light ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 108, 53, 0.45);
-}
-html.theme-light .panel {
-  background: var(--color-surface);
-  border: 1px solid var(--color-line);
-}
-html.theme-light .glass {
-  background: rgba(255, 255, 255, 0.72);
-}
-html.theme-light .tag {
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  letter-spacing: 0.16em;
-}
-html.theme-light .text-signal-gradient {
-  background: linear-gradient(
-    100deg,
-    var(--ksa-3) 0%,
-    var(--ksa-4) 60%,
-    var(--color-signal-deep) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* --- Light-only type: a high-contrast serif carries the headlines -------- */
-.serif {
-  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  line-height: 0.95;
-}
 .t-l-hero {
   font-size: clamp(1.75rem, 3.3vw, 3.1rem);
   line-height: 1.2;
@@ -558,7 +181,18 @@ html.theme-light .text-signal-gradient {
   line-height: 1.6;
   letter-spacing: -0.008em;
 }
-.label {
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* Small label: "CAPABILITIES", form field names */
+.label,
+.tag {
   font-family: var(--font-sans);
   font-size: 0.75rem;
   letter-spacing: 0.16em;
@@ -566,6 +200,7 @@ html.theme-light .text-signal-gradient {
   font-weight: 500;
   color: var(--color-faint);
 }
+
 .pill {
   display: inline-flex;
   align-items: center;
@@ -586,16 +221,6 @@ html.theme-light .text-signal-gradient {
   color: transparent;
 }
 
-/* The green gradient block, grainy like the reference bar */
-.grad-ksa {
-  background: linear-gradient(
-    180deg,
-    var(--ksa-1) 0%,
-    var(--ksa-2) 36%,
-    var(--ksa-3) 70%,
-    var(--ksa-4) 100%
-  );
-}
 .text-grad-ksa {
   background: linear-gradient(
     100deg,
@@ -606,6 +231,50 @@ html.theme-light .text-signal-gradient {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+/* ============================================================================
+   Surfaces
+   ============================================================================ */
+
+.panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--color-line);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  backdrop-filter: blur(20px) saturate(160%);
+}
+
+.hairline-grid {
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+.noise::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}
+
+/* The green gradient block, grainy like the reference bar */
+.grad-ksa {
+  background: linear-gradient(
+    180deg,
+    var(--ksa-1) 0%,
+    var(--ksa-2) 36%,
+    var(--ksa-3) 70%,
+    var(--ksa-4) 100%
+  );
 }
 
 .tile-mist {
@@ -621,6 +290,38 @@ html.theme-light .text-signal-gradient {
   background: var(--tile-sand);
 }
 
+/* ============================================================================
+   Reveal system
+   ============================================================================ */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 1s var(--ease-out-expo),
+    transform 1s var(--ease-out-expo);
+  will-change: opacity, transform;
+}
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Line-by-line mask reveal */
+.mask-line {
+  overflow: hidden;
+  display: block;
+}
+.mask-line > span {
+  display: block;
+  transform: translateY(105%);
+  transition: transform 1.1s var(--ease-out-expo);
+}
+.in .mask-line > span,
+.mask-line.in > span {
+  transform: none;
+}
+
 @keyframes fade-swap {
   from {
     opacity: 0;
@@ -633,4 +334,25 @@ html.theme-light .text-signal-gradient {
 }
 .animate-fade-swap {
   animation: fade-swap 0.55s var(--ease-out-expo);
+}
+
+/* ============================================================================
+   Reduced motion — keep the information, drop the movement
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  .mask-line > span {
+    transform: none;
+  }
 }

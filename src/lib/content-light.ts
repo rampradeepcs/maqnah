@@ -1,9 +1,8 @@
 /**
- * Copy for the light version (/light).
+ * Copy for the home page.
  *
- * Deliberately minimal: one sentence where the dark version has a paragraph.
- * Facts are reused from content.ts so both versions stay in step; keyword
- * highlighting ("AI", "LLM") is applied at render time by <Hi>.
+ * Deliberately minimal: one sentence per idea. Facts live in content.ts;
+ * keyword highlighting ("AI", "LLM") is applied at render time by <Hi>.
  */
 import {
   engine,

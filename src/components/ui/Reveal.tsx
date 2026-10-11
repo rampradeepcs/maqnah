@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 /**
  * Adds `.in` to the element once it enters the viewport (one-way).
  * Everything in the design system keys its entrance off that class, so a
- * single observer drives masks, staggers and rule-draws alike.
+ * single observer drives fades and line masks alike.
  */
 export function useInView<T extends HTMLElement>(options?: {
   threshold?: number;

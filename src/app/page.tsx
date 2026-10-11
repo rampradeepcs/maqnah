@@ -8,7 +8,7 @@ import { LightWork } from "@/components/light/LightWork";
 import { LightFounder } from "@/components/light/LightFounder";
 import { LightContact } from "@/components/light/LightContact";
 
-export default function LightHome() {
+export default function Home() {
   return (
     <>
       <LightHero />

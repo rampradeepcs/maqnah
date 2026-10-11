@@ -6,8 +6,8 @@ import {
 } from "next/font/google";
 
 /**
- * One place for every typeface, shared by both root layouts.
- * The dark version uses display/sans/mono; the light version adds the serif.
+ * One place for every typeface. The serif carries the headlines; display,
+ * sans and mono cover sub-heads, body copy and the cursor label.
  */
 export const display = Instrument_Sans({
   variable: "--font-display",

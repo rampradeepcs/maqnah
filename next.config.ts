@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
      display size (1.9 MB in total), so there is nothing for the optimizer to
      win and no transformation quota to run into. */
   images: { unoptimized: true },
+  /* The light version used to live at /light; keep shared links working. */
+  async redirects() {
+    return [{ source: "/light", destination: "/", permanent: true }];
+  },
 };
 
 export default nextConfig;

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { site } from "@/lib/content";
 import { light } from "@/lib/content-light";
 import { LogoMark } from "../ui/Logo";
@@ -58,16 +57,10 @@ export function LightFooter() {
         </div>
       </div>
 
-      <div className="container-x flex flex-col gap-3 border-t border-line py-6 sm:flex-row sm:items-center sm:justify-between">
+      <div className="container-x border-t border-line py-6">
         <p className="label">
           © {year} {site.name}
         </p>
-        <Link
-          href="/"
-          className="label transition-colors duration-300 hover:text-fg"
-        >
-          View the dark version →
-        </Link>
       </div>
     </footer>
   );

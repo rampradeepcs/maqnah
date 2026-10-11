@@ -4,7 +4,8 @@ A complete redesign of [maqnah.com](https://www.maqnah.com), repositioning Maqna
 from a UX/app agency into an **AI, data and digital-transformation consulting
 partner**.
 
-Built with Next.js 16 (App Router), React 19, Tailwind CSS v4 and Lenis.
+Built with Next.js 16 (App Router), React 19, Tailwind CSS v4, Three.js and
+Lenis.
 
 ```bash
 npm run dev     # http://localhost:3000
@@ -14,63 +15,54 @@ npx eslint src
 
 ## The idea
 
-The site is one continuous argument rather than a stack of sections:
+Light-grey ground, Saudi-flag green `#006C35`, grainy green-gradient
+highlights, Instrument Serif headlines and minimal copy — one sentence per
+idea. The keywords "AI" / "LLM" carry the gradient wherever they appear
+(`components/light/Keyword.tsx`).
 
 ```
-Hero → Big idea → Capabilities → Intelligence engine → Data ecosystem
-→ AI consulting → Solutions → Industries → Work → Impact → Why Maqnah
-→ Method → Insights → Founder → Final CTA
+Hero → Numbers → Capabilities → Intelligence engine → Solutions
+→ Industries → Work → Founder → Contact
 ```
 
-Three moments carry the positioning, and all three are built in code rather
-than shipped as video or images:
-
-| Moment | Component | What it does |
-| --- | --- | --- |
-| **Intelligence Core** | `visuals/IntelligenceCore.tsx` | ~1,000 data particles spiral into a central node on a 2D canvas. The cursor bends trajectories — near the pointer particles gain angular velocity and stall, so the stream swirls around attention. Used in the hero and again, calmer, behind the closing CTA. |
-| **Data ecosystem** | `visuals/DataEcosystem.tsx` | Nine source systems converge on one intelligence core, which emits four things a business can act on. Curves and packets on canvas; labels in real DOM so they stay crisp and accessible. |
-| **Consulting transformation** | `sections/Consulting.tsx` | Five business problems convert, one by one as you scroll, into five AI-powered outcomes. |
-
-## The light version — `/light`
-
-A second take for comparison, served from its own root layout: light-grey
-ground, Saudi-flag green `#006C35`, grainy green-gradient highlights,
-Instrument Serif headlines, minimal copy, and the keywords "AI" / "LLM"
-carried in the gradient wherever they appear (`components/light/Keyword.tsx`).
-
-Its hero backdrop is `components/light/WaveGrid.tsx`: a 40×40 wall of
+The hero backdrop is `components/light/WaveGrid.tsx`: a 40×40 wall of
 instanced cubes seen from above, rippling wherever the cursor has been. Each
 pointer move drops a point into a 128-texel trail texture; the vertex shader
 sums Gaussian-windowed cosine rings expanding from every live point, and the
 crests tint green. Three.js loads lazily on the client and the loop pauses
-when the hero scrolls away. `/light` is `noindex`.
+when the hero scrolls away.
+
+The old `/light` URL permanently redirects to `/` (`next.config.ts`).
 
 ## Design system
 
 Everything lives in `src/app/globals.css` under Tailwind v4's `@theme`.
 
-- **Ground** — near-black `#07090C`, surfaces `#0B0F14` / `#10151C`
-- **Signal** — electric lime `#B8FF4A`, with cool cyan `#5CE1E6` as a secondary
+- **Ground** — light grey `#F3F4F1`, white surfaces, soft tiles
+  (mist, mint, sage, sand)
+- **Signal** — Saudi-flag green `#006C35`, with a four-stop green gradient
+  (`--ksa-1` … `--ksa-4`) for highlights and the grainy `grad-ksa` block
 - Accent colour is treated as *data*: it marks where intelligence is active
-  (live states, metrics, active nodes, CTAs) and is never decoration
-- **Type** — Instrument Sans (display), Inter (body), JetBrains Mono
-  (technical labels and metadata)
+  (live states, metrics, keywords, CTAs) and is never decoration
+- **Type** — Instrument Serif (headlines), Instrument Sans (display), Inter
+  (body), JetBrains Mono (cursor label)
 - The Maqnah mark in `ui/Logo.tsx` is traced from the brand's own logo
   artwork, one `<path>` per blade so they can stagger in independently
 
 ## Motion
 
-Scroll-linked storytelling via `ui/scroll.ts` (`useScrollProgress`) and
-entrance work via `ui/Reveal.tsx` (`useInView`, `MaskLines`).
+Entrance work via `ui/Reveal.tsx` (`useInView`, `MaskLines`), smooth scroll
+via Lenis (`ui/SmoothScroll.tsx`) and a custom cursor (`ui/Cursor.tsx`).
 
 Every animated surface honours `prefers-reduced-motion`: Lenis and the custom
-cursor don't mount, the preloader is skipped, counters jump to their final
-value, and both canvases render a single static frame.
+cursor don't mount, counters jump to their final value, and the wave grid
+renders a single settled frame.
 
 ## Content
 
-All copy lives in `src/lib/content.ts`. Facts carried over from maqnah.com are
-marked `VERIFIED`.
+Page copy lives in `src/lib/content-light.ts`; the facts it draws on live in
+`src/lib/content.ts`. Facts carried over from maqnah.com are marked
+`VERIFIED`.
 
 > **Before launch:** the case-study metrics in `work[]` are marked
 > `ILLUSTRATIVE`. They read as real figures and must be confirmed or replaced
@@ -91,7 +83,5 @@ at the mailbox directly — enquiries are never silently swallowed.
 
 ## Imagery
 
-Every image in `public/img/` was generated for this build (Pixelcut ·
-Nano Banana Pro) to one art direction: a pitch-black void, a single sculptural
-form, light carried by electric lime with one cyan thread. Total weight is
-under 2 MB.
+The images in `public/img/` were generated for this build (Pixelcut ·
+Nano Banana Pro).
