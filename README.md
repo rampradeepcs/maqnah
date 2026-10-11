@@ -106,4 +106,10 @@ at the mailbox directly — enquiries are never silently swallowed.
 The images in `public/img/` were generated for this build (Pixelcut · Nano
 Banana Pro and Nano Banana 2.1) to one art direction: light grey and white,
 silver materials and Saudi-green accents, no text or logos. They are stand-ins
-until real photography and project visuals are available.
+until real photography and project visuals are available. They're compressed
+at JPEG q62 (q70 for the night sky), about 2.2 MB for the whole page.
+
+The share image (`public/img/og.jpg`) is composed from the hero (lock-up,
+tag, headline and lens), and the favicon set (`src/app/icon.svg`,
+`favicon.ico`, `apple-icon.png`) uses the official mark in white on the
+brand green.

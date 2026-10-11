@@ -14,6 +14,7 @@ export function Industries() {
           <p className="label eyebrow">{industries.tag}</p>
         </Reveal>
         <MaskLines
+          as="h2"
           className="display t-h2 mt-5 max-w-[22ch] text-fg"
           lines={[industries.heading]}
         />
@@ -30,7 +31,7 @@ export function Industries() {
                 src={ind.image}
                 alt={ind.alt}
                 fill
-                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                sizes="(min-width: 1216px) 350px, (min-width: 1024px) 31vw, (min-width: 640px) 50vw, 100vw"
                 className="object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-[1.05]"
               />
               <div

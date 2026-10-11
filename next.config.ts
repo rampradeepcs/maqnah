@@ -4,9 +4,10 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: __dirname,
   },
-  /* Serve images as-is: every asset in public/img is already exported at its
-     display size (1.9 MB in total), so there is nothing for the optimizer to
-     win and no transformation quota to run into. */
+  /* Serve images as-is: every asset in public/img is pre-sized for its
+     largest (retina) slot and compressed (about 2.2 MB for the page), so
+     there is no transformation quota to run into. The `sizes` props are
+     kept so switching the optimizer on later yields correct srcsets. */
   images: { unoptimized: true },
   /* The light version used to live at /light; keep shared links working. */
   async redirects() {

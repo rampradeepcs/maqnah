@@ -32,10 +32,10 @@ export function Footer() {
         </div>
 
         <div className="flex flex-col gap-6 border-t border-white/20 py-7 md:flex-row md:items-center md:justify-between">
-          <p className="text-[13.5px] text-white/75">{footer.copyright}</p>
+          <p className="text-[13.5px] text-white/80">{footer.copyright}</p>
 
           <div className="flex flex-wrap items-center gap-x-8 gap-y-5">
-            <ul className="flex gap-6 text-[13.5px] text-white/75">
+            <ul className="flex gap-6 text-[13.5px] text-white/80">
               {footer.legal.map((item) => (
                 <li key={item}>{item}</li>
               ))}

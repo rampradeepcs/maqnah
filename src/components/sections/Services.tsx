@@ -17,7 +17,7 @@ export function Services() {
           <Reveal>
             <p className="label eyebrow">{services.tag}</p>
           </Reveal>
-          <MaskLines className="display t-h2 mt-5 text-fg" lines={[services.heading]} />
+          <MaskLines as="h2" className="display t-h2 mt-5 text-fg" lines={[services.heading]} />
           <Reveal delay={0.1}>
             <p className="lede mt-6 max-w-[58ch] text-muted">{services.lead}</p>
           </Reveal>

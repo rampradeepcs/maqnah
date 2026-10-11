@@ -22,6 +22,7 @@ export function Agentic() {
               </span>
             </Reveal>
             <MaskLines
+              as="h2"
               className="display t-h2 mt-7 font-light"
               lines={[agentic.heading]}
             />
@@ -42,7 +43,7 @@ export function Agentic() {
                   : "md:pl-0"
               }`}
             >
-              <p className="label text-white/70">{m.prefix}</p>
+              <p className="label text-white/80">{m.prefix}</p>
               <p className="display t-num mt-3 font-light">
                 <Counter to={m.value} suffix={m.suffix} />
               </p>

@@ -5,6 +5,9 @@ export const DESCRIPTION = hero.lead;
 
 const TITLE = `Maqnah — ${hero.tag}`;
 
+/** Describes public/img/og.jpg: the lock-up, tag and headline beside the lens. */
+const OG_ALT = `Maqnah: ${hero.headline} Beside it, ${hero.visual.alt.charAt(0).toLowerCase()}${hero.visual.alt.slice(1)}.`;
+
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
@@ -31,7 +34,7 @@ export const metadata: Metadata = {
     siteName: site.name,
     title: hero.headline,
     description: DESCRIPTION,
-    images: [{ url: "/img/og.jpg", width: 1200, height: 630, alt: hero.headline }],
+    images: [{ url: "/img/og.jpg", width: 1200, height: 630, alt: OG_ALT }],
   },
   twitter: {
     card: "summary_large_image",

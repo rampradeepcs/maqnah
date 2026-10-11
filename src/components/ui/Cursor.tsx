@@ -6,7 +6,9 @@ import { FINE_POINTER, REDUCED_MOTION, useMediaQuery } from "./useMediaQuery";
 /**
  * Custom cursor: a small signal dot that expands into a labelled ring over
  * interactive regions. Any element can set the label via `data-cursor="…"`.
- * Only mounts on precise pointers — touch devices keep their own affordances.
+ * Only mounts on precise pointers in windows at least 768px wide — touch
+ * devices and narrow windows keep the native pointer. The same gate adds
+ * `has-custom-cursor`, which hides the native one, so the two never disagree.
  */
 export function Cursor() {
   const dot = useRef<HTMLDivElement>(null);
@@ -16,7 +18,8 @@ export function Cursor() {
   const [visible, setVisible] = useState(false);
   const fine = useMediaQuery(FINE_POINTER);
   const reduced = useMediaQuery(REDUCED_MOTION);
-  const enabled = fine && !reduced;
+  const wide = useMediaQuery("(min-width: 768px)");
+  const enabled = fine && !reduced && wide;
 
   useEffect(() => {
     if (!enabled) return;
@@ -76,7 +79,7 @@ export function Cursor() {
   return (
     <div
       aria-hidden
-      className="pointer-events-none fixed inset-0 z-[190] hidden md:block"
+      className="pointer-events-none fixed inset-0 z-[190]"
       style={{ opacity: visible ? 1 : 0, transition: "opacity .25s" }}
     >
       <div

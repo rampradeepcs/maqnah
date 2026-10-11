@@ -4,16 +4,18 @@ import { MaskLines, Reveal } from "../ui/Reveal";
 import { GradientLines } from "../visuals/GradientLines";
 
 /**
- * The trust section. Track record and vision on the left over a bundle of
- * gradient traces; what Maqnah brings on the right, each strength marked by
- * a line icon in a soft circle.
+ * The trust section. Track record and vision on the left; what Maqnah
+ * brings on the right, each strength marked by a line icon in a soft circle.
+ * On wide screens a bundle of gradient traces enters from the right edge and
+ * climbs into the space under the strengths (hidden on narrow screens, where
+ * it would cross the copy).
  */
 export function About() {
   const [lead, rest] = about.heading.split(". ");
 
   return (
     <section id="about" className="relative overflow-hidden">
-      <GradientLines className="pointer-events-none absolute bottom-6 left-0 w-[78%] max-w-[980px] lg:w-[58%]" />
+      <GradientLines className="pointer-events-none absolute bottom-6 right-0 hidden w-[58%] max-w-[980px] -scale-x-100 lg:block" />
 
       <div className="container-x relative grid gap-16 py-24 md:py-32 lg:grid-cols-2 lg:gap-20">
         <div className="flex flex-col gap-9">
@@ -22,6 +24,7 @@ export function About() {
               <p className="label eyebrow">{about.tag}</p>
             </Reveal>
             <MaskLines
+              as="h2"
               className="display t-h2 mt-5 text-fg"
               lines={[
                 `${lead}.`,

@@ -1,10 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { useInView } from "./Reveal";
 import { REDUCED_MOTION, useMediaQuery } from "./useMediaQuery";
 
-/** Count-up that runs once, when the number scrolls into view. */
+const noop = () => () => {};
+
+/**
+ * Count-up that runs once, when the number scrolls into view.
+ *
+ * The server HTML (and anyone without JavaScript) carries the real figure;
+ * only after hydration, with motion allowed, does it reset to zero and
+ * count up. Screen readers always get the final value, and the digits sit
+ * in a fixed-width box so the suffix doesn't jump while counting.
+ */
 export function Counter({
   to,
   suffix = "",
@@ -20,8 +29,9 @@ export function Counter({
     threshold: 0.25,
     rootMargin: "0px",
   });
-  const [value, setValue] = useState(0);
+  const hydrated = useSyncExternalStore(noop, () => true, () => false);
   const reduced = useMediaQuery(REDUCED_MOTION);
+  const [value, setValue] = useState(0);
 
   useEffect(() => {
     if (!inView || reduced) return;
@@ -39,10 +49,23 @@ export function Counter({
     return () => cancelAnimationFrame(raf);
   }, [inView, reduced, to, duration]);
 
+  const shown = !hydrated || reduced ? to : value;
+
   return (
     <span ref={ref} className={className}>
-      {reduced ? to : value}
-      {suffix}
+      <span className="sr-only">
+        {to}
+        {suffix}
+      </span>
+      <span aria-hidden>
+        <span
+          className="inline-block text-right"
+          style={{ minWidth: `${String(to).length}ch` }}
+        >
+          {shown}
+        </span>
+        {suffix}
+      </span>
     </span>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { nav } from "@/lib/content";
 import { Logo } from "./ui/Logo";
 import { Icon } from "./ui/Icon";
@@ -13,6 +13,7 @@ import { Icon } from "./ui/Icon";
 export function Nav() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const toggle = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -21,11 +22,15 @@ export function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // The mobile menu closes on Escape, and when the viewport outgrows it.
+  // The mobile menu closes on Escape (handing focus back to its toggle if
+  // focus was inside it), and when the viewport outgrows it.
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key !== "Escape") return;
+      const inMenu = document.getElementById("mobile-menu")?.contains(document.activeElement);
+      setOpen(false);
+      if (inMenu || document.activeElement === toggle.current) toggle.current?.focus();
     };
     const wide = window.matchMedia("(min-width: 1024px)");
     const onWide = () => {
@@ -52,7 +57,7 @@ export function Nav() {
           }`}
         >
           <a href="#top" aria-label="Maqnah, back to top" className="shrink-0">
-            <Logo />
+            <Logo preload />
           </a>
 
           <nav aria-label="Main" className="mx-auto hidden lg:block">
@@ -61,7 +66,7 @@ export function Nav() {
                 <li key={l.href}>
                   <a
                     href={l.href}
-                    className="block rounded-full px-4 py-2 text-[14.5px] text-muted transition-colors duration-300 hover:bg-white hover:text-fg"
+                    className="block whitespace-nowrap rounded-full px-3 py-2 text-[14.5px] text-muted transition-colors duration-300 hover:bg-white hover:text-fg xl:px-4"
                   >
                     {l.label}
                   </a>
@@ -86,6 +91,7 @@ export function Nav() {
               {nav.cta.label}
             </a>
             <button
+              ref={toggle}
               type="button"
               className="grid h-11 w-11 place-items-center rounded-xl text-fg transition-colors hover:bg-void lg:hidden"
               aria-expanded={open}
@@ -98,8 +104,9 @@ export function Nav() {
           </div>
         </div>
 
-        <div
+        <nav
           id="mobile-menu"
+          aria-label="Main"
           hidden={!open}
           className="mt-2 rounded-2xl border border-line bg-white/95 p-2 shadow-[0_24px_60px_-30px_rgba(16,21,18,0.5)] backdrop-blur-xl lg:hidden"
         >
@@ -132,7 +139,7 @@ export function Nav() {
               {nav.cta.label}
             </a>
           </div>
-        </div>
+        </nav>
       </div>
     </header>
   );

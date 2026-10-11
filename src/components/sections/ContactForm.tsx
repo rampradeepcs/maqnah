@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { contact, site } from "@/lib/content";
 import { Icon } from "../ui/Icon";
 
 type State = "idle" | "sending" | "sent" | "error";
 
 const input =
-  "w-full rounded-xl border border-line bg-void px-4 py-3 text-[15px] text-fg outline-none transition-[border-color,background-color,box-shadow] duration-300 placeholder:text-faint focus:border-signal focus:bg-white focus:shadow-[0_0_0_4px_rgba(0,108,53,0.1)]";
+  "w-full rounded-xl border border-line bg-void px-4 py-3 text-base text-fg sm:text-[15px] outline-none transition-[border-color,background-color,box-shadow] duration-300 placeholder:text-faint focus:border-signal focus:bg-white focus:shadow-[0_0_0_4px_rgba(0,108,53,0.1)]";
 
 function Field({
   label,
@@ -35,6 +35,13 @@ export function ContactForm() {
   const [state, setState] = useState<State>("idle");
   const [error, setError] = useState<string | null>(null);
   const { form } = contact;
+  const done = useRef<HTMLParagraphElement>(null);
+
+  // The form is replaced by the confirmation: move focus there so keyboard
+  // and screen-reader users land on (and hear) the result.
+  useEffect(() => {
+    if (state === "sent") done.current?.focus();
+  }, [state]);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -68,7 +75,9 @@ export function ContactForm() {
         <span className="grid h-12 w-12 place-items-center rounded-full bg-signal text-white">
           <Icon name="check" className="h-6 w-6" />
         </span>
-        <p className="display t-h3 text-fg">Message received.</p>
+        <p ref={done} tabIndex={-1} className="display t-h3 text-fg outline-none">
+          Message received.
+        </p>
         <p className="max-w-sm text-[15px] leading-relaxed text-muted">
           We read every one of these ourselves. Expect a reply from the team
           within two working days.
@@ -92,7 +101,12 @@ export function ContactForm() {
         <input name="company" type="text" autoComplete="organization" className={input} />
       </Field>
 
-      <Field label="Phone number" required className="sm:col-span-2">
+      {/* Two controls share one visible name, so this is a labelled group
+          rather than a <label> (which would only name the first control). */}
+      <div role="group" aria-labelledby="phone-label" className="grid gap-2 sm:col-span-2">
+        <span id="phone-label" className="text-[13.5px] font-medium text-fg">
+          Phone number<span className="text-signal"> *</span>
+        </span>
         <span className="grid grid-cols-[118px_1fr] gap-2">
           <select
             name="phoneCode"
@@ -113,10 +127,10 @@ export function ContactForm() {
             className={input}
           />
         </span>
-      </Field>
+      </div>
 
       <Field label="What would you like to achieve?" required className="sm:col-span-2">
-        <textarea name="message" required rows={4} className={`${input} min-h-[118px] resize-y`} />
+        <textarea name="message" data-lenis-prevent required rows={4} className={`${input} min-h-[118px] resize-y`} />
       </Field>
 
       <label className="flex items-start gap-3 text-[13.5px] leading-relaxed text-muted sm:col-span-2">

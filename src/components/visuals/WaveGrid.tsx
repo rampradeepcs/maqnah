@@ -331,8 +331,9 @@ export function WaveGrid({ className = "relative" }: { className?: string }) {
         });
       };
 
-      let rect = el.getBoundingClientRect();
       const onMove = (e: PointerEvent) => {
+        // Read the rect fresh: the hero moves as the page scrolls.
+        const rect = el.getBoundingClientRect();
         const px = e.clientX - rect.left;
         const py = e.clientY - rect.top;
         if (px < 0 || py < 0 || px > rect.width || py > rect.height) return;
@@ -390,7 +391,7 @@ export function WaveGrid({ className = "relative" }: { className?: string }) {
 
       // --- Sizing
       const resize = () => {
-        rect = el.getBoundingClientRect();
+        const rect = el.getBoundingClientRect();
         const w = Math.max(1, rect.width);
         const h = Math.max(1, rect.height);
         const dpr = Math.min(window.devicePixelRatio || 1, w < 768 ? 1.5 : 2);
@@ -400,6 +401,9 @@ export function WaveGrid({ className = "relative" }: { className?: string }) {
         composer.setSize(w, h);
         camera.aspect = w / h;
         camera.updateProjectionMatrix();
+        // With no animation loop, a resize clears the canvas: redraw the
+        // single settled frame.
+        if (reduced) composer.render();
       };
       resize();
 

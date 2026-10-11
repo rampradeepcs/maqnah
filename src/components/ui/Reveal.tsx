@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 
 /**
  * Adds `.in` to the element once it enters the viewport (one-way).
@@ -73,28 +73,35 @@ export function Reveal({
 /**
  * Line-by-line mask reveal for display typography. Each line clips a child
  * that slides up from below — the standard editorial headline entrance.
+ * Pass `as="h2"` (etc.) when the lines are a heading. A space separates the
+ * lines so their text reads correctly to assistive tech and in copy-paste.
  */
 export function MaskLines({
   lines,
+  as: Tag = "div",
   className = "",
   lineClassName = "",
   delay = 0,
   step = 0.09,
 }: {
   lines: React.ReactNode[];
+  as?: React.ElementType;
   className?: string;
   lineClassName?: string;
   delay?: number;
   step?: number;
 }) {
-  const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.2 });
+  const { ref, inView } = useInView<HTMLElement>({ threshold: 0.2 });
   return (
-    <div ref={ref} className={`${inView ? "in" : ""} ${className}`}>
+    <Tag ref={ref} className={`${inView ? "in" : ""} ${className}`}>
       {lines.map((line, i) => (
-        <span key={i} className={`mask-line ${lineClassName}`}>
-          <span style={{ transitionDelay: `${delay + i * step}s` }}>{line}</span>
-        </span>
+        <Fragment key={i}>
+          {i > 0 && " "}
+          <span className={`mask-line ${lineClassName}`}>
+            <span style={{ transitionDelay: `${delay + i * step}s` }}>{line}</span>
+          </span>
+        </Fragment>
       ))}
-    </div>
+    </Tag>
   );
 }

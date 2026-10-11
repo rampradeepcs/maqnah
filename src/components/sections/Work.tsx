@@ -15,6 +15,7 @@ export function Work() {
           <p className="label eyebrow">{work.tag}</p>
         </Reveal>
         <MaskLines
+          as="h2"
           className="display t-h2 mt-5 max-w-[24ch] text-fg"
           lines={[work.heading]}
         />
@@ -34,7 +35,7 @@ export function Work() {
                   src={c.image}
                   alt=""
                   fill
-                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  sizes="(min-width: 1216px) 350px, (min-width: 1024px) 31vw, (min-width: 640px) 50vw, 100vw"
                   className="object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-[1.05]"
                 />
               </div>

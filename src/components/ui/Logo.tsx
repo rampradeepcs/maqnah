@@ -14,9 +14,12 @@ import Image from "next/image";
 export function Logo({
   className = "",
   tone = "brand",
+  preload = false,
 }: {
   className?: string;
   tone?: "brand" | "white";
+  /** Only the copy in the navigation is above the fold. */
+  preload?: boolean;
 }) {
   const reverse = tone === "white" ? "brightness-0 invert" : "";
   return (
@@ -28,7 +31,7 @@ export function Logo({
         width={68}
         height={32}
         alt=""
-        priority
+        preload={preload}
         className={`h-[23px] w-auto sm:h-[27px] ${reverse}`}
       />
       <Image
@@ -36,7 +39,7 @@ export function Logo({
         width={141}
         height={36}
         alt="Maqnah"
-        priority
+        preload={preload}
         className={`mt-[3px] h-[26px] w-auto sm:mt-[3.6px] sm:h-[30.5px] ${reverse}`}
       />
     </span>

@@ -15,7 +15,7 @@ export function Clients() {
           <Reveal>
             <p className="label eyebrow">{clients.tag}</p>
           </Reveal>
-          <MaskLines className="display t-h2 mt-5 text-fg" lines={[clients.heading]} />
+          <MaskLines as="h2" className="display t-h2 mt-5 text-fg" lines={[clients.heading]} />
         </div>
 
         <Reveal className="mt-14">
@@ -32,7 +32,7 @@ export function Clients() {
         </Reveal>
 
         <Reveal className="mt-16 overflow-hidden rounded-3xl border border-line">
-          <div className="grid divide-y divide-line md:grid-cols-3 md:divide-x md:divide-y-0">
+          <div className="grid divide-y divide-line lg:grid-cols-3 lg:divide-x lg:divide-y-0">
             {clients.testimonials.map((t, i) => (
               <figure
                 key={i}

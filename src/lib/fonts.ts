@@ -6,20 +6,22 @@ import { Inter, JetBrains_Mono, Urbanist } from "next/font/google";
  * the cursor label.
  */
 export const display = Urbanist({
-  variable: "--font-display",
+  variable: "--font-urbanist",
   subsets: ["latin"],
   display: "swap",
 });
 
 export const sans = Inter({
-  variable: "--font-sans",
+  variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
 });
 
+// Only the desktop cursor label uses it (semibold), so it isn't preloaded.
 export const mono = JetBrains_Mono({
-  variable: "--font-mono",
+  variable: "--font-jetbrains",
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["600"],
   display: "swap",
+  preload: false,
 });

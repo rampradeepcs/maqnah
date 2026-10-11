@@ -27,7 +27,7 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative flex min-h-[100svh] flex-col overflow-hidden pt-28 md:pt-32"
+      className="relative flex min-h-[100svh] flex-col overflow-clip pt-28 md:pt-32"
     >
       {/* Backdrop: the cube wall, with a CSS grid beneath as the no-WebGL fallback */}
       <div aria-hidden className="hairline-grid pointer-events-none absolute inset-0" />
@@ -109,8 +109,8 @@ export function Hero() {
             alt={hero.visual.alt}
             width={1600}
             height={1194}
-            priority
-            sizes="(min-width: 1024px) 48vw, 100vw"
+            preload
+            sizes="(min-width: 1280px) 600px, (min-width: 1024px) 45vw, 100vw"
             className="hero-visual rise relative w-full"
             style={{ animationDelay: "0.35s" }}
           />
@@ -129,11 +129,11 @@ export function Hero() {
 
       {/* Mobile: the calls to action ride the bottom of the opening screen */}
       <div className="container-x sticky bottom-4 z-20 pb-4 md:hidden">
-        <div className="glass flex gap-2 rounded-2xl p-2 shadow-[0_18px_40px_-22px_rgba(16,21,18,0.55)]">
-          <a href={hero.ctas[0].href} className="btn btn-dark flex-1">
+        <div className="glass flex flex-wrap gap-2 rounded-2xl p-2 shadow-[0_18px_40px_-22px_rgba(16,21,18,0.55)]">
+          <a href={hero.ctas[0].href} className="btn btn-dark min-w-fit flex-1">
             {hero.ctas[0].label}
           </a>
-          <a href={hero.ctas[1].href} className="btn btn-ghost px-4">
+          <a href={hero.ctas[1].href} className="btn btn-ghost min-w-fit flex-1 px-4">
             {hero.ctas[1].label}
             <Icon name="arrow-down" className="h-4 w-4" strokeWidth={2} />
           </a>
