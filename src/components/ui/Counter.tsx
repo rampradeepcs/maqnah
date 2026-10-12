@@ -49,20 +49,29 @@ export function Counter({
     return () => cancelAnimationFrame(raf);
   }, [inView, reduced, to, duration]);
 
-  const shown = !hydrated || reduced ? to : value;
+  // Until the count-up can run, render the figure once as plain text.
+  // dir="ltr" keeps "55%" in that order inside right-to-left text.
+  if (!hydrated || reduced) {
+    return (
+      <span ref={ref} dir="ltr" className={`inline-block ${className}`}>
+        {to}
+        {suffix}
+      </span>
+    );
+  }
 
   return (
-    <span ref={ref} className={className}>
+    <span ref={ref} dir="ltr" className={`inline-block ${className}`}>
       <span className="sr-only">
         {to}
         {suffix}
       </span>
       <span aria-hidden>
-        <span
-          className="inline-block text-right"
-          style={{ minWidth: `${String(to).length}ch` }}
-        >
-          {shown}
+        {/* An invisible copy of the final figure sizes the box, so the
+            digits sit flush with their labels and the suffix never moves. */}
+        <span className="inline-grid text-right">
+          <span className="invisible [grid-area:1/1]">{to}</span>
+          <span className="[grid-area:1/1]">{value}</span>
         </span>
         {suffix}
       </span>

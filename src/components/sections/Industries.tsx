@@ -1,12 +1,12 @@
 import Image from "next/image";
-import { industries } from "@/lib/content";
+import type { Dictionary } from "@/lib/i18n";
 import { MaskLines, Reveal } from "../ui/Reveal";
 
 /**
  * Six sectors, three by two, each carried by regional, real-world imagery
  * with the name set over a soft scrim at the foot of the card.
  */
-export function Industries() {
+export function Industries({ t: industries }: { t: Dictionary["industries"] }) {
   return (
     <section id="industries" className="py-24 md:py-32">
       <div className="container-x">

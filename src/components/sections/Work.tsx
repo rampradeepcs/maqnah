@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { work } from "@/lib/content";
+import type { Dictionary } from "@/lib/i18n";
 import { Icon } from "../ui/Icon";
 import { MaskLines, Reveal } from "../ui/Reveal";
 
@@ -7,7 +7,7 @@ import { MaskLines, Reveal } from "../ui/Reveal";
  * The showcase: no detail pages, no client names. Each card is a soft 3D
  * render with the story in a white panel set into its lower half.
  */
-export function Work() {
+export function Work({ t: work, ui }: { t: Dictionary["work"]; ui: Dictionary["ui"] }) {
   return (
     <section id="work" className="py-24 md:py-32">
       <div className="container-x">
@@ -52,7 +52,7 @@ export function Work() {
 
         <Reveal className="mt-8 flex flex-col items-start gap-5 rounded-3xl border border-line bg-surface p-6 sm:flex-row sm:items-center sm:justify-between md:p-8">
           <p className="display t-h3 text-fg">{work.cta.line}</p>
-          <a href={work.cta.href} data-cursor="LET'S TALK" className="btn btn-dark">
+          <a href={work.cta.href} data-cursor={ui.cursor.talk} className="btn btn-dark">
             {work.cta.label}
             <Icon name="arrow-right" className="arrow h-4 w-4" strokeWidth={2} />
           </a>

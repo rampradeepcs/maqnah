@@ -1,4 +1,4 @@
-import { footer, nav } from "@/lib/content";
+import type { Dictionary } from "@/lib/i18n";
 import { Logo } from "./ui/Logo";
 import { Icon } from "./ui/Icon";
 
@@ -7,15 +7,16 @@ import { Icon } from "./ui/Icon";
  * out, every section one click away, thin line icons for social, and the
  * standard copyright and policy row underneath.
  */
-export function Footer() {
+export function Footer({ dict }: { dict: Dictionary }) {
+  const { footer, nav, ui } = dict;
   return (
     <footer className="bg-signal text-white">
       <div className="container-x">
         <div className="flex flex-col gap-10 py-14 md:flex-row md:items-center md:justify-between md:py-16">
-          <a href="#top" aria-label="Maqnah, back to top" className="self-start">
+          <a href="#top" aria-label={ui.backToTop} className="self-start">
             <Logo tone="white" />
           </a>
-          <nav aria-label="Footer">
+          <nav aria-label={ui.footerNav}>
             <ul className="flex flex-wrap gap-x-8 gap-y-3">
               {nav.links.map((l) => (
                 <li key={l.href}>
@@ -42,11 +43,10 @@ export function Footer() {
             </ul>
             <ul className="flex gap-3">
               {footer.social.map((s) => {
-                const icon = s.label === "LinkedIn" ? "linkedin" : "x";
                 const tile =
                   "grid h-10 w-10 place-items-center rounded-xl border border-white/30 text-white";
                 return (
-                  <li key={s.label}>
+                  <li key={s.icon}>
                     {s.href ? (
                       <a
                         href={s.href}
@@ -55,11 +55,15 @@ export function Footer() {
                         aria-label={s.label}
                         className={`${tile} transition-colors duration-300 hover:bg-white hover:text-signal`}
                       >
-                        <Icon name={icon} className="h-5 w-5" />
+                        <Icon name={s.icon} className="h-5 w-5" />
                       </a>
                     ) : (
-                      <span role="img" aria-label={`${s.label} (link to come)`} className={`${tile} opacity-60`}>
-                        <Icon name={icon} className="h-5 w-5" />
+                      <span
+                        role="img"
+                        aria-label={`${s.label} ${ui.linkToCome}`}
+                        className={`${tile} opacity-60`}
+                      >
+                        <Icon name={s.icon} className="h-5 w-5" />
                       </span>
                     )}
                   </li>

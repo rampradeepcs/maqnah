@@ -24,6 +24,8 @@ export function Logo({
   const reverse = tone === "white" ? "brightness-0 invert" : "";
   return (
     <span
+      // The lock-up is artwork: mark then wordmark, in either language.
+      dir="ltr"
       className={`inline-flex translate-y-[2px] items-start gap-[8.5px] sm:gap-[10px] ${className}`}
     >
       <Image
@@ -31,6 +33,7 @@ export function Logo({
         width={68}
         height={32}
         alt=""
+        unoptimized
         preload={preload}
         className={`h-[23px] w-auto sm:h-[27px] ${reverse}`}
       />
@@ -39,6 +42,7 @@ export function Logo({
         width={141}
         height={36}
         alt="Maqnah"
+        unoptimized
         preload={preload}
         className={`mt-[3px] h-[26px] w-auto sm:mt-[3.6px] sm:h-[30.5px] ${reverse}`}
       />

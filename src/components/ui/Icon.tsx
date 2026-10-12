@@ -1,4 +1,4 @@
-import type { IconName } from "@/lib/content";
+import type { IconName } from "@/lib/i18n";
 
 /**
  * One family of thin line icons (24-unit grid, 1.6 stroke) so every glyph on

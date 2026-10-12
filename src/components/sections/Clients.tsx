@@ -1,4 +1,4 @@
-import { clients } from "@/lib/content";
+import type { Dictionary } from "@/lib/i18n";
 import { Icon } from "../ui/Icon";
 import { MaskLines, Reveal } from "../ui/Reveal";
 
@@ -7,7 +7,7 @@ import { MaskLines, Reveal } from "../ui/Reveal";
  * the testimonials in one ruled grid. Logo and portrait slots stay marked
  * until real, approved assets replace them.
  */
-export function Clients() {
+export function Clients({ t: clients, ui }: { t: Dictionary["clients"]; ui: Dictionary["ui"] }) {
   return (
     <section id="clients" className="bg-surface py-24 md:py-32">
       <div className="container-x">
@@ -40,13 +40,15 @@ export function Clients() {
               >
                 <span
                   role="img"
-                  aria-label="Client photo to come"
+                  aria-label={ui.clientPhotoToCome}
                   className="slot h-16 w-16 rounded-full"
                 >
                   <Icon name="user" className="h-6 w-6" />
                 </span>
                 <blockquote className="text-[16px] leading-[1.7] text-fg">
-                  &ldquo;{t.quote}&rdquo;
+                  {ui.quotes[0]}
+                  {t.quote}
+                  {ui.quotes[1]}
                 </blockquote>
                 <figcaption className="mt-auto">
                   <span className="block text-[15px] font-semibold text-fg">{t.name}</span>

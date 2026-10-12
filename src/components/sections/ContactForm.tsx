@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { contact, site } from "@/lib/content";
+import type { Dictionary, Locale } from "@/lib/i18n";
+import { site } from "@/lib/site";
 import { Icon } from "../ui/Icon";
 
 type State = "idle" | "sending" | "sent" | "error";
 
 const input =
-  "w-full rounded-xl border border-line bg-void px-4 py-3 text-base text-fg sm:text-[15px] outline-none transition-[border-color,background-color,box-shadow] duration-300 placeholder:text-faint focus:border-signal focus:bg-white focus:shadow-[0_0_0_4px_rgba(0,108,53,0.1)]";
+  "w-full rounded-xl border border-line bg-void px-4 py-3 text-base text-fg outline-none transition-[border-color,background-color,box-shadow] duration-300 placeholder:text-faint focus:border-signal focus:bg-white focus:shadow-[0_0_0_4px_rgba(0,108,53,0.1)]";
 
 function Field({
   label,
@@ -31,10 +32,18 @@ function Field({
   );
 }
 
-export function ContactForm() {
+export function ContactForm({
+  form,
+  ui,
+  locale,
+}: {
+  form: Dictionary["contact"]["form"];
+  ui: Dictionary["ui"];
+  locale: Locale;
+}) {
   const [state, setState] = useState<State>("idle");
   const [error, setError] = useState<string | null>(null);
-  const { form } = contact;
+  const t = ui.form;
   const done = useRef<HTMLParagraphElement>(null);
 
   // The form is replaced by the confirmation: move focus there so keyboard
@@ -45,6 +54,7 @@ export function ContactForm() {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (state === "sending") return;
     setState("sending");
     setError(null);
 
@@ -59,13 +69,13 @@ export function ContactForm() {
       });
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
-        throw new Error(body.error ?? "Something went wrong.");
+        throw new Error(body.error ?? t.genericError);
       }
       setState("sent");
       el.reset();
     } catch (err) {
       setState("error");
-      setError(err instanceof Error ? err.message : "Something went wrong.");
+      setError(err instanceof Error ? err.message : t.genericError);
     }
   };
 
@@ -76,28 +86,32 @@ export function ContactForm() {
           <Icon name="check" className="h-6 w-6" />
         </span>
         <p ref={done} tabIndex={-1} className="display t-h3 text-fg outline-none">
-          Message received.
+          {t.successTitle}
         </p>
-        <p className="max-w-sm text-[15px] leading-relaxed text-muted">
-          We read every one of these ourselves. Expect a reply from the team
-          within two working days.
-        </p>
+        <p className="max-w-sm text-[15px] leading-relaxed text-muted">{t.successBody}</p>
       </div>
     );
   }
 
   return (
-    <form onSubmit={onSubmit} className="grid gap-4 sm:grid-cols-2">
-      <Field label="First name" required>
+    <form
+      method="post"
+      action="/api/contact"
+      onSubmit={onSubmit}
+      className="grid gap-4 sm:grid-cols-2"
+    >
+      {/* Tells the API which language to answer in */}
+      <input type="hidden" name="locale" value={locale} />
+      <Field label={t.firstName} required>
         <input name="firstName" type="text" required autoComplete="given-name" className={input} />
       </Field>
-      <Field label="Last name" required>
+      <Field label={t.lastName} required>
         <input name="lastName" type="text" required autoComplete="family-name" className={input} />
       </Field>
-      <Field label="Work email" required>
-        <input name="email" type="email" required autoComplete="email" className={input} />
+      <Field label={t.email} required>
+        <input name="email" type="email" dir="ltr" required autoComplete="email" className={input} />
       </Field>
-      <Field label="Company name">
+      <Field label={t.company}>
         <input name="company" type="text" autoComplete="organization" className={input} />
       </Field>
 
@@ -105,12 +119,14 @@ export function ContactForm() {
           rather than a <label> (which would only name the first control). */}
       <div role="group" aria-labelledby="phone-label" className="grid gap-2 sm:col-span-2">
         <span id="phone-label" className="text-[13.5px] font-medium text-fg">
-          Phone number<span className="text-signal"> *</span>
+          {t.phone}
+          <span className="text-signal"> *</span>
         </span>
-        <span className="grid grid-cols-[118px_1fr] gap-2">
+        {/* Code then number, left to right, in either language */}
+        <span dir="ltr" className="grid grid-cols-[118px_1fr] gap-2">
           <select
             name="phoneCode"
-            aria-label="Country code"
+            aria-label={t.countryCode}
             defaultValue={form.countryCodes[0]}
             className={`${input} pr-2`}
           >
@@ -123,13 +139,13 @@ export function ContactForm() {
             type="tel"
             required
             autoComplete="tel-national"
-            aria-label="Phone number"
+            aria-label={t.phone}
             className={input}
           />
         </span>
       </div>
 
-      <Field label="What would you like to achieve?" required className="sm:col-span-2">
+      <Field label={t.message} required className="sm:col-span-2">
         <textarea name="message" data-lenis-prevent required rows={4} className={`${input} min-h-[118px] resize-y`} />
       </Field>
 
@@ -156,18 +172,18 @@ export function ContactForm() {
       <div className="flex flex-col items-center gap-3 pt-2 sm:col-span-2">
         <button
           type="submit"
-          disabled={state === "sending"}
-          data-cursor="SEND"
-          className="btn btn-primary px-8 disabled:opacity-60"
+          aria-disabled={state === "sending"}
+          data-cursor={ui.cursor.send}
+          className="btn btn-primary px-8 aria-disabled:cursor-wait aria-disabled:opacity-60"
         >
-          {state === "sending" ? "Sending…" : form.submit}
+          {state === "sending" ? t.sending : form.submit}
         </button>
         <p aria-live="polite" className="text-center text-[13.5px] text-muted">
           {state === "error" && (
             <>
               {error}{" "}
               <a href={`mailto:${site.email}`} className="text-signal underline underline-offset-4">
-                Email us directly
+                {t.emailUs}
               </a>
               .
             </>

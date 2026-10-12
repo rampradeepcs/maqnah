@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { services } from "@/lib/content";
+import type { Dictionary } from "@/lib/i18n";
 import { Icon } from "../ui/Icon";
 import { MaskLines, Reveal } from "../ui/Reveal";
 import { PillarArt } from "../visuals/PillarArt";
@@ -9,7 +9,7 @@ import { PillarArt } from "../visuals/PillarArt";
  * A collage strip runs edge to edge after the copy — a pit crew in sync,
  * the "end to end" idea in one image — before the cards.
  */
-export function Services() {
+export function Services({ t: services }: { t: Dictionary["services"] }) {
   return (
     <section id="services" className="py-24 md:py-32">
       <div className="container-x">
@@ -29,7 +29,7 @@ export function Services() {
           src={services.strip.src}
           alt={services.strip.alt}
           fill
-          sizes="100vw"
+          unoptimized
           className="object-cover"
         />
       </Reveal>
@@ -47,7 +47,7 @@ export function Services() {
                 variant={p.icon}
                 className="aspect-[16/10] w-full transition-transform duration-700 ease-out group-hover:scale-[1.04]"
               />
-              <span className="absolute left-3 top-3 grid h-11 w-11 place-items-center rounded-xl bg-signal text-white">
+              <span className="absolute start-3 top-3 grid h-11 w-11 place-items-center rounded-xl bg-signal text-white">
                 <Icon name={p.icon} className="h-[22px] w-[22px]" />
               </span>
             </div>

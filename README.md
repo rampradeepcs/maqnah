@@ -16,7 +16,7 @@ npx eslint src
 ## Sources
 
 - **Copy** is taken verbatim from the content wireframe ("Maqnah Website
-  Wireframe" v1). It all lives in `src/lib/content.ts`; the wireframe's yellow
+  Wireframe" v1). It lives in `src/lib/i18n/en.ts`; the wireframe's yellow
   creative notes are design direction, so they appear there as comments, not
   on the page.
 - **Visual direction** comes from the brief's Figma feedback board
@@ -51,6 +51,32 @@ is multiplied onto it with feathered edges (`.hero-visual` in `globals.css`).
 
 The old `/light` URL permanently redirects to `/` (`next.config.ts`).
 
+## Arabic version — `/ar`
+
+The header toggle ("العربية" / "English") links between `/` and `/ar` and
+keeps the section you were on. Each is a complete, statically rendered page
+in its own language, with `lang`/`dir` on `<html>`, canonical and hreflang
+alternates, both in the sitemap, and its own share image (`og-ar.jpg`).
+
+- **Dictionaries** — every string, including form labels, API messages and
+  accessibility text, lives in `src/lib/i18n/en.ts` and `ar.ts`; the
+  `Dictionary` type (`types.ts`) makes a missing Arabic string a type error.
+  `app/(en)` and `app/ar` are two root layouts rendering the same
+  `SiteShell` and `HomePage` with their dictionary.
+- **Translation** — two independent translators (faithful and idiomatic),
+  merged string by string, then reviewed for accuracy and for Saudi
+  business style. The brand name, LinkedIn/X and technical acronyms (ERP,
+  RPA, IoT, PDPL, LLMs) stay in Latin; figures use Western digits.
+- **RTL** — layout mirrors through logical utilities (`ms-`, `ps-`, `start-`,
+  `border-s`…); the hero veil, lens, contact sky and gradient lines flip
+  with `rtl:`; arrows point the way the line reads; figures, phone numbers
+  and emails stay left-to-right.
+- **Type** — Alexandria (titles) and IBM Plex Sans Arabic (body); no letter
+  spacing (it breaks Arabic joins), taller line heights, and roomier reveal
+  masks for Arabic ascenders and descenders.
+- **Form** — a hidden `locale` field makes `/api/contact` answer in the
+  visitor's language, including its no-JavaScript result page.
+
 ## Design system
 
 Everything lives in `src/app/globals.css`: tokens under Tailwind v4's `@theme`,
@@ -79,14 +105,16 @@ appear drawn, and the wave grid renders a single settled frame.
 
 ## Before launch
 
-Marked in `src/lib/content.ts`:
+Marked in `src/lib/i18n/en.ts` (and so in `ar.ts`):
 
 - `ILLUSTRATIVE` — the three "up to" metrics need Maqnah's own results behind
   them; the work stories need confirming with the project leads.
 - `PLACEHOLDER` — client logos (with permission), the team photo, the
   testimonials and their portraits, the phone number and mailbox, and the X
-  account URL. "Privacy Policy" and "Cookie Policy" need real pages, and the
-  Arabic (RTL) version is still to be built.
+  account URL. "Privacy Policy" and "Cookie Policy" need real pages.
+- **Arabic** — have a native-speaking reviewer at Maqnah sign off the
+  translation, and confirm the brand's official Arabic name (the page keeps
+  "Maqnah" in Latin script until then).
 
 ## Contact form
 

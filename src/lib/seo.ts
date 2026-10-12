@@ -1,66 +1,61 @@
 import type { Metadata } from "next";
-import { hero, site } from "./content";
+import type { Dictionary } from "./i18n";
+import { site } from "./site";
 
-export const DESCRIPTION = hero.lead;
+/** Both language versions, for hreflang alternates and the sitemap. */
+export const languageAlternates = {
+  en: "/",
+  ar: "/ar",
+  "x-default": "/",
+} as const;
 
-const TITLE = `Maqnah — ${hero.tag}`;
+export function buildMetadata(dict: Dictionary): Metadata {
+  const { meta, hero } = dict;
+  return {
+    metadataBase: new URL(site.url),
+    title: { default: meta.title, template: "%s · Maqnah" },
+    description: meta.description,
+    authors: [{ name: site.name }],
+    alternates: { canonical: meta.path, languages: languageAlternates },
+    openGraph: {
+      type: "website",
+      url: meta.path,
+      siteName: site.name,
+      locale: meta.ogLocale,
+      alternateLocale: dict.locale === "ar" ? ["en_US"] : ["ar_SA"],
+      title: hero.headline,
+      description: meta.description,
+      images: [{ url: meta.ogImage, width: 1200, height: 630, alt: meta.ogAlt }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: hero.headline,
+      description: meta.description,
+      images: [{ url: meta.ogImage, alt: meta.ogAlt }],
+    },
+    robots: { index: true, follow: true },
+  };
+}
 
-/** Describes public/img/og.jpg: the lock-up, tag and headline beside the lens. */
-const OG_ALT = `Maqnah: ${hero.headline} Beside it, ${hero.visual.alt.charAt(0).toLowerCase()}${hero.visual.alt.slice(1)}.`;
-
-export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
-  title: {
-    default: TITLE,
-    template: "%s · Maqnah",
-  },
-  description: DESCRIPTION,
-  keywords: [
-    "AI consulting Saudi Arabia",
-    "data and AI GCC",
-    "AI-native data platforms",
-    "agentic AI",
-    "Arabic LLM",
-    "generative AI consulting",
-    "predictive analytics",
-    "data governance PDPL",
-    "decision intelligence",
-    "Maqnah",
-  ],
-  authors: [{ name: site.name }],
-  openGraph: {
-    type: "website",
+export function buildJsonLd(dict: Dictionary) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: site.name,
     url: site.url,
-    siteName: site.name,
-    title: hero.headline,
-    description: DESCRIPTION,
-    images: [{ url: "/img/og.jpg", width: 1200, height: 630, alt: OG_ALT }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: hero.headline,
-    description: DESCRIPTION,
-    images: ["/img/og.jpg"],
-  },
-  robots: { index: true, follow: true },
-};
-
-export const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: site.name,
-  url: site.url,
-  slogan: hero.headline,
-  email: site.email,
-  foundingLocation: site.location,
-  areaServed: ["Saudi Arabia", "GCC"],
-  description: DESCRIPTION,
-  knowsAbout: [
-    "Data Platforms",
-    "Generative AI",
-    "Agentic AI",
-    "Predictive Analytics",
-    "Decision Intelligence",
-  ],
-  address: { "@type": "PostalAddress", addressCountry: "SA" },
-};
+    slogan: dict.hero.headline,
+    email: site.email,
+    foundingLocation: site.location,
+    areaServed: ["Saudi Arabia", "GCC"],
+    description: dict.meta.description,
+    knowsLanguage: ["en", "ar"],
+    knowsAbout: [
+      "Data Platforms",
+      "Generative AI",
+      "Agentic AI",
+      "Predictive Analytics",
+      "Decision Intelligence",
+    ],
+    address: { "@type": "PostalAddress", addressCountry: "SA" },
+  };
+}

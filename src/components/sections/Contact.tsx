@@ -1,26 +1,28 @@
 import Image from "next/image";
-import { contact } from "@/lib/content";
+import type { Dictionary } from "@/lib/i18n";
 import { Icon } from "../ui/Icon";
 import { Reveal } from "../ui/Reveal";
 import { ContactForm } from "./ContactForm";
 
 /**
- * Two panels side by side over a night sky: a frosted invitation on the
- * left, the booking form on a white card on the right.
+ * Two panels side by side over a night sky: a frosted invitation at the
+ * start, the booking form on a white card at the end. In RTL the sky and its
+ * shading mirror so the planet's glow stays behind the form.
  */
-export function Contact() {
+export function Contact({ dict }: { dict: Dictionary }) {
+  const { contact } = dict;
   return (
     <section id="contact" className="relative overflow-hidden bg-night text-white">
       <Image
         src="/img/contact-universe.jpg"
         alt=""
         fill
-        sizes="100vw"
-        className="object-cover object-[70%_60%]"
+        unoptimized
+        className="object-cover object-[70%_60%] rtl:-scale-x-100"
       />
       <div
         aria-hidden
-        className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,10,7,0.7)_0%,rgba(4,10,7,0.25)_55%,rgba(4,10,7,0)_100%)]"
+        className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,10,7,0.7)_0%,rgba(4,10,7,0.25)_55%,rgba(4,10,7,0)_100%)] rtl:bg-[linear-gradient(270deg,rgba(4,10,7,0.7)_0%,rgba(4,10,7,0.25)_55%,rgba(4,10,7,0)_100%)]"
       />
 
       <div className="container-x relative grid items-stretch gap-5 py-24 md:py-32 lg:grid-cols-2">
@@ -49,7 +51,8 @@ export function Contact() {
               <div key={c.label} className="rounded-2xl bg-white/[0.07] px-5 py-4">
                 <span className="label block text-white/60">{c.label}</span>
                 <strong className="mt-1.5 block text-[15.5px] font-semibold [overflow-wrap:anywhere]">
-                  {c.value}
+                  {/* Phone numbers and addresses read left to right in any language */}
+                  <bdi dir="ltr">{c.value}</bdi>
                 </strong>
               </div>
             ))}
@@ -65,7 +68,7 @@ export function Contact() {
               {contact.form.heading}
             </h3>
           </div>
-          <ContactForm />
+          <ContactForm form={contact.form} ui={dict.ui} locale={dict.locale} />
         </Reveal>
       </div>
     </section>

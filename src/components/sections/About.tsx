@@ -1,4 +1,4 @@
-import { about } from "@/lib/content";
+import type { Dictionary } from "@/lib/i18n";
 import { Icon } from "../ui/Icon";
 import { MaskLines, Reveal } from "../ui/Reveal";
 import { GradientLines } from "../visuals/GradientLines";
@@ -6,16 +6,16 @@ import { GradientLines } from "../visuals/GradientLines";
 /**
  * The trust section. Track record and vision on the left; what Maqnah
  * brings on the right, each strength marked by a line icon in a soft circle.
- * On wide screens a bundle of gradient traces enters from the right edge and
+ * On wide screens a bundle of gradient traces enters from the end edge and
  * climbs into the space under the strengths (hidden on narrow screens, where
  * it would cross the copy).
  */
-export function About() {
-  const [lead, rest] = about.heading.split(". ");
+export function About({ t: about }: { t: Dictionary["about"] }) {
+  const [lead, rest] = about.heading;
 
   return (
     <section id="about" className="relative overflow-hidden">
-      <GradientLines className="pointer-events-none absolute bottom-6 right-0 hidden w-[58%] max-w-[980px] -scale-x-100 lg:block" />
+      <GradientLines className="pointer-events-none absolute bottom-6 end-0 hidden w-[58%] max-w-[980px] ltr:-scale-x-100 lg:block" />
 
       <div className="container-x relative grid gap-16 py-24 md:py-32 lg:grid-cols-2 lg:gap-20">
         <div className="flex flex-col gap-9">
@@ -27,7 +27,7 @@ export function About() {
               as="h2"
               className="display t-h2 mt-5 text-fg"
               lines={[
-                `${lead}.`,
+                lead,
                 <span key="rest" className="text-faint">
                   {rest}
                 </span>,
@@ -37,7 +37,7 @@ export function About() {
 
           {about.blocks.map((b, i) => (
             <Reveal key={b.title} delay={0.06 * i}>
-              <div className="border-l-2 border-signal pl-5">
+              <div className="border-s-2 border-signal ps-5">
                 <h3 className="label eyebrow">{b.title}</h3>
                 <p className="mt-3 max-w-[58ch] text-[16px] leading-relaxed text-muted">
                   {b.body}

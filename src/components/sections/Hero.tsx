@@ -1,27 +1,25 @@
 import Image from "next/image";
-import { hero } from "@/lib/content";
+import type { Dictionary } from "@/lib/i18n";
 import { WaveGrid } from "../visuals/WaveGrid";
 import { Icon } from "../ui/Icon";
 
-/** Headline words followed by a tiny icon tile — the brief's two title icons. */
-const TITLE_ICONS: Record<string, "layers" | "spark"> = {
-  Engineering: "layers",
-  intelligence: "spark",
-};
-
-/** Small frosted tiles that float over the lens: detail, at low opacity. */
+/**
+ * Small frosted tiles that float over the lens: detail, at low opacity.
+ * Logical insets, so they follow the lens when the page mirrors (RTL).
+ */
 const GLASS = [
-  { icon: "chart", className: "left-[6%] top-[14%]", delay: "0s" },
-  { icon: "nodes", className: "right-[4%] top-[6%]", delay: "-2.4s" },
-  { icon: "shield", className: "bottom-[14%] right-[12%]", delay: "-4.6s" },
+  { icon: "chart", className: "start-[6%] top-[14%]", delay: "0s" },
+  { icon: "nodes", className: "end-[4%] top-[6%]", delay: "-2.4s" },
+  { icon: "shield", className: "bottom-[14%] end-[12%]", delay: "-4.6s" },
 ] as const;
 
 /**
  * The banner keeps the wall of cubes behind it and sets a detailed 3D lens on
- * top: data streams in from the left and resolves into dashboards. A frosted
- * veil lets the copy sit over the wall without hiding its texture.
+ * top: data streams in from the copy's side and resolves into dashboards. A
+ * frosted veil lets the copy sit over the wall without hiding its texture.
+ * In RTL the veil, the lens and its details mirror with the layout.
  */
-export function Hero() {
+export function Hero({ t: hero, ui }: { t: Dictionary["hero"]; ui: Dictionary["ui"] }) {
   const words = hero.headline.split(" ");
 
   return (
@@ -34,7 +32,7 @@ export function Hero() {
       <WaveGrid className="pointer-events-none absolute inset-0" />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(243,244,241,0.92)_0%,rgba(243,244,241,0.78)_55%,rgba(243,244,241,0.3)_100%)] lg:bg-[linear-gradient(100deg,rgba(243,244,241,0.95)_0%,rgba(243,244,241,0.8)_36%,rgba(243,244,241,0.18)_64%,rgba(243,244,241,0)_82%)]"
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(243,244,241,0.92)_0%,rgba(243,244,241,0.78)_55%,rgba(243,244,241,0.3)_100%)] lg:bg-[linear-gradient(100deg,rgba(243,244,241,0.95)_0%,rgba(243,244,241,0.8)_36%,rgba(243,244,241,0.18)_64%,rgba(243,244,241,0)_82%)] lg:rtl:bg-[linear-gradient(260deg,rgba(243,244,241,0.95)_0%,rgba(243,244,241,0.8)_36%,rgba(243,244,241,0.18)_64%,rgba(243,244,241,0)_82%)]"
       />
       <div
         aria-hidden
@@ -52,18 +50,25 @@ export function Hero() {
 
           <h1 className="display t-hero mt-7 text-fg">
             {words.map((word, i) => {
-              const icon = TITLE_ICONS[word];
+              const icon = hero.headlineIcons[i];
               const delay = `${0.12 + i * 0.06}s`;
               return (
                 <span key={i}>
-                  <span className="word-mask">
-                    <span style={{ animationDelay: delay }}>{word}</span>
-                  </span>
-                  {icon && (
-                    <>
-                      {" "}
-                      <span className="word-mask" aria-hidden>
-                        <span style={{ animationDelay: delay }}>
+                  {/* A word and its icon tile never wrap apart */}
+                  <span className={icon ? "whitespace-nowrap" : undefined}>
+                    <span className="word-mask">
+                      <span style={{ animationDelay: delay }}>{word}</span>
+                    </span>
+                    {icon && (
+                      <>
+                        {" "}
+                        {/* Tiles fade up rather than rise out of a mask, so
+                            their shadow and rotated corners are never clipped. */}
+                        <span
+                          aria-hidden
+                          className="rise inline-block"
+                          style={{ animationDelay: delay }}
+                        >
                           <span
                             className={`inline-grid h-[0.8em] w-[0.8em] translate-y-[0.1em] place-items-center rounded-[0.24em] border border-line bg-white text-signal shadow-[0_10px_24px_-12px_rgba(0,77,38,0.5)] ${
                               icon === "spark" ? "rotate-6" : "-rotate-6"
@@ -72,9 +77,9 @@ export function Hero() {
                             <Icon name={icon} className="h-[0.48em] w-[0.48em]" strokeWidth={1.8} />
                           </span>
                         </span>
-                      </span>
-                    </>
-                  )}
+                      </>
+                    )}
+                  </span>
                   {i < words.length - 1 && " "}
                 </span>
               );
@@ -92,18 +97,18 @@ export function Hero() {
             className="rise mt-9 hidden flex-wrap gap-3 md:flex"
             style={{ animationDelay: "0.75s" }}
           >
-            <a href={hero.ctas[0].href} data-cursor="LET'S TALK" className="btn btn-primary">
+            <a href={hero.ctas[0].href} data-cursor={ui.cursor.talk} className="btn btn-primary">
               {hero.ctas[0].label}
               <Icon name="arrow-right" className="arrow h-4 w-4" strokeWidth={2} />
             </a>
-            <a href={hero.ctas[1].href} data-cursor="VIEW" className="btn btn-ghost">
+            <a href={hero.ctas[1].href} data-cursor={ui.cursor.view} className="btn btn-ghost">
               {hero.ctas[1].label}
             </a>
           </div>
         </div>
 
         {/* The lens: multiplied onto the wall so its white ground disappears */}
-        <div className="relative lg:-mr-10 xl:-mr-20">
+        <div className="relative lg:-me-10 xl:-me-20">
           <Image
             src={hero.visual.src}
             alt={hero.visual.alt}
@@ -111,7 +116,7 @@ export function Hero() {
             height={1194}
             preload
             sizes="(min-width: 1280px) 600px, (min-width: 1024px) 45vw, 100vw"
-            className="hero-visual rise relative w-full"
+            className="hero-visual rise relative w-full rtl:-scale-x-100"
             style={{ animationDelay: "0.35s" }}
           />
           {GLASS.map((g) => (
@@ -127,14 +132,20 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Mobile: the calls to action ride the bottom of the opening screen */}
+      {/* Mobile: the calls to action ride the bottom of the opening screen,
+          one row — a full-width primary and, on narrow phones, a square
+          arrow for the secondary (its label stays as the accessible name). */}
       <div className="container-x sticky bottom-4 z-20 pb-4 md:hidden">
-        <div className="glass flex flex-wrap gap-2 rounded-2xl p-2 shadow-[0_18px_40px_-22px_rgba(16,21,18,0.55)]">
-          <a href={hero.ctas[0].href} className="btn btn-dark min-w-fit flex-1">
+        <div className="glass flex gap-2 rounded-2xl p-2 shadow-[0_18px_40px_-22px_rgba(16,21,18,0.55)]">
+          <a href={hero.ctas[0].href} className="btn btn-dark min-w-0 flex-1">
             {hero.ctas[0].label}
           </a>
-          <a href={hero.ctas[1].href} className="btn btn-ghost min-w-fit flex-1 px-4">
-            {hero.ctas[1].label}
+          <a
+            href={hero.ctas[1].href}
+            aria-label={hero.ctas[1].label}
+            className="btn btn-ghost shrink-0 px-3.5 min-[430px]:px-4"
+          >
+            <span className="hidden min-[430px]:inline">{hero.ctas[1].label}</span>
             <Icon name="arrow-down" className="h-4 w-4" strokeWidth={2} />
           </a>
         </div>

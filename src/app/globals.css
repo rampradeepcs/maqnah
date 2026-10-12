@@ -61,6 +61,12 @@
     background: var(--color-void);
     scroll-padding-top: var(--nav-offset);
   }
+  /* Keep scroll-padding for focused controls, but land section jumps at the
+     very top: every section's own top padding already clears the nav, and
+     full-bleed bands shouldn't show a strip of the section above. */
+  section[id] {
+    scroll-margin-top: calc(-1 * var(--nav-offset));
+  }
 
   body {
     background: var(--color-void);
@@ -345,6 +351,9 @@
   }
   .reveal:not(.in) {
     will-change: opacity, transform;
+    /* Safety net: if the app never hydrates (a script failed to load),
+       reveal anyway after 4s. <html class="hydrated"> switches it off. */
+    animation: settle 0s 4s forwards;
   }
   .reveal.in {
     opacity: 1;
@@ -366,6 +375,7 @@
     display: block;
     transform: translateY(150%);
     transition: transform 1.1s var(--ease-out-expo);
+    animation: settle 0s 4s forwards;
   }
   .in .mask-line > span,
   .mask-line.in > span {
@@ -444,9 +454,24 @@
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
     transition: stroke-dashoffset 2.4s var(--ease-out-expo);
+    animation: settle 0s 4s forwards;
   }
   .draw.in path {
     stroke-dashoffset: 0;
+  }
+
+  @keyframes settle {
+    to {
+      opacity: 1;
+      transform: none;
+      stroke-dashoffset: 0;
+    }
+  }
+  /* Hydrated: the observers own the reveals from here. */
+  .hydrated .reveal,
+  .hydrated .mask-line > span,
+  .hydrated .draw path {
+    animation: none;
   }
 }
 
@@ -475,7 +500,7 @@
 }
 
 /* ============================================================================
-   No JavaScript — nothing waits on an observer that will never run
+   No JavaScript — show everything at once rather than after the 4s net
    ============================================================================ */
 
 @media (scripting: none) {
@@ -489,4 +514,69 @@
   .draw path {
     stroke-dashoffset: 0;
   }
+}
+
+/* ============================================================================
+   Arabic (RTL) — /ar
+   Layout mirrors through logical utilities (ms-/ps-/start-/border-s…); these
+   rules carry what the type itself needs.
+   ============================================================================ */
+
+html[lang="ar"] {
+  --font-display: var(--font-alexandria), "Geeza Pro", "Segoe UI", system-ui, sans-serif;
+  --font-sans: var(--font-plex-arabic), "Geeza Pro", "Segoe UI", system-ui, sans-serif;
+  /* The cursor label: JetBrains Mono has no Arabic */
+  --font-mono: var(--font-plex-arabic), "Geeza Pro", system-ui, sans-serif;
+}
+
+/* Arabic letters join; any tracking breaks the joins. */
+html[lang="ar"] *,
+html[lang="ar"] *::before,
+html[lang="ar"] *::after {
+  letter-spacing: 0 !important;
+}
+html[lang="ar"] .label,
+html[lang="ar"] .chip,
+html[lang="ar"] .mono {
+  text-transform: none;
+}
+/* …but the metric figures are Latin digits: keep their tight set. */
+html[lang="ar"] .t-num,
+html[lang="ar"] .t-num * {
+  letter-spacing: -0.04em !important;
+  font-variant-numeric: normal;
+}
+html[lang="ar"] .label {
+  font-size: 0.8125rem;
+}
+
+/* Tall letters, dots and deep descenders need a roomier line. */
+html[lang="ar"] body {
+  line-height: 1.75;
+}
+html[lang="ar"] .display:not(.t-num) {
+  line-height: 1.4 !important;
+}
+html[lang="ar"] .lede {
+  line-height: 1.85;
+}
+
+/* …and more room inside the reveal masks, top and bottom. */
+html[lang="ar"] .mask-line,
+html[lang="ar"] .word-mask {
+  padding-block: 0.3em 0.4em;
+  margin-block: -0.3em -0.4em;
+}
+/* Stacked lines' negative margins collapse into one (-0.4em), leaving 0.3em
+   of extra gap; this cancels it so line spacing matches English. */
+html[lang="ar"] .mask-line + .mask-line {
+  margin-top: -0.7em;
+}
+
+/* Arrows point the way the line reads. */
+[dir="rtl"] .btn .arrow {
+  transform: scaleX(-1);
+}
+[dir="rtl"] .btn:hover .arrow {
+  transform: translateX(-3px) scaleX(-1);
 }

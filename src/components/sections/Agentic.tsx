@@ -1,4 +1,4 @@
-import { agentic } from "@/lib/content";
+import type { Dictionary } from "@/lib/i18n";
 import { Counter } from "../ui/Counter";
 import { MaskLines, Reveal } from "../ui/Reveal";
 
@@ -7,7 +7,7 @@ import { MaskLines, Reveal } from "../ui/Reveal";
  * band, no imagery, and the three metrics laid out in a single row —
  * large light numerals divided by hairlines.
  */
-export function Agentic() {
+export function Agentic({ t: agentic }: { t: Dictionary["agentic"] }) {
   return (
     <section
       id="agentic"
@@ -39,8 +39,8 @@ export function Agentic() {
               delay={0.08 * i}
               className={`py-9 md:px-10 md:pb-2 md:pt-12 ${
                 i > 0
-                  ? "border-t border-white/25 md:border-l md:border-t-0"
-                  : "md:pl-0"
+                  ? "border-t border-white/25 md:border-s md:border-t-0"
+                  : "md:ps-0"
               }`}
             >
               <p className="label text-white/80">{m.prefix}</p>
