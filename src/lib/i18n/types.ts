@@ -10,13 +10,16 @@ export type IconName =
   | "domain"
   | "scale"
   | "integration"
-  | "design"
-  | "local"
   | "foundations"
   | "intelligence"
   | "operations";
 
 export type PillarIcon = "foundations" | "intelligence" | "operations";
+
+/** The two colour graphics set into the banner headline */
+export type HeadlineGraphic = "data" | "ai";
+
+export type ClientLogoId = "qiddiya" | "qudrat" | "elite" | "inzkar" | "zizi";
 
 type Link = { label: string; href: string };
 
@@ -45,11 +48,6 @@ export type Dictionary = {
     footerNav: string;
     openMenu: string;
     closeMenu: string;
-    /** Labels shown in the custom cursor ring */
-    cursor: { talk: string; view: string; send: string };
-    clientPhotoToCome: string;
-    /** Opening and closing quotation marks for testimonials */
-    quotes: [string, string];
     /** Appended to a social label whose URL is still to come */
     linkToCome: string;
     form: {
@@ -94,12 +92,12 @@ export type Dictionary = {
   };
 
   hero: {
-    tag: string;
     headline: string;
-    /** Word index (split on spaces) → the tiny icon tile that follows it */
-    headlineIcons: Record<number, "layers" | "spark">;
+    /** Word index (split on spaces) → the small colour graphic that follows it */
+    headlineIcons: Record<number, HeadlineGraphic>;
     lead: string;
-    ctas: Link[];
+    /** One call to action only */
+    cta: Link;
     visual: { src: string; alt: string };
   };
 
@@ -115,7 +113,6 @@ export type Dictionary = {
     /** Two sentences: the first set in ink, the second in grey */
     heading: [string, string];
     blocks: { title: string; body: string }[];
-    photo: { label: string; note: string };
     strengthsHeading: string;
     strengths: { icon: IconName; title: string; body: string }[];
   };
@@ -142,15 +139,16 @@ export type Dictionary = {
   work: {
     tag: string;
     heading: string;
-    items: { chip: string; title: string; body: string; image: string }[];
+    /** No titles: the sector chip, then the story */
+    items: { chip: string; body: string; image: string }[];
     cta: { line: string; label: string; href: string };
   };
 
   clients: {
     tag: string;
     heading: string;
-    logos: string[];
-    testimonials: { quote: string; name: string; role: string }[];
+    /** Client name for each logo, as read by screen readers */
+    logos: { id: ClientLogoId; name: string }[];
   };
 
   contact: {

@@ -3,9 +3,9 @@ import { Counter } from "../ui/Counter";
 import { MaskLines, Reveal } from "../ui/Reveal";
 
 /**
- * Straight under the banner, the outcomes that back it up: one solid green
+ * Straight under the banner, the outcomes that back it up: one solid indigo
  * band, no imagery, and the three metrics laid out in a single row —
- * large light numerals divided by hairlines.
+ * large light numerals divided by hairlines, each led by an amber label.
  */
 export function Agentic({ t: agentic }: { t: Dictionary["agentic"] }) {
   return (
@@ -43,7 +43,7 @@ export function Agentic({ t: agentic }: { t: Dictionary["agentic"] }) {
                   : "md:ps-0"
               }`}
             >
-              <p className="label text-white/80">{m.prefix}</p>
+              <p className="label text-accent">{m.prefix}</p>
               <p className="display t-num mt-3 font-light">
                 <Counter to={m.value} suffix={m.suffix} />
               </p>

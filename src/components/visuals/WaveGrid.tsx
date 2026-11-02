@@ -9,7 +9,7 @@ import { useEffect, useRef } from "react";
  * from every live point, so waves cross, average and fade rather than stack.
  * When the pointer rests, random points keep the surface alive.
  *
- * Wave peaks tint toward Saudi green. An RGB-shift vignette pass adds the
+ * Wave peaks tint toward Maqnah indigo. An RGB-shift vignette pass adds the
  * faint chromatic fringing at the edges. Three.js loads lazily on the client
  * so the rest of the page never waits on it.
  */
@@ -30,7 +30,7 @@ const WAVE = {
   fadeTime: 2.0, // s to fall to ~37%
   trailSpacing: 0.1,
   colorBase: "#ffffff",
-  colorHigh: "#006c35",
+  colorHigh: "#3d3887",
 };
 
 const VERTEX_HEAD = /* glsl */ `

@@ -1,5 +1,4 @@
 import { Inter, Urbanist } from "next/font/google";
-import { mono } from "./fonts-mono";
 
 /**
  * English typefaces. Urbanist is the title face the brief asks for (a calm
@@ -18,4 +17,4 @@ const sans = Inter({
   display: "swap",
 });
 
-export const fontsEn = `${display.variable} ${sans.variable} ${mono.variable}`;
+export const fontsEn = `${display.variable} ${sans.variable}`;

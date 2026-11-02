@@ -5,17 +5,17 @@ import { GradientLines } from "../visuals/GradientLines";
 
 /**
  * The trust section. Track record and vision on the left; what Maqnah
- * brings on the right, each strength marked by a line icon in a soft circle.
- * On wide screens a bundle of gradient traces enters from the end edge and
- * climbs into the space under the strengths (hidden on narrow screens, where
- * it would cross the copy).
+ * brings on the right: three strengths, each marked by a line icon in a soft
+ * circle, set to end level with the left column. On wide screens a bundle of
+ * gradient traces enters from the end edge into the space above the
+ * strengths (hidden on narrow screens, where it would cross the copy).
  */
 export function About({ t: about }: { t: Dictionary["about"] }) {
   const [lead, rest] = about.heading;
 
   return (
     <section id="about" className="relative overflow-hidden">
-      <GradientLines className="pointer-events-none absolute bottom-6 end-0 hidden w-[58%] max-w-[980px] ltr:-scale-x-100 lg:block" />
+      <GradientLines className="pointer-events-none absolute end-0 top-24 hidden w-[44%] max-w-[760px] ltr:-scale-x-100 lg:block" />
 
       <div className="container-x relative grid gap-16 py-24 md:py-32 lg:grid-cols-2 lg:gap-20">
         <div className="flex flex-col gap-9">
@@ -45,19 +45,9 @@ export function About({ t: about }: { t: Dictionary["about"] }) {
               </div>
             </Reveal>
           ))}
-
-          <Reveal>
-            <div className="slot relative aspect-[16/10] rounded-3xl bg-surface">
-              <div className="flex flex-col items-center gap-3 px-6">
-                <Icon name="camera" className="h-8 w-8" />
-                <p className="label">{about.photo.label}</p>
-                <p className="text-[13.5px]">{about.photo.note}</p>
-              </div>
-            </div>
-          </Reveal>
         </div>
 
-        <div className="lg:pt-24">
+        <div className="lg:self-end">
           <Reveal>
             <h3 className="display t-h3 border-b border-line pb-5 text-fg">
               {about.strengthsHeading}
@@ -71,7 +61,7 @@ export function About({ t: about }: { t: Dictionary["about"] }) {
                 delay={0.05 * i}
                 className="flex gap-5 border-b border-line py-6"
               >
-                <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-mint text-signal">
+                <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-tint text-signal">
                   <Icon name={s.icon} className="h-6 w-6" />
                 </span>
                 <div className="pt-1">

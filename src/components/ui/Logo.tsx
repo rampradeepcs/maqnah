@@ -1,8 +1,8 @@
 import Image from "next/image";
 
 /**
- * The official Maqnah lock-up from the brand brief (public/brand), with the
- * mark's blades recoloured from indigo to the site's Saudi green.
+ * The official Maqnah lock-up from the brand brief (public/brand), in its
+ * own colours: indigo blades (#3D3887) and a charcoal wordmark.
  * `tone="white"` reverses it for dark grounds with a filter, so the source
  * artwork is never redrawn.
  *

@@ -8,7 +8,7 @@ const GAP = 12;
 
 /**
  * A bundle of stepped traces — horizontal, a 45° climb, horizontal again —
- * stroked in a mint-to-green gradient that fades out at the far end. They
+ * stroked in a lavender-to-indigo gradient that fades out at the far end. They
  * draw themselves in once, when the bundle scrolls into view.
  */
 export function GradientLines({ className = "" }: { className?: string }) {
@@ -25,10 +25,10 @@ export function GradientLines({ className = "" }: { className?: string }) {
       >
         <defs>
           <linearGradient id={id} x1="0" y1="0" x2="900" y2="0" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#a6d6b8" stopOpacity="0.2" />
-            <stop offset="28%" stopColor="#2f9f5f" stopOpacity="0.9" />
-            <stop offset="62%" stopColor="#006c35" stopOpacity="0.75" />
-            <stop offset="100%" stopColor="#006c35" stopOpacity="0" />
+            <stop offset="0%" stopColor="#b8b4ea" stopOpacity="0.2" />
+            <stop offset="28%" stopColor="#4a7dff" stopOpacity="0.9" />
+            <stop offset="62%" stopColor="#3d3887" stopOpacity="0.75" />
+            <stop offset="100%" stopColor="#3d3887" stopOpacity="0" />
           </linearGradient>
         </defs>
         {Array.from({ length: LINES }, (_, i) => {

@@ -4,38 +4,44 @@
    MAQNAH — Design system
    "Intelligence that transforms business."
 
-   Light-grey ground · Saudi-flag green signal · generous white space.
-   Colour is treated as data: the accent marks where intelligence is active,
-   never as decoration.
+   Cool light-grey ground · Maqnah indigo signal (the logo's own colour) ·
+   an amber accent for contrast · generous white space. Indigo marks where
+   intelligence is active; amber is used sparingly, so the page never reads
+   as one flat colour.
    ============================================================================ */
 
 @theme {
   /* --- Ground ------------------------------------------------------------ */
-  --color-void: #f3f4f1;
+  --color-void: #f4f4f7;
   --color-surface: #ffffff;
-  --color-surface2: #e9ede9;
+  --color-surface2: #ebebf1;
 
   /* --- Ink --------------------------------------------------------------- */
-  --color-fg: #101512;
-  --color-muted: #4f5853;
-  --color-faint: #66706a;
-  --color-line: rgba(16, 21, 18, 0.09);
-  --color-line-strong: rgba(16, 21, 18, 0.2);
+  --color-fg: #13141b;
+  --color-muted: #515462;
+  --color-faint: #686b7a;
+  --color-line: rgba(19, 20, 27, 0.09);
+  --color-line-strong: rgba(19, 20, 27, 0.2);
 
-  /* --- Signal: Saudi flag green (Pantone 330 C ≈ #006C35) ---------------- */
-  --color-signal: #006c35;
-  --color-signal-deep: #004d26;
-  --color-mint: #dfefe5;
-  --color-mint-strong: #a6d6b8;
+  /* --- Signal: Maqnah indigo, from the logo mark (#3D3887) --------------- */
+  --color-signal: #3d3887;
+  --color-signal-deep: #2b2769;
+  --color-tint: #ecebf8;
+  --color-tint-strong: #b8b4ea;
+
+  /* --- Accent: amber, the indigo's contrast. Fills and marks only: it is
+         too light for text on white. --------------------------------------- */
+  --color-accent: #f2a53a;
+  --color-accent-deep: #d9821a;
+  --color-sky: #4a7dff;
 
   /* --- Night: the contact section's ground ------------------------------- */
-  --color-night: #040a07;
+  --color-night: #07071a;
 
   /* --- Type -------------------------------------------------------------- */
-  /* next/font sets --font-urbanist / --font-inter / --font-jetbrains on <html> */
+  /* next/font sets --font-urbanist / --font-inter on <html> (Arabic fonts below) */
   --font-display: var(--font-urbanist), "Helvetica Neue", system-ui, sans-serif;
   --font-sans: var(--font-inter), system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, "SF Mono", monospace;
 
   /* --- Motion ------------------------------------------------------------ */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -43,7 +49,7 @@
 
 :root {
   color-scheme: light;
-  --grid-line: rgba(16, 21, 18, 0.06);
+  --grid-line: rgba(19, 20, 27, 0.06);
   /* Fixed header: 12px gap + 64px bar + breathing room */
   --nav-offset: 96px;
 }
@@ -76,14 +82,6 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Cursor is drawn by <Cursor/>; hide the native one on precise pointers. */
-  @media (hover: hover) and (pointer: fine) {
-    body.has-custom-cursor,
-    body.has-custom-cursor * {
-      cursor: none !important;
-    }
-  }
-
   ::selection {
     background: var(--color-signal);
     color: #ffffff;
@@ -97,11 +95,11 @@
     background: var(--color-void);
   }
   ::-webkit-scrollbar-thumb {
-    background: rgba(16, 21, 18, 0.18);
+    background: rgba(19, 20, 27, 0.18);
     border-radius: 999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 108, 53, 0.45);
+    background: rgba(61, 56, 135, 0.45);
   }
 
   :focus-visible {
@@ -109,7 +107,7 @@
     outline-offset: 3px;
     border-radius: 2px;
   }
-  /* Green on green would vanish: the footer and the agentic band ring in white */
+  /* Indigo on indigo would vanish: the footer and the agentic band ring in white */
   footer :focus-visible,
   #agentic :focus-visible {
     outline-color: #ffffff;
@@ -191,14 +189,6 @@
     letter-spacing: -0.008em;
   }
 
-  .mono {
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    font-weight: 500;
-  }
-
   /* Small label: section eyebrows, form field names */
   .label {
     font-family: var(--font-sans);
@@ -231,7 +221,7 @@
     display: inline-flex;
     align-items: center;
     border-radius: 999px;
-    background: var(--color-mint);
+    background: var(--color-tint);
     color: var(--color-signal);
     padding: 0.3rem 0.7rem;
     font-size: 0.6875rem;
@@ -525,8 +515,6 @@
 html[lang="ar"] {
   --font-display: var(--font-alexandria), "Geeza Pro", "Segoe UI", system-ui, sans-serif;
   --font-sans: var(--font-plex-arabic), "Geeza Pro", "Segoe UI", system-ui, sans-serif;
-  /* The cursor label: JetBrains Mono has no Arabic */
-  --font-mono: var(--font-plex-arabic), "Geeza Pro", system-ui, sans-serif;
 }
 
 /* Arabic letters join; any tracking breaks the joins. */
@@ -536,8 +524,7 @@ html[lang="ar"] *::after {
   letter-spacing: 0 !important;
 }
 html[lang="ar"] .label,
-html[lang="ar"] .chip,
-html[lang="ar"] .mono {
+html[lang="ar"] .chip {
   text-transform: none;
 }
 /* …but the metric figures are Latin digits: keep their tight set. */

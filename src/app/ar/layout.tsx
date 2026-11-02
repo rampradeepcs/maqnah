@@ -8,7 +8,7 @@ import { SiteShell } from "@/components/SiteShell";
 export const metadata = buildMetadata(ar);
 
 export const viewport: Viewport = {
-  themeColor: "#f3f4f1",
+  themeColor: "#f4f4f7",
   colorScheme: "light",
 };
 

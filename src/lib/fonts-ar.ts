@@ -1,5 +1,4 @@
 import { Alexandria, IBM_Plex_Sans_Arabic } from "next/font/google";
-import { mono } from "./fonts-mono";
 
 /**
  * Arabic typefaces: Alexandria (a geometric Arabic display face that sits
@@ -26,4 +25,4 @@ const sans = IBM_Plex_Sans_Arabic({
   preload: false,
 });
 
-export const fontsAr = `${display.variable} ${sans.variable} ${mono.variable}`;
+export const fontsAr = `${display.variable} ${sans.variable}`;

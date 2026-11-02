@@ -2,11 +2,12 @@
  * Three abstract line graphics, one per service pillar, drawn on a faint
  * construction grid: stacked signal bars (foundations), a radiating burst
  * (intelligence) and nested discs settling into place (operations).
- * Ink with a single green accent, so colour still marks what is active.
+ * Ink with a single amber accent: the contrast to the indigo around it,
+ * and still the mark of what is active.
  */
-const INK = "#101512";
-const GREEN = "#006c35";
-const GUIDE = "rgba(16,21,18,0.12)";
+const INK = "#13141b";
+const ACCENT = "#e8952c";
+const GUIDE = "rgba(19,20,27,0.12)";
 
 function Guides() {
   return (
@@ -33,7 +34,7 @@ function Bars() {
           <path
             key={`b${i}`}
             d={`M${x} ${100 - h / 2}V${100 + h / 2}`}
-            stroke={accent ? GREEN : INK}
+            stroke={accent ? ACCENT : INK}
             strokeWidth={3.2}
             strokeLinecap="round"
           />
@@ -62,9 +63,9 @@ function Burst() {
         const r1 = 76;
         const w = 5.5;
         const d = `M${cx + ux * r0} ${cy + uy * r0} L${cx + ux * r1 + px * w} ${cy + uy * r1 + py * w} L${cx + ux * r1 - px * w} ${cy + uy * r1 - py * w} Z`;
-        return <path key={i} d={d} fill={i === 1 ? GREEN : INK} />;
+        return <path key={i} d={d} fill={i === 1 ? ACCENT : INK} />;
       })}
-      <circle cx={cx} cy={cy} r={5} fill={GREEN} />
+      <circle cx={cx} cy={cy} r={5} fill={ACCENT} />
     </g>
   );
 }
@@ -76,7 +77,7 @@ function Discs() {
     { r: 51, c: "#c4c9c5" },
     { r: 39, c: "#a3a9a5" },
     { r: 28, c: "#7d847f" },
-    { r: 18, c: GREEN },
+    { r: 18, c: ACCENT },
   ];
   return (
     <g>

@@ -2,7 +2,14 @@ import { ar } from "./ar";
 import { en } from "./en";
 import type { Dictionary, Locale } from "./types";
 
-export type { Dictionary, Locale, IconName, PillarIcon } from "./types";
+export type {
+  ClientLogoId,
+  Dictionary,
+  HeadlineGraphic,
+  IconName,
+  Locale,
+  PillarIcon,
+} from "./types";
 
 export const dictionaries: Record<Locale, Dictionary> = { en, ar };
 

@@ -1,13 +1,27 @@
-import type { Dictionary } from "@/lib/i18n";
-import { Icon } from "../ui/Icon";
+import Image from "next/image";
+import type { ClientLogoId, Dictionary } from "@/lib/i18n";
 import { MaskLines, Reveal } from "../ui/Reveal";
 
 /**
- * Social proof, quiet and centred: a greyscale strip of client logos, then
- * the testimonials in one ruled grid. Logo and portrait slots stay marked
- * until real, approved assets replace them.
+ * Each logo file in public/brand/clients, at its own pixel size, and the
+ * height it is drawn at. Qiddiya is the official artwork, cropped tight;
+ * the others are simple marks drawn for this page (Qudrat National's stands
+ * in until the official file arrives) with a little padding of their own,
+ * so they are drawn taller to match it optically.
  */
-export function Clients({ t: clients, ui }: { t: Dictionary["clients"]; ui: Dictionary["ui"] }) {
+const LOGOS: Record<ClientLogoId, { width: number; height: number; className: string }> = {
+  qiddiya: { width: 480, height: 119, className: "h-[34px]" },
+  qudrat: { width: 448, height: 144, className: "h-11" },
+  elite: { width: 427, height: 144, className: "h-11" },
+  inzkar: { width: 542, height: 144, className: "h-11" },
+  zizi: { width: 371, height: 144, className: "h-11" },
+};
+
+/**
+ * Social proof, quiet and centred: a greyscale row of client logos, each
+ * coming up to full strength on hover.
+ */
+export function Clients({ t: clients }: { t: Dictionary["clients"] }) {
   return (
     <section id="clients" className="bg-surface py-24 md:py-32">
       <div className="container-x">
@@ -19,44 +33,26 @@ export function Clients({ t: clients, ui }: { t: Dictionary["clients"]; ui: Dict
         </div>
 
         <Reveal className="mt-14">
-          <ul className="grid grid-cols-2 gap-3 grayscale sm:grid-cols-3 lg:grid-cols-6">
-            {clients.logos.map((label, i) => (
-              <li
-                key={i}
-                className="slot h-14 rounded-xl text-[11px] font-medium uppercase tracking-[0.14em]"
-              >
-                {label}
-              </li>
-            ))}
-          </ul>
-        </Reveal>
-
-        <Reveal className="mt-16 overflow-hidden rounded-3xl border border-line">
-          <div className="grid divide-y divide-line lg:grid-cols-3 lg:divide-x lg:divide-y-0">
-            {clients.testimonials.map((t, i) => (
-              <figure
-                key={i}
-                className="flex flex-col items-center gap-6 bg-surface p-8 text-center md:p-10"
-              >
-                <span
-                  role="img"
-                  aria-label={ui.clientPhotoToCome}
-                  className="slot h-16 w-16 rounded-full"
+          <ul className="flex flex-wrap justify-center gap-3">
+            {clients.logos.map(({ id, name }) => {
+              const logo = LOGOS[id];
+              return (
+                <li
+                  key={id}
+                  className="flex h-24 basis-[calc(50%-6px)] items-center justify-center rounded-2xl border border-line bg-void/60 px-5 sm:basis-[calc(33.333%-8px)] lg:basis-[calc(20%-9.6px)]"
                 >
-                  <Icon name="user" className="h-6 w-6" />
-                </span>
-                <blockquote className="text-[16px] leading-[1.7] text-fg">
-                  {ui.quotes[0]}
-                  {t.quote}
-                  {ui.quotes[1]}
-                </blockquote>
-                <figcaption className="mt-auto">
-                  <span className="block text-[15px] font-semibold text-fg">{t.name}</span>
-                  <span className="mt-1 block text-[13.5px] text-muted">{t.role}</span>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
+                  <Image
+                    src={`/brand/clients/${id}.png`}
+                    alt={name}
+                    width={logo.width}
+                    height={logo.height}
+                    unoptimized
+                    className={`w-auto max-w-full object-contain opacity-70 grayscale transition-opacity duration-300 hover:opacity-100 ${logo.className}`}
+                  />
+                </li>
+              );
+            })}
+          </ul>
         </Reveal>
       </div>
     </section>

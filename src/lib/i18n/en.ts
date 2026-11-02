@@ -35,9 +35,6 @@ export const en = {
     footerNav: "Footer",
     openMenu: "Open menu",
     closeMenu: "Close menu",
-    cursor: { talk: "LET'S TALK", view: "VIEW", send: "SEND" },
-    clientPhotoToCome: "Client photo to come",
-    quotes: ["\u201c", "\u201d"],
     linkToCome: "(link to come)",
     form: {
       firstName: "First name",
@@ -83,14 +80,10 @@ export const en = {
   },
 
   hero: {
-    tag: "Data & AI · Saudi Arabia & GCC",
     headline: "Engineering the intelligence that powers the Kingdom's next era.",
-    headlineIcons: { 0: "layers", 2: "spark" },
+    headlineIcons: { 0: "data", 2: "ai" },
     lead: "Maqnah builds AI-native data platforms that let enterprises and startups across Saudi Arabia and the GCC sense, decide and act at the speed of change.",
-    ctas: [
-      { label: "Start a conversation", href: "#contact" },
-      { label: "See our work", href: "#work" },
-    ],
+    cta: { label: "See our work", href: "#work" },
     visual: {
       src: "/img/hero-lens.jpg",
       alt: "A silver lens etched with an Islamic geometric pattern, turning streams of data into live dashboards",
@@ -123,8 +116,6 @@ export const en = {
         body: "Technology has reinvented itself many times in that span, from big data and cloud to machine learning, generative AI and autonomous agents. We have evolved with every shift, and we bring that same vision to our clients today, helping them adopt what's next with confidence.",
       },
     ],
-    /** PLACEHOLDER — real team photography only, never stock. */
-    photo: { label: "Team photo", note: "Real team in a workshop or office setting" },
     strengthsHeading: "What we bring to the table",
     strengths: [
       {
@@ -141,17 +132,6 @@ export const en = {
         icon: "integration",
         title: "Seamless integration",
         body: "We connect with the systems you already run, from ERP to legacy platforms.",
-      },
-      {
-        icon: "design",
-        title: "Design-led engineering",
-        body: "Data products people adopt, because they are designed around them.",
-      },
-      {
-        // Confirm the team's language capabilities before launch.
-        icon: "local",
-        title: "Local presence",
-        body: "A team on the ground in the Kingdom, working in Arabic and English.",
       },
     ],
   },
@@ -211,7 +191,7 @@ export const en = {
         alt: "A gas processing facility in the Saudi desert at golden hour",
       },
       {
-        name: "Financial Services & Fintech",
+        name: "Fintech",
         line: "Automation, risk insight and smarter customer journeys.",
         image: "/img/industry-fintech.jpg",
         alt: "Glass towers of a financial district at dusk, with a light-rail line curving below",
@@ -223,7 +203,7 @@ export const en = {
         alt: "A young founding team working around a laptop in a bright co-working space",
       },
       {
-        name: "Automotive & Manufacturing",
+        name: "Manufacturing",
         line: "Connected production, quality and sales insight.",
         image: "/img/industry-automotive.jpg",
         alt: "Robotic arms working on car body shells along a clean assembly line",
@@ -248,44 +228,42 @@ export const en = {
    * Project copy is indicative: confirm each story (and add one real result)
    * with the project leads before launch.
    */
+  /**
+   * No detail pages, no client names and no titles: each card is the sector
+   * and the story (Round 2 feedback copy, 1 Nov 2026).
+   */
   work: {
     tag: "Our work",
     heading: "Real results across the region's key industries",
     items: [
       {
         chip: "Oil & Gas",
-        title: "Automating a national energy program, end to end",
-        body: "Replaced manual tracking with one automated platform. Every stakeholder now sees live progress. Decisions are faster and fully transparent.",
+        body: "For a leading oil and gas company, we replaced the manual, vendor-run tracking of food, laundry and housekeeping services at a remote pump station with a fully automated system using dynamic QR codes. It now covers 400+ field staff, with built-in checks that make every service delivery transparent and accountable in real time.",
         image: "/img/work-energy.jpg",
       },
       {
         chip: "Automotive",
-        title: "Turning production data into live decisions",
-        body: "Connected plant and sales data in one view. Teams spot bottlenecks before they slow the line. Leaders plan with confidence.",
+        body: "An intelligent field-to-engineering feedback platform for a global automotive major's R&D facility, capturing, classifying and routing on-ground vehicle issues to engineering teams in real time. This closed-loop pipeline sped up root-cause analysis and design improvements for each next variant.",
         image: "/img/work-automotive.jpg",
       },
       {
         chip: "Fintech",
-        title: "Building an RPA product for a fintech innovator",
-        body: "Designed and engineered a robotic process automation platform. Customers automate repetitive finance work. Launched faster with a product users enjoy.",
+        body: "An intelligent RPA solution for a leading European bank's credit underwriting function, automating document ingestion and financial spreading across complex credit files. It optimises the credit decisioning lifecycle and enables straight-through processing.",
         image: "/img/work-fintech.jpg",
       },
       {
         chip: "Agritech",
-        title: "Smarter farming through field data",
-        body: "Brought crop, weather and field data together. Growers get clear, timely recommendations. Better planning from seed to harvest.",
+        body: "Engineered satellite-powered solutions that map farm plots, analyse yields and draw on historical crop records. Lenders gain reliable, data-backed insight to assess credit risk and lend with confidence, while farmers access fairer, faster financing based on how their land actually performs.",
         image: "/img/work-agritech.jpg",
       },
       {
         chip: "Healthcare",
-        title: "Clearer care with connected data",
-        body: "Unified patient and operational data. Care teams see what matters at a glance. Less admin, more time for patients.",
+        body: "Developed connected metabolic-health platforms that enable continuous remote monitoring of patients' glycaemic data. Real-time insights empower patients to manage their condition confidently, while clinicians intervene early and personalise treatment. The result is attentive, around-the-clock care that extends expert support beyond the clinic, wherever patients are.",
         image: "/img/work-healthcare.jpg",
       },
       {
         chip: "Analytics",
-        title: "Enterprise dashboards leaders actually use",
-        body: "Designed analytics products for data-heavy teams. Complex data made simple and visual. Adoption that lasts beyond launch.",
+        body: "For one of the Middle East's largest enterprises, we reimagined the interface of a data-intensive analytics platform, distilling complex, multi-domain information into clean, intuitive dashboards. Key KPIs now sit front and centre, giving leadership clear visibility across a vast asset portfolio and enabling faster, more confident decisions.",
         image: "/img/work-analytics.jpg",
       },
     ],
@@ -296,31 +274,17 @@ export const en = {
     },
   },
 
+  /** Logos shown with client permission. Testimonials are off for now. */
   clients: {
     tag: "Clients",
     heading: "Trusted by leaders across the GCC and beyond",
-    /** PLACEHOLDER — logos only with client permission; otherwise sector names. */
-    logos: Array.from({ length: 6 }, () => "Client logo"),
-    /** PLACEHOLDER — samples showing length and tone; use real, approved quotes. */
-    testimonials: [
-      {
-        quote:
-          "Maqnah brought deep expertise and disciplined processes to a program of real scale. They worked seamlessly across our stakeholders and existing systems, backed by clear, proven capability at every stage.",
-        name: "[Client name]",
-        role: "[Role], [Energy company], KSA",
-      },
-      {
-        quote:
-          "From day one, Maqnah put clear governance in place for how our project would be run. They brought multiple teams and legacy platforms together without friction, and have held that standard at every phase since.",
-        name: "[Client name]",
-        role: "[Role], [Fintech company]",
-      },
-      {
-        quote:
-          "Their early analysis gave us a clear roadmap for a project of this size and complexity. Stakeholders stayed aligned, systems came together smoothly, and the results speak for themselves.",
-        name: "[Client name]",
-        role: "[Role], [Industry], [Country]",
-      },
+    logos: [
+      { id: "qiddiya", name: "Qiddiya" },
+      // PLACEHOLDER — a stand-in mark until the official logo file arrives.
+      { id: "qudrat", name: "Qudrat National" },
+      { id: "elite", name: "Elite International" },
+      { id: "inzkar", name: "Inzkar Tech" },
+      { id: "zizi", name: "ZiZi Logistics" },
     ],
   },
 

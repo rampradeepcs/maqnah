@@ -8,7 +8,7 @@ import { Icon } from "../ui/Icon";
 type State = "idle" | "sending" | "sent" | "error";
 
 const input =
-  "w-full rounded-xl border border-line bg-void px-4 py-3 text-base text-fg outline-none transition-[border-color,background-color,box-shadow] duration-300 placeholder:text-faint focus:border-signal focus:bg-white focus:shadow-[0_0_0_4px_rgba(0,108,53,0.1)]";
+  "w-full rounded-xl border border-line bg-void px-4 py-3 text-base text-fg outline-none transition-[border-color,background-color,box-shadow] duration-300 placeholder:text-faint focus:border-signal focus:bg-white focus:shadow-[0_0_0_4px_rgba(61,56,135,0.12)]";
 
 function Field({
   label,
@@ -173,7 +173,6 @@ export function ContactForm({
         <button
           type="submit"
           aria-disabled={state === "sending"}
-          data-cursor={ui.cursor.send}
           className="btn btn-primary px-8 aria-disabled:cursor-wait aria-disabled:opacity-60"
         >
           {state === "sending" ? t.sending : form.submit}

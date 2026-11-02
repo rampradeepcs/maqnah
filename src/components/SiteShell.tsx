@@ -1,7 +1,6 @@
 import type { Dictionary } from "@/lib/i18n";
 import { buildJsonLd } from "@/lib/seo";
 import { SmoothScroll } from "./ui/SmoothScroll";
-import { Cursor } from "./ui/Cursor";
 import { HydrationMark } from "./ui/HydrationMark";
 import { Nav } from "./Nav";
 import { Footer } from "./Footer";
@@ -32,7 +31,6 @@ export function SiteShell({
       <body className="min-h-full">
         <HydrationMark />
         <SmoothScroll />
-        <Cursor />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:start-5 focus:top-5 focus:z-[200] focus:rounded-full focus:bg-signal focus:px-5 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-white"

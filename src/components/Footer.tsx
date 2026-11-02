@@ -3,7 +3,7 @@ import { Logo } from "./ui/Logo";
 import { Icon } from "./ui/Icon";
 
 /**
- * Simple and solid: the brand green as a plain ground, the lock-up reversed
+ * Simple and solid: Maqnah indigo as a plain ground, the lock-up reversed
  * out, every section one click away, thin line icons for social, and the
  * standard copyright and policy row underneath.
  */

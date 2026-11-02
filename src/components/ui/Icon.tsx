@@ -6,37 +6,18 @@ import type { IconName } from "@/lib/i18n";
  */
 type Name =
   | IconName
-  | "layers"
-  | "spark"
   | "chart"
   | "shield"
   | "nodes"
   | "check"
   | "phone"
-  | "mail"
-  | "camera"
-  | "user"
   | "linkedin"
   | "x"
   | "menu"
   | "close"
-  | "arrow-right"
-  | "arrow-down";
+  | "arrow-right";
 
 const PATHS: Record<Name, React.ReactNode> = {
-  layers: (
-    <>
-      <path d="M12 3 3 7.5 12 12l9-4.5L12 3Z" />
-      <path d="m3 12 9 4.5 9-4.5" />
-      <path d="m3 16.5 9 4.5 9-4.5" />
-    </>
-  ),
-  spark: (
-    <>
-      <path d="M12 3c.6 3.9 2.1 5.4 6 6-3.9.6-5.4 2.1-6 6-.6-3.9-2.1-5.4-6-6 3.9-.6 5.4-2.1 6-6Z" />
-      <path d="M18.5 15.5c.3 1.6.9 2.2 2.5 2.5-1.6.3-2.2.9-2.5 2.5-.3-1.6-.9-2.2-2.5-2.5 1.6-.3 2.2-.9 2.5-2.5Z" />
-    </>
-  ),
   chart: (
     <>
       <path d="M4 20h16" />
@@ -76,19 +57,6 @@ const PATHS: Record<Name, React.ReactNode> = {
       <path d="M12 17v4" />
     </>
   ),
-  design: (
-    <>
-      <path d="m12 3 6 6-6 12-6-12 6-6Z" />
-      <circle cx="12" cy="11.5" r="1.6" />
-      <path d="M12 13.1V21" />
-    </>
-  ),
-  local: (
-    <>
-      <path d="M12 21s7-6.2 7-11.5a7 7 0 1 0-14 0C5 14.8 12 21 12 21Z" />
-      <circle cx="12" cy="9.5" r="2.5" />
-    </>
-  ),
   foundations: (
     <>
       <ellipse cx="12" cy="5.5" rx="7" ry="2.5" />
@@ -117,24 +85,6 @@ const PATHS: Record<Name, React.ReactNode> = {
   phone: (
     <path d="M5 4h3.5l1.8 4.4-2.2 1.4a11 11 0 0 0 6.1 6.1l1.4-2.2L20 15.5V19a1.5 1.5 0 0 1-1.6 1.5C10.9 20 4 13.1 3.5 5.6A1.5 1.5 0 0 1 5 4Z" />
   ),
-  mail: (
-    <>
-      <rect x="3" y="5" width="18" height="14" rx="2" />
-      <path d="m3.5 6.5 8.5 6.5 8.5-6.5" />
-    </>
-  ),
-  camera: (
-    <>
-      <path d="M4 8h3l1.8-2.5h6.4L17 8h3v11H4V8Z" />
-      <circle cx="12" cy="13.3" r="3.3" />
-    </>
-  ),
-  user: (
-    <>
-      <circle cx="12" cy="8.5" r="3.8" />
-      <path d="M4.5 20.5c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5" />
-    </>
-  ),
   linkedin: (
     <>
       <rect x="3.5" y="3.5" width="17" height="17" rx="3" />
@@ -145,7 +95,6 @@ const PATHS: Record<Name, React.ReactNode> = {
   menu: <path d="M4 8h16M4 16h16" />,
   close: <path d="m6 6 12 12M18 6 6 18" />,
   "arrow-right": <path d="M5 12h14m-5-5 5 5-5 5" />,
-  "arrow-down": <path d="M12 5v14m-5-5 5 5 5-5" />,
 };
 
 export function Icon({

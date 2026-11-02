@@ -2,6 +2,7 @@ import Image from "next/image";
 import type { Dictionary } from "@/lib/i18n";
 import { WaveGrid } from "../visuals/WaveGrid";
 import { Icon } from "../ui/Icon";
+import { HeadlineGraphic } from "../visuals/HeadlineGraphic";
 
 /**
  * Small frosted tiles that float over the lens: detail, at low opacity.
@@ -19,7 +20,7 @@ const GLASS = [
  * frosted veil lets the copy sit over the wall without hiding its texture.
  * In RTL the veil, the lens and its details mirror with the layout.
  */
-export function Hero({ t: hero, ui }: { t: Dictionary["hero"]; ui: Dictionary["ui"] }) {
+export function Hero({ t: hero }: { t: Dictionary["hero"] }) {
   const words = hero.headline.split(" ");
 
   return (
@@ -32,7 +33,7 @@ export function Hero({ t: hero, ui }: { t: Dictionary["hero"]; ui: Dictionary["u
       <WaveGrid className="pointer-events-none absolute inset-0" />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(243,244,241,0.92)_0%,rgba(243,244,241,0.78)_55%,rgba(243,244,241,0.3)_100%)] lg:bg-[linear-gradient(100deg,rgba(243,244,241,0.95)_0%,rgba(243,244,241,0.8)_36%,rgba(243,244,241,0.18)_64%,rgba(243,244,241,0)_82%)] lg:rtl:bg-[linear-gradient(260deg,rgba(243,244,241,0.95)_0%,rgba(243,244,241,0.8)_36%,rgba(243,244,241,0.18)_64%,rgba(243,244,241,0)_82%)]"
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(244,244,247,0.92)_0%,rgba(244,244,247,0.78)_55%,rgba(244,244,247,0.3)_100%)] lg:bg-[linear-gradient(100deg,rgba(244,244,247,0.95)_0%,rgba(244,244,247,0.8)_36%,rgba(244,244,247,0.18)_64%,rgba(244,244,247,0)_82%)] lg:rtl:bg-[linear-gradient(260deg,rgba(244,244,247,0.95)_0%,rgba(244,244,247,0.8)_36%,rgba(244,244,247,0.18)_64%,rgba(244,244,247,0)_82%)]"
       />
       <div
         aria-hidden
@@ -41,20 +42,13 @@ export function Hero({ t: hero, ui }: { t: Dictionary["hero"]; ui: Dictionary["u
 
       <div className="container-x relative grid flex-1 items-center gap-6 pb-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-4 lg:pb-16">
         <div className="relative z-10">
-          <p className="rise" style={{ animationDelay: "0.05s" }}>
-            <span className="pill-outline border-line-strong bg-white/60 text-fg backdrop-blur-sm">
-              <span className="h-1.5 w-1.5 rounded-full bg-signal" aria-hidden />
-              <span className="label text-fg/80">{hero.tag}</span>
-            </span>
-          </p>
-
-          <h1 className="display t-hero mt-7 text-fg">
+          <h1 className="display t-hero text-fg">
             {words.map((word, i) => {
               const icon = hero.headlineIcons[i];
               const delay = `${0.12 + i * 0.06}s`;
               return (
                 <span key={i}>
-                  {/* A word and its icon tile never wrap apart */}
+                  {/* A word and its graphic never wrap apart */}
                   <span className={icon ? "whitespace-nowrap" : undefined}>
                     <span className="word-mask">
                       <span style={{ animationDelay: delay }}>{word}</span>
@@ -62,7 +56,7 @@ export function Hero({ t: hero, ui }: { t: Dictionary["hero"]; ui: Dictionary["u
                     {icon && (
                       <>
                         {" "}
-                        {/* Tiles fade up rather than rise out of a mask, so
+                        {/* Graphics fade up rather than rise out of a mask, so
                             their shadow and rotated corners are never clipped. */}
                         <span
                           aria-hidden
@@ -70,11 +64,11 @@ export function Hero({ t: hero, ui }: { t: Dictionary["hero"]; ui: Dictionary["u
                           style={{ animationDelay: delay }}
                         >
                           <span
-                            className={`inline-grid h-[0.8em] w-[0.8em] translate-y-[0.1em] place-items-center rounded-[0.24em] border border-line bg-white text-signal shadow-[0_10px_24px_-12px_rgba(0,77,38,0.5)] ${
-                              icon === "spark" ? "rotate-6" : "-rotate-6"
+                            className={`inline-grid h-[0.8em] w-[0.8em] translate-y-[0.1em] place-items-center rounded-[0.24em] border border-line bg-white shadow-[0_10px_24px_-12px_rgba(19,20,27,0.4)] ${
+                              icon === "ai" ? "rotate-6" : "-rotate-6"
                             }`}
                           >
-                            <Icon name={icon} className="h-[0.48em] w-[0.48em]" strokeWidth={1.8} />
+                            <HeadlineGraphic name={icon} className="h-[0.62em] w-[0.62em]" />
                           </span>
                         </span>
                       </>
@@ -93,16 +87,10 @@ export function Hero({ t: hero, ui }: { t: Dictionary["hero"]; ui: Dictionary["u
             {hero.lead}
           </p>
 
-          <div
-            className="rise mt-9 hidden flex-wrap gap-3 md:flex"
-            style={{ animationDelay: "0.75s" }}
-          >
-            <a href={hero.ctas[0].href} data-cursor={ui.cursor.talk} className="btn btn-primary">
-              {hero.ctas[0].label}
+          <div className="rise mt-9 hidden md:block" style={{ animationDelay: "0.75s" }}>
+            <a href={hero.cta.href} className="btn btn-primary">
+              {hero.cta.label}
               <Icon name="arrow-right" className="arrow h-4 w-4" strokeWidth={2} />
-            </a>
-            <a href={hero.ctas[1].href} data-cursor={ui.cursor.view} className="btn btn-ghost">
-              {hero.ctas[1].label}
             </a>
           </div>
         </div>
@@ -123,7 +111,7 @@ export function Hero({ t: hero, ui }: { t: Dictionary["hero"]; ui: Dictionary["u
             <span
               key={g.icon}
               aria-hidden
-              className={`glass float absolute hidden h-14 w-14 place-items-center rounded-2xl text-signal shadow-[0_18px_40px_-22px_rgba(16,21,18,0.55)] sm:grid ${g.className}`}
+              className={`glass float absolute hidden h-14 w-14 place-items-center rounded-2xl text-signal shadow-[0_18px_40px_-22px_rgba(19,20,27,0.55)] sm:grid ${g.className}`}
               style={{ animationDelay: g.delay }}
             >
               <Icon name={g.icon} className="h-6 w-6" />
@@ -132,21 +120,12 @@ export function Hero({ t: hero, ui }: { t: Dictionary["hero"]; ui: Dictionary["u
         </div>
       </div>
 
-      {/* Mobile: the calls to action ride the bottom of the opening screen,
-          one row — a full-width primary and, on narrow phones, a square
-          arrow for the secondary (its label stays as the accessible name). */}
+      {/* Mobile: the call to action rides the bottom of the opening screen. */}
       <div className="container-x sticky bottom-4 z-20 pb-4 md:hidden">
-        <div className="glass flex gap-2 rounded-2xl p-2 shadow-[0_18px_40px_-22px_rgba(16,21,18,0.55)]">
-          <a href={hero.ctas[0].href} className="btn btn-dark min-w-0 flex-1">
-            {hero.ctas[0].label}
-          </a>
-          <a
-            href={hero.ctas[1].href}
-            aria-label={hero.ctas[1].label}
-            className="btn btn-ghost shrink-0 px-3.5 min-[430px]:px-4"
-          >
-            <span className="hidden min-[430px]:inline">{hero.ctas[1].label}</span>
-            <Icon name="arrow-down" className="h-4 w-4" strokeWidth={2} />
+        <div className="glass rounded-2xl p-2 shadow-[0_18px_40px_-22px_rgba(19,20,27,0.55)]">
+          <a href={hero.cta.href} className="btn btn-primary w-full">
+            {hero.cta.label}
+            <Icon name="arrow-right" className="arrow h-4 w-4" strokeWidth={2} />
           </a>
         </div>
       </div>

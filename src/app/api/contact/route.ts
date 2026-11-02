@@ -34,8 +34,8 @@ function resultPage(dict: Dictionary, status: number, error?: string) {
   const html = `<!doctype html><html lang="${dict.lang}" dir="${dict.dir}"><head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex"><title>${escape(error ? api.failTitle : form.successTitle)} · ${site.name}</title>
-    <style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f3f4f1;color:#101512;font:17px/1.6 system-ui,sans-serif}
-    main{max-width:34rem;padding:2rem}h1{font-weight:500;font-size:2rem;margin:0 0 .75rem}a{color:#006c35}</style>
+    <style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f4f4f7;color:#13141b;font:17px/1.6 system-ui,sans-serif}
+    main{max-width:34rem;padding:2rem}h1{font-weight:500;font-size:2rem;margin:0 0 .75rem}a{color:#3d3887}</style>
     </head><body><main>${body}</main></body></html>`;
   return new Response(html, {
     status: error ? status : 200,

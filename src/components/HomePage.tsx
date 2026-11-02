@@ -12,13 +12,13 @@ import { Contact } from "./sections/Contact";
 export function HomePage({ dict }: { dict: Dictionary }) {
   return (
     <>
-      <Hero t={dict.hero} ui={dict.ui} />
+      <Hero t={dict.hero} />
       <Agentic t={dict.agentic} />
       <About t={dict.about} />
       <Services t={dict.services} />
       <Industries t={dict.industries} />
-      <Work t={dict.work} ui={dict.ui} />
-      <Clients t={dict.clients} ui={dict.ui} />
+      <Work t={dict.work} />
+      <Clients t={dict.clients} />
       <Contact dict={dict} />
     </>
   );

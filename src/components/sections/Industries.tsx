@@ -36,7 +36,7 @@ export function Industries({ t: industries }: { t: Dictionary["industries"] }) {
               />
               <div
                 aria-hidden
-                className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,10,7,0)_40%,rgba(4,10,7,0.35)_62%,rgba(4,10,7,0.82)_100%)]"
+                className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,7,26,0)_40%,rgba(7,7,26,0.35)_62%,rgba(7,7,26,0.82)_100%)]"
               />
               <div className="absolute inset-x-0 bottom-0 p-6 md:p-7">
                 <h3 className="display t-h3 text-white">{ind.name}</h3>
