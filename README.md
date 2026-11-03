@@ -47,7 +47,8 @@ Nav → Hero → Agentic expertise → About → What we do → Industries
 The hero backdrop, `visuals/WaveGrid.tsx`, is a 40×40 wall of instanced cubes
 seen from above, rippling wherever the cursor has been. Three.js loads lazily
 on the client and the loop pauses when the hero scrolls away. The lens render
-is multiplied onto it with feathered edges (`.hero-visual` in `globals.css`).
+is a transparent cut-out (`public/img/hero-lens.webp`): the ring and glass are
+opaque, the data streams and floor shadow carry soft alpha.
 
 The old `/light` URL permanently redirects to `/` (`next.config.ts`).
 

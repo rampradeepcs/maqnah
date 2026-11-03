@@ -95,7 +95,7 @@ export function Hero({ t: hero }: { t: Dictionary["hero"] }) {
           </div>
         </div>
 
-        {/* The lens: multiplied onto the wall so its white ground disappears */}
+        {/* The lens: a cut-out, so it sits solid on the wall and only its data streams and shadow are see-through */}
         <div className="relative lg:-me-10 xl:-me-20">
           <Image
             src={hero.visual.src}

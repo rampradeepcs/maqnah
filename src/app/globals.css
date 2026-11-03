@@ -409,20 +409,13 @@
     }
   }
 
-  /* The hero lens: multiplied onto the cube wall so its white ground drops
-     out, with feathered edges so the render's soft floor shadow never
-     reads as a rectangle. */
+  /* The hero lens is a transparent cut-out, drawn as is so the wall never
+     shows through the ring or glass. Only the far ends of the data streams
+     fade, so they emerge from the copy side (the fade mirrors in RTL with
+     the image). */
   .hero-visual {
-    mix-blend-mode: multiply;
-    filter: brightness(1.04);
-    -webkit-mask-image:
-      linear-gradient(90deg, transparent 0%, #000 14%, #000 90%, transparent 100%),
-      linear-gradient(180deg, transparent 0%, #000 7%, #000 86%, transparent 100%);
-    -webkit-mask-composite: source-in;
-    mask-image:
-      linear-gradient(90deg, transparent 0%, #000 14%, #000 90%, transparent 100%),
-      linear-gradient(180deg, transparent 0%, #000 7%, #000 86%, transparent 100%);
-    mask-composite: intersect;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 11%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 11%);
   }
 
   /* Gentle float for the hero's glass details */

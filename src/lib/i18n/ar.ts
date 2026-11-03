@@ -109,7 +109,7 @@ export const ar = {
       "href": "#work"
     },
     "visual": {
-      "src": "/img/hero-lens.jpg",
+      "src": "/img/hero-lens.webp",
       "alt": "عدسة فضية محفورة بزخرفة هندسية إسلامية، تحول تدفقات البيانات إلى لوحات معلومات حية"
     }
   },

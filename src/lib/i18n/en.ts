@@ -85,7 +85,7 @@ export const en = {
     lead: "Maqnah builds AI-native data platforms that let enterprises and startups across Saudi Arabia and the GCC sense, decide and act at the speed of change.",
     cta: { label: "See our work", href: "#work" },
     visual: {
-      src: "/img/hero-lens.jpg",
+      src: "/img/hero-lens.webp",
       alt: "A silver lens etched with an Islamic geometric pattern, turning streams of data into live dashboards",
     },
   },

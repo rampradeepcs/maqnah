@@ -10,7 +10,7 @@
  * listed is served as-is.
  */
 const LADDERS: [RegExp, number[]][] = [
-  [/^\/img\/hero-lens\.jpg$/, [800, 1200, 1600]],
+  [/^\/img\/hero-lens\.webp$/, [800, 1200, 1600]],
   [/^\/img\/work-[a-z-]+\.jpg$/, [600, 1200]],
   [/^\/img\/industry-[a-z-]+\.jpg$/, [480, 960]],
 ];
@@ -20,5 +20,5 @@ export default function imageLoader({ src, width }: { src: string; width: number
   if (!ladder) return src;
   const largest = ladder[ladder.length - 1];
   const pick = ladder.find((w) => w >= width) ?? largest;
-  return pick === largest ? src : src.replace(/\.jpg$/, `-${pick}.jpg`);
+  return pick === largest ? src : src.replace(/\.(jpg|webp)$/, `-${pick}.$1`);
 }
