@@ -63,12 +63,16 @@ export function Hero({ t: hero }: { t: Dictionary["hero"] }) {
                           className="rise inline-block"
                           style={{ animationDelay: delay }}
                         >
+                          {/* The AI mark fills its chip edge to edge, with no border */}
                           <span
-                            className={`inline-grid h-[0.8em] w-[0.8em] translate-y-[0.1em] place-items-center rounded-[0.24em] border border-line bg-white shadow-[0_10px_24px_-12px_rgba(19,20,27,0.4)] ${
-                              icon === "ai" ? "rotate-6" : "-rotate-6"
+                            className={`inline-grid h-[0.8em] w-[0.8em] translate-y-[0.1em] place-items-center rounded-[0.24em] bg-white shadow-[0_10px_24px_-12px_rgba(19,20,27,0.4)] ${
+                              icon === "ai" ? "rotate-6" : "-rotate-6 border border-line"
                             }`}
                           >
-                            <HeadlineGraphic name={icon} className="h-[0.62em] w-[0.62em]" />
+                            <HeadlineGraphic
+                              name={icon}
+                              className={icon === "ai" ? "h-full w-full" : "h-[0.62em] w-[0.62em]"}
+                            />
                           </span>
                         </span>
                       </>

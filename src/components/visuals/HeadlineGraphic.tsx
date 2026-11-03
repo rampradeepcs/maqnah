@@ -4,8 +4,9 @@ import type { HeadlineGraphic as Name } from "@/lib/i18n";
  * The two small colour graphics set into the banner headline, in the spirit
  * of the brief's reference (a gold padlock and a blue "AI" tile): glossy,
  * emoji-like and colourful against the ink type. "data" is a stack of
- * platform layers in amber, blue and indigo; "ai" is a blue tile with a
- * spark. Each appears once per page, so the gradient ids can be fixed.
+ * platform layers in amber, blue and indigo; "ai" is two sparkles and the
+ * letters in a pink-to-violet gradient, drawn edge to edge on its white
+ * chip. Each appears once per page, so the gradient ids can be fixed.
  */
 export function HeadlineGraphic({ name, className = "" }: { name: Name; className?: string }) {
   return name === "data" ? <DataStack className={className} /> : <AiTile className={className} />;
@@ -52,40 +53,43 @@ function DataStack({ className }: { className: string }) {
   );
 }
 
+/** A four-point sparkle: concave sides meeting in sharp tips. */
+function sparkle(x: number, y: number, r: number) {
+  const k = 0.29 * r;
+  return `M${x} ${y - r}Q${x + k} ${y - k} ${x + r} ${y}Q${x + k} ${y + k} ${x} ${y + r}Q${x - k} ${y + k} ${x - r} ${y}Q${x - k} ${y - k} ${x} ${y - r}Z`;
+}
+
+/** The sparkles and letters in one paint, so the shadow can repeat them. */
+function AiMark({ paint }: { paint: string }) {
+  return (
+    <g fill={paint} stroke={paint} strokeLinecap="round" strokeLinejoin="round">
+      <path d={sparkle(15.2, 21.7, 8.2)} stroke="none" />
+      <path d={sparkle(25.9, 10.5, 4.3)} stroke="none" />
+      {/* "AI", drawn as strokes so it never depends on a loaded font */}
+      <g fill="none">
+        <path d="M21.1 40.2L27 26.4L32.9 40.2" strokeWidth={3.3} />
+        <path d="M22.9 36.3H31.1" strokeWidth={2.6} strokeLinecap="butt" />
+        <path d="M39.2 26.4V40.2" strokeWidth={3.5} />
+      </g>
+    </g>
+  );
+}
+
 function AiTile({ className }: { className: string }) {
   return (
     <svg viewBox="0 0 48 48" className={className} aria-hidden>
       <defs>
-        <linearGradient id="hg-ai" x1="8" y1="10" x2="38" y2="42" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#7aa6ff" />
-          <stop offset="1" stopColor="#2e5cf0" />
+        <linearGradient id="hg-ai" x1="0" y1="48" x2="48" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#ff6bd9" />
+          <stop offset="0.5" stopColor="#7a5efb" />
+          <stop offset="1" stopColor="#6304d2" />
         </linearGradient>
       </defs>
-      <rect x="6" y="10" width="32" height="32" rx="9" fill="url(#hg-ai)" />
-      <rect
-        x="6.6"
-        y="10.6"
-        width="30.8"
-        height="30.8"
-        rx="8.4"
-        fill="none"
-        stroke="#ffffff"
-        strokeOpacity={0.35}
-        strokeWidth={1.2}
-      />
-      {/* "AI", drawn as strokes so it never depends on a loaded font */}
-      <g stroke="#ffffff" strokeWidth={3.4} strokeLinecap="round" strokeLinejoin="round" fill="none">
-        <path d="M13.5 33.5L18.5 18.5L23.5 33.5M15.3 28.4H21.7" />
-        <path d="M29.5 18.5V33.5" />
+      {/* A flat shadow, set just below and right of every shape */}
+      <g opacity={0.1} transform="translate(0.25 0.9)">
+        <AiMark paint="#13141b" />
       </g>
-      {/* The spark, breaking the tile's corner */}
-      <path
-        d="M39 3.5C39.6 7.4 40.6 8.4 44.5 9C40.6 9.6 39.6 10.6 39 14.5C38.4 10.6 37.4 9.6 33.5 9C37.4 8.4 38.4 7.4 39 3.5Z"
-        fill="#ffc94a"
-        stroke="#ffffff"
-        strokeWidth={1.2}
-        strokeLinejoin="round"
-      />
+      <AiMark paint="url(#hg-ai)" />
     </svg>
   );
 }
